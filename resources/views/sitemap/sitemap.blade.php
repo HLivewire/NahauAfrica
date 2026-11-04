@@ -58,7 +58,7 @@
 <!-- Index -->
 <script src="{{ asset('frontend/js/index.js') }} "></script>
 <!-- toastr -->
-<script src="{{ asset('admin/plugins/toastr/toastr.min.js') }} "></script>
+<script src="{{ asset('adminassets/plugins/toastr/toastr.min.js') }} "></script>
 
 
 {{--</urlset>--}}

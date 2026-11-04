@@ -47,4 +47,20 @@ class AdminTest extends TestCase
         $this->post('/login', ['email' => 'nobody@example.com', 'password' => 'wrong'])->assertRedirect();
         $this->assertGuest();
     }
+
+    public function test_admin_and_super_admin_can_log_in(): void
+    {
+        foreach ([['superadmin21@gmail.com', 'superadmin21'], ['admin21@gmail.com', 'admin21']] as [$email, $password]) {
+            $this->post('/login', ['email' => $email, 'password' => $password])
+                ->assertRedirect(route('admin.dashboard'));
+            $this->get('/admin')->assertOk();
+            auth()->logout();
+        }
+    }
+
+    public function test_public_admin_folder_does_not_shadow_the_admin_route(): void
+    {
+        // A real public/admin directory makes web servers answer /admin with 404 instead of Laravel.
+        $this->assertDirectoryDoesNotExist(public_path('admin'));
+    }
 }

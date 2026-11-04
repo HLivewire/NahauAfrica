@@ -292,3 +292,7 @@
 .color-box.nahau,
 .dropdown-item.theme-color.nahau::after,
 .dropdown-item.theme-color.nahau.active{ background:#02a025 !important; }
+
+.color-box.broadcast,
+.dropdown-item.theme-color.broadcast::after,
+.dropdown-item.theme-color.broadcast.active{ background:#FF0000 !important; color:#fff; }

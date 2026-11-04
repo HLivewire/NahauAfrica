@@ -23,10 +23,9 @@ class Maanuser extends Authenticatable
         return $this->hasMany(Provider::class,'user_id','id');
     }
 
-    public function sendPasswordResetNotification($token){
-
-        $url =env('APP_URL').'/reset-password?token='. $token;
-
-        $this->notify(new ResetPasswordNotification($url));
+    public function sendPasswordResetNotification($token)
+    {
+        // Uses the named route password.reset (see routes/web.php), so it follows APP_URL / the request host.
+        $this->notify(new ResetPasswordNotification($token));
     }
 }

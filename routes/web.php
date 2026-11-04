@@ -78,6 +78,11 @@ Route::post('/contactus',[\App\Http\Controllers\Frontend\ContactusController::cl
 Route::get('/signup',[SignupController::class,'maanSignupIndex'])->name('signup');
 Route::post('/signup',[SignupController::class,'maanSignupStore']);
 
+//route forgot / reset password (frontend users)
+Route::post('/forgot-password',[\App\Http\Controllers\Frontend\PasswordResetController::class,'sendLink'])->middleware('throttle:5,1')->name('password.email');
+Route::get('/reset-password/{token}',[\App\Http\Controllers\Frontend\PasswordResetController::class,'form'])->name('password.reset');
+Route::post('/reset-password',[\App\Http\Controllers\Frontend\PasswordResetController::class,'reset'])->middleware('throttle:10,1')->name('password.update');
+
 //route signin
 Route::get('/signin',[SigninController::class,'maanSigninIndex'])->name('signin');
 Route::post('/signin',[SigninController::class,'maanSigninLogin'])->middleware('throttle:10,1');

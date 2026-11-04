@@ -12,14 +12,14 @@
     <title>{{ $settings->title }}</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="{{ asset('admin/fonts/google-font-sans.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminassets/fonts/google-font-sans.css') }}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('admin/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminassets/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="{{ asset('admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminassets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('admin/dist/css/adminlte.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminassets/dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminassets/css/login.css') }}">
     <style>
         .forgetsec a{
             color: black;
@@ -40,14 +40,14 @@
 <div class="new-login-section">
     <div class="row">
         <div class="col-md-6">
-            <div class="login-bg"><img src="{{ asset('admin/img/login/login-bgjpg.jpg') }}" alt=""></div>
+            <div class="login-bg"><img src="{{ asset('adminassets/img/login/login-bgjpg.jpg') }}" alt=""></div>
         </div>
     </div>
     <div class="login-form-section">
         <div class="row">
             <div class="col-md-6">
                 <div class="login-left-img">
-                    <img src="{{ asset('admin/img/login/login-left.png') }}" alt="">
+                    <img src="{{ asset('adminassets/img/login/login-left.png') }}" alt="">
                 </div>
             </div>
             <div class="col-md-6">
@@ -67,17 +67,17 @@
                         <p> {{ __('Welcome back, Please login in to your account') }}</p>
                         <div class="login-input-item">
                             <div class="input-group">
-                                <span class="left-img"><img src="{{ asset('admin/img/login/user.svg') }}" alt="icon"></span>
+                                <span class="left-img"><img src="{{ asset('adminassets/img/login/user.svg') }}" alt="icon"></span>
                                 <input type="email" name="email" id="email" class="form-control" placeholder="Email">
                             </div>
                         </div>
                         <div class="login-input-item">
                             <div class="input-group">
-                                <span class="left-img"><img src="{{ asset('admin/img/login/lock.svg') }}" alt="icon"></span>
+                                <span class="left-img"><img src="{{ asset('adminassets/img/login/lock.svg') }}" alt="icon"></span>
                                 <div class="input-wrp">
                                     <input type="password"  name="password" id="password"  class="form-control passwordhide" placeholder="Password">
-                                    <span class="hide-pass"><img src="{{ asset('admin/img/login/eye-slash.svg') }}" alt="icon"></span>
-                                    <span class="hideicon"><img src="{{ asset('admin/img/login/eye-slash.svg') }}" alt="icon"></span>
+                                    <span class="hide-pass"><img src="{{ asset('adminassets/img/login/eye-slash.svg') }}" alt="icon"></span>
+                                    <span class="hideicon"><img src="{{ asset('adminassets/img/login/eye-slash.svg') }}" alt="icon"></span>
                                 </div>
                             </div>
                         </div>
@@ -121,13 +121,13 @@
 </div>
 
 <!-- jQuery -->
-<script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('adminassets/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
-<script src="{{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('adminassets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->
-<script src="{{ asset('admin/dist/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('adminassets/dist/js/adminlte.min.js') }}"></script>
 <!-- Login JS -->
-<script src="{{ asset('admin/js/login.js') }}"></script>
+<script src="{{ asset('adminassets/js/login.js') }}"></script>
 
 <script>
         $(".hide-pass").click(function() {

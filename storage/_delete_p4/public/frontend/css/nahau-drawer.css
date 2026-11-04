@@ -1,0 +1,85 @@
+/* NahauAfrica: Get Started button, minimal search, auth drawer, premium pagination */
+:root{--nahau-red:#FF0000;--nahau-red-dark:#CC0000;--nahau-line:rgba(255,0,0,.28);--nahau-ink:#111}
+
+/* ---------- Get Started ---------- */
+.nahau-getstarted{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--nahau-red);background:var(--nahau-red);color:#fff;font-size:16px;font-weight:600;letter-spacing:.2px;line-height:1;padding:15px 38px;border-radius:6px;cursor:pointer;box-shadow:0 6px 16px rgba(255,0,0,.18);transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease,transform .15s ease}
+.nahau-getstarted:hover,.nahau-getstarted:focus-visible{background:#fff;color:#000;border-color:rgba(255,0,0,.22);box-shadow:0 6px 18px rgba(0,0,0,.08);outline:0}
+.nahau-getstarted:active{transform:scale(.97)}
+.nahau-getstarted--sm{font-size:13px;padding:9px 18px;box-shadow:none}
+
+/* ---------- Search (lives in the menu row, aligned with the menu text) ---------- */
+.maan-manu-bar .nahau-right{display:flex;align-items:center;justify-content:flex-end;gap:12px;margin:0;padding:0}
+.maan-manu-bar .nahau-right>li{margin:0;display:flex;align-items:center}
+.nahau-search{position:relative;display:flex;align-items:center;width:190px;border-bottom:1px solid #E3E3E3;transition:border-color .3s,width .3s}
+.nahau-search:focus-within{border-color:var(--nahau-line);width:220px}
+.nahau-search input{flex:1;min-width:0;border:0;background:transparent;box-shadow:none;outline:0;padding:4px 0;font-size:14px;color:#0F0F0F}
+.nahau-search input::placeholder{color:#9a9a9a}
+.nahau-search input::-webkit-search-cancel-button{display:none}
+.nahau-search button{border:0;background:transparent;padding:2px 0 2px 8px;color:#9a9a9a;cursor:pointer;line-height:0;transition:color .25s}
+.nahau-search button:hover,.nahau-search:focus-within button{color:var(--nahau-red)}
+.nahau-search button svg{width:18px;height:18px;display:block}
+.theme-broadcast .maan-manu-bar .nahau-search button,.theme-broadcast .maan-manu-bar .nahau-search button svg{background:transparent !important;color:#9a9a9a !important}
+.theme-broadcast .maan-manu-bar .nahau-search button:hover,.theme-broadcast .maan-manu-bar .nahau-search:focus-within button{color:var(--nahau-red) !important}
+.theme-broadcast .maan-manu-bar .nahau-search input{background:transparent !important}
+.theme-broadcast .maan-manu-bar .nahau-getstarted{background:var(--nahau-red) !important;color:#fff !important;border-color:var(--nahau-red) !important}
+.theme-broadcast .maan-manu-bar .nahau-getstarted:hover{background:#fff !important;color:#000 !important;border-color:rgba(255,0,0,.22) !important}
+.theme-broadcast .maan-mid-bar .nahau-getstarted{background:var(--nahau-red) !important;color:#fff !important;border-color:var(--nahau-red) !important}
+.theme-broadcast .maan-mid-bar .nahau-getstarted:hover,.theme-broadcast .maan-mid-bar .nahau-getstarted:focus-visible{background:#fff !important;color:#000 !important;border-color:rgba(255,0,0,.22) !important}
+.theme-broadcast .maan-manu-bar .maan-right-btns,.theme-broadcast .maan-manu-bar .nahau-right>li{background:transparent !important}
+
+/* ---------- Drawer ---------- */
+.nahau-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;visibility:hidden;transition:opacity .45s ease .05s,visibility 0s linear .5s;z-index:1990}
+.nahau-overlay.is-open{opacity:1;visibility:visible;transition:opacity .45s ease .05s,visibility 0s}
+.nahau-drawer{--d:.4s;position:fixed;top:0;right:0;height:100%;width:420px;max-width:100%;background:#fff;box-shadow:-12px 0 40px rgba(0,0,0,.18);transform:translateX(105%);transition:transform .6s cubic-bezier(.22,.8,.24,1) .12s,visibility 0s linear .75s;z-index:2000;overflow-y:auto;visibility:hidden}
+.nahau-drawer.is-open{transform:translateX(0);visibility:visible;transition:transform .6s cubic-bezier(.22,.8,.24,1) .12s,visibility 0s}
+.nahau-drawer-close{position:absolute;top:14px;right:18px;border:0;background:transparent;font-size:34px;line-height:1;color:#0F0F0F;cursor:pointer;transition:color .2s,transform .3s}
+.nahau-drawer-close:hover{color:var(--nahau-red);transform:rotate(90deg)}
+.nahau-drawer-body{padding:34px 38px 40px}
+.nahau-d-logo{display:block;margin:0 0 26px}
+.nahau-d-logo img{display:block;height:46px;width:auto;max-width:200px}
+.nahau-drawer h3{font-size:26px;font-weight:700;color:#0F0F0F;margin:0 0 4px}
+.nahau-sub{color:#606060;margin:0 0 22px}
+
+/* panels: leave, then enter with a staggered fade/slide */
+.nahau-panel{display:none}
+.nahau-panel.is-active{display:block}
+.nahau-panel.is-leaving{opacity:0;transform:translateX(-26px);transition:opacity .28s ease,transform .28s ease}
+.nahau-drawer:not(.is-open) .nahau-d-item{opacity:0}
+.nahau-drawer.is-open .nahau-panel.is-active .nahau-d-item{animation:nahauIn .55s cubic-bezier(.22,.8,.24,1) both;animation-delay:calc(var(--d) + var(--i,1) * .07s)}
+@keyframes nahauIn{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
+
+.nahau-form label{display:block;font-size:14px;font-weight:600;color:#0F0F0F;margin:14px 0 6px}
+.nahau-form input{display:block;width:100%;height:46px;padding:0 14px;border:1px solid var(--nahau-line);border-radius:6px;background:#fff;color:#0F0F0F;font-size:15px;outline:0;transition:box-shadow .3s,border-color .3s}
+.nahau-form input:hover{border-color:rgba(255,0,0,.5)}
+.nahau-form input:focus{border-color:var(--nahau-red);box-shadow:0 0 0 4px rgba(255,0,0,.09)}
+.nahau-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.nahau-err{display:block;color:#b00000;font-size:12px;margin-top:4px}
+.nahau-login-btn{display:block;width:100%;height:48px;margin-top:22px;border:1px solid var(--nahau-red);border-radius:6px;background:var(--nahau-red);color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:background .3s,color .3s,border-color .3s,transform .15s}
+.nahau-login-btn:hover,.nahau-login-btn:focus-visible{background:#fff;color:#000;border-color:rgba(255,0,0,.3);outline:0}
+.nahau-login-btn:active{transform:scale(.98)}
+.nahau-links{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:20px;font-size:14px}
+.nahau-links a{color:#000;text-decoration:none;transition:color .25s}
+.nahau-links a:hover,.nahau-links a:focus-visible{color:var(--nahau-red);text-decoration:underline}
+.nahau-muted{color:#606060}
+.nahau-d-alert{background:#fdecec;border:1px solid var(--nahau-line);color:#7a0000;border-radius:6px;padding:10px 12px;margin-bottom:8px;font-size:14px}
+.nahau-d-ok{background:#f1f8f1;border:1px solid #cfe5cf;color:#1e5a1e;border-radius:6px;padding:10px 12px;margin-bottom:8px;font-size:14px}
+body.nahau-lock{overflow:hidden}
+
+/* ---------- Premium pagination ---------- */
+.maan-pagination .container{display:flex;justify-content:center}
+.maan-pagination ul.nahau-pagination{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;list-style:none;margin:10px 0 0;padding:0}
+.maan-pagination ul.nahau-pagination li{margin:0 !important;display:block}
+.maan-pagination ul.nahau-pagination li a,.maan-pagination ul.nahau-pagination li span{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:44px;padding:0 14px;border:1px solid #E6E6E6;border-radius:12px;background:#fff;color:#222;font-size:15px;font-weight:600;line-height:1;text-decoration:none;transition:background .25s,color .25s,border-color .25s,box-shadow .25s,transform .2s}
+.maan-pagination ul.nahau-pagination a:hover,.maan-pagination ul.nahau-pagination a:focus-visible{background:#F5F5F5;color:var(--nahau-red);border-color:#D9D9D9;box-shadow:0 6px 16px rgba(0,0,0,.07);transform:translateY(-2px);outline:0}
+.maan-pagination ul.nahau-pagination .active span{background:var(--nahau-red);border-color:var(--nahau-red);color:#fff;box-shadow:0 8px 20px rgba(255,0,0,.25)}
+.maan-pagination ul.nahau-pagination .disabled span{color:#BDBDBD;background:#FAFAFA;border-color:#EFEFEF;cursor:not-allowed}
+.maan-pagination ul.nahau-pagination .dots span{border-color:transparent;background:transparent;min-width:28px;padding:0;color:#9a9a9a}
+.maan-pagination ul.nahau-pagination svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+@media (max-width:575px){.nahau-drawer{width:100%}.nahau-drawer-body{padding:30px 24px 36px}.nahau-search{width:130px}.nahau-row{grid-template-columns:1fr}.maan-pagination ul.nahau-pagination li a,.maan-pagination ul.nahau-pagination li span{min-width:38px;height:38px;padding:0 10px;font-size:14px}}
+@media (prefers-reduced-motion:reduce){.nahau-drawer,.nahau-overlay,.nahau-panel,.nahau-getstarted{transition:none !important}.nahau-drawer.is-open .nahau-panel.is-active .nahau-d-item{animation:none !important}}
+.nahau-search button svg,.nahau-search button svg *{fill:none !important;stroke:currentColor !important;stroke-width:1.5}
+.nahau-drawer-body h3{margin-top:0 !important;padding-top:0}
+.nahau-d-logo{margin-bottom:34px}
+.nahau-panel{padding:0 !important;margin:0 !important}
+.maan-pagination ul.nahau-pagination li a:hover svg,.maan-pagination ul.nahau-pagination li a svg{fill:none !important}

@@ -24,7 +24,7 @@ class SigninController extends Controller
         }else{
             //If is invalid email or password,will be redirect to back
             $this->setError('Invalid Email or Password !');
-            return redirect()->back();
+            return redirect()->back()->with('nahau_panel', 'login');
         }
 
 

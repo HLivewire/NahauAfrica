@@ -6,7 +6,7 @@
                     <a href="{{ URL('/') }}"><img loading="lazy" src="{{ media_url($settings->logo) }} " alt="logo"></a>
                 </div>
             </div>
-            <div class="col-sm-8 offset-sm-1 offset-lg-2">
+            <div class="col-sm-6 col-lg-7 offset-sm-1 offset-lg-1">
                 <div class="maan-header-adds">
                     @if ($advertisement)
                         {!! $advertisement->header_ads !!}
@@ -18,6 +18,9 @@
 
 
                 </div>
+            </div>
+            <div class="col-lg-2 d-none d-lg-flex justify-content-end">
+                <button type="button" class="nahau-getstarted" data-nahau-open="drawer">{{ __('Get Started') }}</button>
             </div>
         </div>
     </div>

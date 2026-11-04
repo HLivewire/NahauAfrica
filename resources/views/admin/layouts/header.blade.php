@@ -57,6 +57,10 @@
                     {{__('Theme Rose')}}
                 </a>
                 <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item theme-color broadcast @if($settings->theme_color=='theme-broadcast') active @endif" id="theme-broadcast" data-color="theme-broadcast" data-colortext="Broadcast Red">
+                    {{__('Broadcast Red')}}
+                </a>
+                <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item theme-color nahau @if($settings->theme_color=='theme-nahau') active @endif" id="theme-nahau" data-color="theme-nahau" data-colortext="NahauAfrica">
                     {{__('NahauAfrica Green')}}
                 </a>

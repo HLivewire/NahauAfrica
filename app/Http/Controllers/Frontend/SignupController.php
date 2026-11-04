@@ -35,7 +35,7 @@ class SignupController extends Controller
 
         ]);
         if ($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput()->with('nahau_panel', 'register');
         }
         try {
             $maanusers                      = new Maanuser();
@@ -52,6 +52,10 @@ class SignupController extends Controller
             $maanusers->save();
             //success message
             $this->setSuccess('Data Inserted Successfully');
+            if ($request->boolean('nahau_drawer')) {
+                // Registered from the drawer: go back and show the sign-in panel.
+                return redirect()->back()->with('nahau_panel', 'login')->with('nahau_notice', __('Account created. Please sign in.'));
+            }
             return redirect()->route('signin');
 
         }catch (Exception $exception){

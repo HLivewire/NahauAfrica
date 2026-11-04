@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://127.0.0.1:5656</loc>
-    <lastmod>2026-11-03T23:31:38+00:00</lastmod>
+    <lastmod>2026-11-04T01:17:52+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -55,7 +55,7 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/travel-news</loc>
+    <loc>http://127.0.0.1:5656/bookshop</loc>
     <lastmod>2023-05-09T15:13:29+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -79,19 +79,19 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/travel-news/details/56/on-sunrise-viewpoint-at-ja-bo-village-mae-hong-son-province-thailand</loc>
+    <loc>http://127.0.0.1:5656/bookshop/details/56/on-sunrise-viewpoint-at-ja-bo-village-mae-hong-son-province-thailand</loc>
     <lastmod>2023-05-30T11:56:59+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/travel-news/details/55/a-photo-on-phu-sub-lek-viewpoint-at-sunset-lopburi-thailand</loc>
+    <loc>http://127.0.0.1:5656/bookshop/details/55/a-photo-on-phu-sub-lek-viewpoint-at-sunset-lopburi-thailand</loc>
     <lastmod>2023-05-30T11:58:01+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/travel-news/details/54/fancy-a-different-type-of-getaway-this-christmas</loc>
+    <loc>http://127.0.0.1:5656/bookshop/details/54/fancy-a-different-type-of-getaway-this-christmas</loc>
     <lastmod>2023-05-09T15:06:02+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -247,7 +247,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/travel-news/details/26/tourists-will-soon-be-able-to-visit-beautiful-villages-along-indo-china-border</loc>
+    <loc>http://127.0.0.1:5656/bookshop/details/26/tourists-will-soon-be-able-to-visit-beautiful-villages-along-indo-china-border</loc>
     <lastmod>2022-04-19T13:26:10+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

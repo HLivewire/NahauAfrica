@@ -56,6 +56,13 @@
                             <span class="color-name">{{_('magenta')}}</span>
                         </div>
                     </label>
+                    <label class="color-items" id="color-broadcast" data-id="color-broadcast" data-color="theme-broadcast" data-colortext="Broadcast Red">
+                        <input type="radio"  name="radio" class="d-none" @if($settings->theme_color=='theme-broadcast') checked @endif>
+                        <div class="colorbox-wrp">
+                            <span class="color-box broadcast" style="background:#FF0000"></span>
+                            <span class="color-name">{{_('broadcast red')}}</span>
+                        </div>
+                    </label>
                     <label class="color-items" id="color-nahau" data-id="color-nahau" data-color="theme-nahau" data-colortext="NahauAfrica">
                         <input type="radio"  name="radio" class="d-none" @if($settings->theme_color=='theme-nahau') checked @endif>
                         <div class="colorbox-wrp">

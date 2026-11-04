@@ -8,23 +8,18 @@
     <meta name="csrf-token">
     <title>{{ __('MAAN|LMS') }}</title>
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="{{ asset('admin/fonts/google-font-sans-pro.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminassets/fonts/google-font-sans-pro.css') }}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('admin/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminassets/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Ionicons 2.0.1 -->
-    <link rel="stylesheet" href="{{ asset('admin/fonts/docs/css/ionicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminassets/fonts/docs/css/ionicons.min.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('admin/dist/css/adminlte.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin/css/maan-custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminassets/dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminassets/css/maan-custom.css') }}">
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
-
-    <!-- Preloader -->
-    <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="{{ asset(config('app.icon')) }}" alt="AdminLTELogo" height="60" width="60">
-    </div>
 
     <!-- Navbar -->
     @include('maanuser.partials.header')
@@ -54,14 +49,14 @@
 
 <!-- jQuery -->
 
-<script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('adminassets/plugins/jquery/jquery.min.js') }}"></script>
 
 <!-- Bootstrap 4 -->
-<script src="{{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('adminassets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-<script src="{{ asset('admin/dist/js/adminlte.js') }}"></script>
+<script src="{{ asset('adminassets/dist/js/adminlte.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{ asset('admin/dist/js/demo.js') }}"></script>
+<script src="{{ asset('adminassets/dist/js/demo.js') }}"></script>
 
 </body>
 </html>

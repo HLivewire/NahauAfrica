@@ -50,11 +50,12 @@
     <!-- Responsive -->
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
     <!-- toastr -->
-    <link rel="stylesheet" href="{{ asset('admin/plugins/toastr/toastr.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminassets/plugins/toastr/toastr.css') }}">
     <!-- Style for maannews-->
     <link rel="stylesheet" href="{{ asset('frontend/css/maan_news_style.css') }}">
     <!-- color change for maannews-->
     <link rel="stylesheet" href="{{ asset('frontend/css/color-change.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/nahau-drawer.css') }}">
 
     @stack('styles')
 
@@ -67,7 +68,7 @@
 
 </head>
 
-<body class="{{$settings->theme_color??'theme-nahau'}}">
+<body class="{{$settings->theme_color??'theme-broadcast'}}">
 
 <div id="main-wrapper">
     @empty($headers)
@@ -119,15 +120,6 @@
     @endif
     <!-- Maan Breaking News End -->
 
-        <!-- Maan news  preloader start -->
-        <div class="loader-inner ball-scale-multiple">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-        <link rel="stylesheet" href="{{ asset('frontend/css/loaders.css') }}">
-        <!-- Maan news  preloader end -->
-
         <!-- Main Content Start -->
     @yield('main_content')
     <!-- Main Content End -->
@@ -171,7 +163,7 @@
 
 <script src="{{ asset('frontend/js/theme.js') }} "></script>
 <!-- toastr -->
-<script src="{{ asset('admin/plugins/toastr/toastr.min.js') }} "></script>
+<script src="{{ asset('adminassets/plugins/toastr/toastr.min.js') }} "></script>
 {{--lazyloaded--}}
 <script src="{{ asset('maan/js/jquery.lazy.min.js') }} "></script>
 @stack('scripts')
@@ -180,12 +172,9 @@
 <script>
     $("#loginMessage").show().delay(5000).fadeOut('slow');
 </script>
-<script>
-    $( document ).ready(function() {
-        $('img').lazyLoad();
-    });
-</script>
+{{-- images use native loading="lazy"; the old $('img').lazyLoad() plugin is not installed --}}
 
+    <script src="{{ asset('frontend/js/nahau-drawer.js') }}"></script>
 </body>
 
 </html>

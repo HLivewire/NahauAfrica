@@ -20,7 +20,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Paginator::useBootstrap();
+        Paginator::defaultView('vendor.pagination.nahau');
+        Paginator::defaultSimpleView('vendor.pagination.nahau');
 
         // The existing oauth_clients / oauth_access_tokens tables use numeric client ids
         // (created by Passport 10). Passport 13 defaults to UUID clients, so keep numeric ids

@@ -14,7 +14,7 @@ abstract class TestCase extends BaseTestCase
         'test_protected_routes_need_a_token', 'test_public_pages_load',
         'test_legacy_public_urls_redirect', 'test_dangerous_maintenance_routes_are_gone',
         'test_uploads_reject_executable_files', 'test_image_upload_helper_stores_and_deletes_files',
-        'test_search_validates_input_and_works',
+        'test_search_validates_input_and_works', 'test_public_admin_folder_does_not_shadow_the_admin_route',
     ];
 
     protected function setUp(): void

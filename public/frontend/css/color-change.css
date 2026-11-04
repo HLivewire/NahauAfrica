@@ -2874,7 +2874,9 @@ footer section .news10-title-center::after{
         height: 100%;
         aspect-ratio: 16/9;
     }
-}/* ===== NahauAfrica brand theme (logo green #02a025, dark green #01531e) ===== */
+}
+
+/* ===== NahauAfrica brand theme (logo green #02a025, dark green #01531e) ===== */
 .theme-nahau .maan-manu-bar{
     background: #02a025;
 }
@@ -3129,3 +3131,62 @@ footer section .news10-title-center::after{
 .theme-nahau .news10-info-footer .d-btn.subscribe{ background:#02a025 !important; background-image:none !important; border-color:#02a025 !important; }
 .theme-nahau .news10-info-footer .d-btn.subscribe:hover{ background:#01531e !important; }
 .theme-nahau{ --news10-color-parpul: #01531e; --maan-color-parpul: #01531e; }
+
+/* no page spinners */
+.preloader,.loader-inner{display:none !important}
+
+/* ===== Broadcast Red theme (NahauAfrica red logo) ===== */
+body.theme-broadcast{
+  --maan-color-blue:#FF0000; --maan-color-lblue:#F2F2F2; --maan-color-green:#2BA640; --maan-color-parpul:#CC0000;
+  --news10-color-blue:#FF0000; --news10-color-parpul:#CC0000;
+  --maan-color-gray:#606060; --maan-color-border:#E5E5E5;
+}
+/* header: top bar stays black; logo row + menu bar light grey */
+.theme-broadcast .maan-mid-bar{background:#F2F2F2}
+.theme-broadcast .maan-manu-bar{background:#F2F2F2 !important;border-bottom:1px solid #E5E5E5}
+.theme-broadcast .maan-manu-bar a,.theme-broadcast .maan-manu-bar li{color:#0F0F0F !important}
+.theme-broadcast .maan-manu-bar a:hover,.theme-broadcast .maan-manu-bar li.active>a{color:#FF0000 !important}
+.theme-broadcast .maan-manu-bar svg,.theme-broadcast .maan-manu-bar svg *{fill:#0F0F0F}
+.theme-broadcast .maan-manu-bar button,.theme-broadcast .maan-manu-bar [class*="btn"]{background:#fff !important;color:#0F0F0F !important}
+/* primary red actions */
+.theme-broadcast a.link-btn,.theme-broadcast .d-btn{background:#FF0000 !important;color:#fff !important;border-color:#FF0000 !important}
+.theme-broadcast a.link-btn:hover,.theme-broadcast .d-btn:hover{background:#CC0000 !important;border-color:#CC0000 !important;color:#fff !important}
+.theme-broadcast section .maan-title::after,.theme-broadcast section .maan-title-center::after,
+.theme-broadcast .maan-most-popular-section .news-tab .nav-pills button::before{background:#FF0000 !important}
+.theme-broadcast .maan-breaking-news-section .maan-slide-title,.theme-broadcast .news-tab .nav-pills{background:#F2F2F2 !important}
+.theme-broadcast .maan-slide-title::before,.theme-broadcast .maan-slide-title::after,.theme-broadcast .nav-pills::before{background:transparent !important}
+.theme-broadcast .maan-breaking-news-section .maan-slide-title .icon svg{fill:#FF0000}
+.theme-broadcast .nav-pills .nav-link.active,.theme-broadcast section .row .news-tab .nav-pills .nav-link.active{color:#FF0000 !important}
+.theme-broadcast .card .maan-card-body .maan-text h4 a:hover,.theme-broadcast .maan-news-list li .maan-list-text a:hover{color:#FF0000 !important}
+.theme-broadcast .maan-top-news-section .topnews-big-card .card.maan-card-img .topnews-thumb:before{background:linear-gradient(0deg,#FF0000 0%,rgba(15,41,49,0) 100%)}
+.theme-broadcast .maan-categories-section .card,.theme-broadcast [class*="category"] .card{background:#F2F2F2}
+.theme-broadcast .maan-slide-section .slick-arrow:hover,.theme-broadcast .slick-arrow:hover{background:#FF0000}
+/* footer: light grey */
+.theme-broadcast .news10-info-footer,.theme-broadcast .maan-info-footer{background:#F2F2F2 !important;color:#0F0F0F}
+.theme-broadcast .maan-info-footer::after,.theme-broadcast .news10-footer-section::after{background:transparent !important}
+.theme-broadcast .news10-info-footer *:not(.d-btn):not(.d-btn *),.theme-broadcast .maan-info-footer *:not(.d-btn):not(.d-btn *){color:#0F0F0F}
+.theme-broadcast .news10-info-footer p,.theme-broadcast .news10-info-footer .news10-news-list span,.theme-broadcast .news10-info-footer time,.theme-broadcast .news10-info-footer i{color:#606060}
+.theme-broadcast .news10-info-footer a:hover,.theme-broadcast .maan-info-footer a:hover{color:#FF0000}
+.theme-broadcast .news10-info-footer .news10-title::before{background:#FF0000 !important}
+.theme-broadcast .news10-info-footer .news10-news-tags ul li a,.theme-broadcast .maan-info-footer .maan-news-tags ul li a{background:#fff !important;color:#0F0F0F !important;border:1px solid #E5E5E5 !important}
+.theme-broadcast .news10-info-footer .news10-news-tags ul li a:hover,.theme-broadcast .maan-info-footer .maan-news-tags ul li a:hover{background:#FF0000 !important;color:#fff !important;border-color:#FF0000 !important}
+.theme-broadcast .news10-info-footer .form-control{background:#fff;border-color:#E5E5E5;color:#0F0F0F}
+.theme-broadcast .d-btn.subscribe,.theme-broadcast .d-btn.subscribe *{color:#fff !important}
+.theme-broadcast .d-btn.subscribe{background:#FF0000 !important;background-image:none !important}
+.theme-broadcast .d-btn.subscribe::before{background:#FF0000 !important;background-image:none !important}
+.theme-broadcast .d-btn.subscribe:hover,.theme-broadcast .d-btn.subscribe:hover::before{background:#CC0000 !important}
+.theme-broadcast .news10-footer-bottom,.theme-broadcast .copy_right{border-color:#E5E5E5 !important}
+/* keep the whole menu on one line */
+.theme-broadcast .maan-manu-bar .maan-main-manu li{margin-right:22px}
+.theme-broadcast .maan-manu-bar .maan-main-manu li:last-child{margin-right:0}
+.theme-broadcast .maan-manu-bar .maan-main-manu ul{flex-wrap:nowrap;white-space:nowrap}
+/* footer text readable on grey */
+.theme-broadcast footer *:not(.d-btn):not(.d-btn *):not(.news10-news-tags a):not(.maan-news-tags a){color:#0F0F0F !important}
+.theme-broadcast footer p,.theme-broadcast footer time,.theme-broadcast footer i,.theme-broadcast footer .news10-news-list span{color:#606060 !important}
+.theme-broadcast footer a:hover{color:#FF0000 !important}
+.theme-broadcast footer .news10-title::before,.theme-broadcast footer .news10-title::after,.theme-broadcast footer h2::before,.theme-broadcast footer h2::after,.theme-broadcast footer h4::before{background:#FF0000 !important;opacity:1 !important}
+/* buttons: red -> white background + black text on hover (text always readable) */
+.theme-broadcast a.link-btn:hover,.theme-broadcast .d-btn:hover,.theme-broadcast .d-btn.subscribe:hover,
+.theme-broadcast .d-btn.subscribe:hover *{background:#fff !important;color:#000 !important;border-color:#FF0000 !important}
+.theme-broadcast .d-btn.subscribe:hover::before{opacity:0 !important}
+.theme-broadcast .d-btn.subscribe:hover::after{opacity:1 !important;background:#fff !important}

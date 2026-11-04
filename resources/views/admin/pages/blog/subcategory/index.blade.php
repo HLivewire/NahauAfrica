@@ -223,7 +223,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('adminassets/plugins/jquery/jquery.min.js') }}"></script>
     <script  type="text/javascript">
         $(document).ready(function (){
             $('.edit-item').each(function () {
