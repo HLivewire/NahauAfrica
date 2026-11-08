@@ -1,25 +1,17 @@
 <div class="maan-manu-bar">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-6 d-lg-none">
+            <div class="col-6 col-lg-2">
                 <div class="maan-logo">
                     <a href="{{ URL('/') }}"><img src="{{ media_url(settings()->logo) }}" alt="logo"></a>
                 </div>
             </div>
-            <div class="col-6 order-lg-2 col-lg-2">
+            <div class="col-6 order-lg-3 col-lg-2">
                 <ul class="maan-right-btns nahau-right">
-                    <li class="d-lg-none">
+                    <li>
                         <button type="button" class="nahau-getstarted nahau-getstarted--sm" data-nahau-open="drawer">{{ __('Get Started') }}</button>
                     </li>
-                    <li class="nahau-search-li d-none d-lg-flex">
-                        <form class="nahau-search" action="{{ route('search') }}" method="GET" role="search">
-                            <input type="search" name="search" placeholder="{{ __('Search...') }}" aria-label="{{ __('Search') }}" autocomplete="off">
-                            <button type="submit" aria-label="{{ __('Search') }}">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4-4"></path></svg>
-                            </button>
-                        </form>
-                    </li>
-                    <li class="d-lg-none">
+                                        <li class="d-lg-none">
                         <button type="button" class="manu-btn">
                             <span></span>
                             <span></span>
@@ -36,27 +28,19 @@
                     </button>
                 </form>
             </div>
-            <div class="col-12 order-lg-1 col-lg-10">
+            <div class="col-12 order-lg-2 col-lg-8">
                 <nav class="maan-main-manu">
                     <button class="close-btn d-lg-none">
                         <span></span>
                         <span></span>
                     </button>
                     <ul>
-                        <li class="dropdown"><a href="{{route('home')}}">{{ home() }}</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{route('home-one')}}">{{__('Home One')}}</a></li>
-                                <li><a href="{{route('home-two')}}">{{__('Home Two')}}</a></li>
-
-                            </ul>
-                        </li>
                         {{--start menu dynamic--}}
                         @include('frontend.layouts._menu_one')
                         {{--end menu dynamic--}}
 
-                        <li>
-                            <a href="{{ route('contactus') }}">{{ contactus() }}</a>
-                        </li>
+                        <li><a href="{{ route('aboutus') }}">{{ __('About') }}</a></li>
+                        <li><a href="{{ route('contactus') }}">{{ __('Write for Us') }}</a></li>
 
                     </ul>
 

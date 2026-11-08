@@ -12,24 +12,13 @@
                         </div>
                         <div class="maan-content">
                             <div class="maan-content-title">
-                                <h3>{{ __('The Professional Publishing Platform') }}</h3>
-                                <p>{{ __('In 1978, founders Matt and Hendricks were looking for a tech event to showcase their
-                                    new startup. When they couldn’t find one that checked all the boxes they decided to
-                                    host their own. As they were organizing things, they soon realized they needed
-                                    somewhere to promote the conference, and that’s how newsweb.com was launched. It
-                                    later became a blog and the result is what you are looking at right now.
-
-                                    Digiqole was started to bring insight, meaning—and every now and again, the lulz—to
-                                    the world of technology. But we didn’t want to stop there. Today the company has
-                                    grown from those two parts to four pillars that brought forth Digiqole News,
-                                    Digiqole Deals, Digiqole Conference and Events, our new tech hub called DP and
-                                    Index, our market intelligence platform.') }}</p>
+                                <h3>{{ __('Our Stories. Our Voices.') }}</h3>
+                                <p>{{ __('Nahau Africa is a home for African stories, told in our own voices. We publish fiction, lived experiences, relationship stories, working lives and the remarkable people who shape our continent, in English and Kiswahili.') }}</p>
                             </div>
                             <div class="maan-blockqoute">
                                 <div class="maan-blockqoute-content">
                                     <blockquote class="blockqoute">
-                                       {{ __(' A mission becomes your constitution, the solid expression of your vision and
-                                        values. It becomes the criterion by which you measure everything.') }}
+                                       {{ __('Every African story deserves to be told well, and heard by the people it belongs to.') }}
                                     </blockquote>
                                     <div class="block-qoute">
                                         <img loading="lazy" src="{{ asset('frontend/img/icon/quote.png') }}" alt="Maan">
@@ -37,18 +26,8 @@
                                 </div>
                             </div>
                             <div class="maan-content-title">
-                                <h3>{{ __('Our Growing News Network') }}</h3>
-                                <p>{{ __('In 1978, founders Matt and Hendricks were looking for a tech event to showcase their
-                                    new startup. When they couldn’t find one that checked all the boxes they decided to
-                                    host their own. As they were organizing things, they soon realized they needed
-                                    somewhere to promote the conference, and that’s how newsweb.com was launched. It
-                                    later became a blog and the result is what you are looking at right now.
-
-                                    Digiqole was started to bring insight, meaning—and every now and again, the lulz—to
-                                    the world of technology. But we didn’t want to stop there. Today the company has
-                                    grown from those two parts to four pillars that brought forth Digiqole News,
-                                    Digiqole Deals, Digiqole Conference and Events, our new tech hub called DP and
-                                    Index, our market intelligence platform.') }}</p>
+                                <h3>{{ __('Write for Nahau Africa') }}</h3>
+                                <p>{{ __('Have a story to tell? We welcome writers across Africa. Send us your fiction, your experience, or the story of someone who inspires you, and our editors will get back to you.') }}</p>
                             </div>
                         </div>
                     </div>

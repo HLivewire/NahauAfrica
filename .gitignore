@@ -22,3 +22,7 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# temporary patch files
+/storage/_delete_*
+/storage/*.tgz

@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/swiper-bundle.min.css') }}">
 @endpush
 @section('main_content')
+    @include('frontend.pages._nahau_hero')
     <!-- news10-newtop-news stat -->
     <section class="news10-newtop-news pt-0">
         <div class="container-xxl container-lg">

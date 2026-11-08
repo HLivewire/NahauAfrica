@@ -71,6 +71,7 @@ Route::get('/photogallery/details/{id}/{slug?}',[\App\Http\Controllers\Frontend\
 // route news comments
 Route::post('news/comment/{id?}',[\App\Http\Controllers\Frontend\NewsController::class,'maanNewsComment'])->name('news.comment');
 // route contact us
+Route::get('/about-us',[\App\Http\Controllers\Frontend\AboutusController::class,'maanNewsAboutus'])->name('aboutus');
 Route::get('/contactus',[\App\Http\Controllers\Frontend\ContactusController::class,'maanNewsContactus'])->name('contactus');
 Route::post('/contactus',[\App\Http\Controllers\Frontend\ContactusController::class,'maanNewsContactusStore'])->name('contactus.store');
 

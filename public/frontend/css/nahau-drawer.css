@@ -107,3 +107,53 @@ body.nahau-lock{overflow:hidden}
   .theme-broadcast .maan-manu-bar .close-btn:hover{background:var(--nahau-red) !important;border-color:var(--nahau-red) !important}
 }
 @media (max-width:360px){.maan-manu-bar .nahau-getstarted--sm{padding:10px 14px;font-size:13px}.maan-manu-bar .maan-logo{max-width:110px}}
+
+/* ---------- One-row desktop header: logo | titles (right) | Get Started ---------- */
+.maan-mid-bar{display:none !important}
+@media (min-width:992px){
+  .maan-manu-bar{padding:22px 0}
+  .maan-manu-bar .maan-logo{max-width:190px}
+  .maan-manu-bar .maan-logo img{max-height:52px;width:auto}
+  .maan-manu-bar .nahau-getstarted--sm{font-size:16px;padding:15px 38px;box-shadow:0 6px 16px rgba(255,0,0,.18)}
+  .theme-broadcast .maan-manu-bar .maan-main-manu ul{display:flex !important;justify-content:flex-end;padding:0 56px 0 0;margin:0}
+  .theme-broadcast .maan-manu-bar .maan-main-manu li{margin:0 0 0 28px}
+}
+@media (min-width:992px){
+  .maan-manu-bar .nahau-getstarted{white-space:nowrap}
+  .theme-broadcast .maan-manu-bar .maan-main-manu ul{padding-right:36px}
+}
+@media (min-width:992px) and (max-width:1199.98px){
+  .maan-manu-bar .nahau-getstarted--sm{font-size:14px;padding:13px 22px}
+  .theme-broadcast .maan-manu-bar .maan-main-manu li{margin-left:20px}
+}
+
+/* ---------- Hero (after the header) ---------- */
+.nahau-hero{padding:72px 0 64px;background:#fff}
+.nahau-hero .nahau-eyebrow{margin:0 0 18px;font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#606060}
+.nahau-hero h1{margin:0 0 24px;max-width:15ch;font-family:'Source Serif 4','Source Serif Pro',Georgia,'Times New Roman',serif;font-weight:700;font-size:clamp(38px,6.2vw,76px);line-height:1.06;letter-spacing:-.01em;color:#0F0F0F}
+.nahau-hero-sub{margin:0 0 32px;max-width:620px;font-size:19px;line-height:1.7;color:#4a4a4a}
+.nahau-hero-actions{display:flex;flex-wrap:wrap;gap:14px}
+.nahau-btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 30px;border-radius:8px;border:1px solid transparent;font-size:16px;font-weight:600;text-decoration:none;transition:background .3s,color .3s,border-color .3s,box-shadow .3s,transform .15s}
+.nahau-btn:active{transform:scale(.98)}
+.nahau-btn--primary{background:var(--nahau-red);border-color:var(--nahau-red);color:#fff;box-shadow:0 8px 20px rgba(255,0,0,.16)}
+.nahau-btn--primary:hover,.nahau-btn--primary:focus-visible{background:#fff;color:#000;border-color:rgba(255,0,0,.25);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+.nahau-btn--ghost{background:#fff;border-color:#D9D9D9;color:#0F0F0F}
+.nahau-btn--ghost:hover,.nahau-btn--ghost:focus-visible{border-color:rgba(255,0,0,.3);color:var(--nahau-red);box-shadow:0 8px 20px rgba(0,0,0,.06)}
+.nahau-hero-rule{margin:56px 0;border:0;border-top:1px solid #E6E6E6;opacity:1}
+.nahau-featured{display:grid;grid-template-columns:1.15fr 1fr;gap:64px;align-items:center}
+.nahau-featured-media{position:relative;aspect-ratio:16/11;border-radius:14px;overflow:hidden;background:#FDECEC}
+.nahau-featured-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.nahau-featured-media span{position:absolute;left:24px;bottom:20px;font-size:14px;color:#B30000}
+.nahau-featured-media img+span{display:none}
+.nahau-featured-body h2{margin:0 0 18px;font-family:'Source Serif 4','Source Serif Pro',Georgia,'Times New Roman',serif;font-weight:700;font-size:clamp(28px,3.6vw,44px);line-height:1.15;color:#0F0F0F}
+.nahau-featured-body h2 a{color:inherit;text-decoration:none;transition:color .25s}
+.nahau-featured-body h2 a:hover{color:var(--nahau-red)}
+.nahau-featured-body p{font-size:18px;line-height:1.7;color:#4a4a4a;margin:0 0 16px}
+.nahau-featured-body .nahau-eyebrow{margin-bottom:14px}
+.nahau-featured-body .nahau-featured-meta{font-size:15px;color:#6b6b6b;margin:0}
+@media (max-width:991.98px){.nahau-hero{padding:44px 0 40px}.nahau-featured{grid-template-columns:1fr;gap:26px}.nahau-hero-rule{margin:40px 0}.nahau-hero-sub{font-size:17px}}
+@media (max-width:575px){.nahau-btn{flex:1 1 auto;padding:0 22px}.nahau-hero h1{max-width:none}}
+.nahau-hero{padding:48px 0 64px !important}
+.nahau-hero h1{max-width:1000px !important}
+.nahau-hero .nahau-hero-rule{width:100% !important;height:0;margin:52px 0 !important;background:none}
+.nahau-hero h1,.nahau-hero h2{text-transform:none}

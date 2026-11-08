@@ -4,6 +4,7 @@
 
 @endsection
 @section('main_content')
+    @include('frontend.pages._nahau_hero')
     <!-- Maan Top News Start -->
     <section class="maan-top-news-section">
         <div class="container">
