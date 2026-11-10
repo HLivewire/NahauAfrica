@@ -1,15 +1,15 @@
 /* NahauAfrica public site — tokens use our red / black / grey palette */
-.nx{--nx-red:#FF0000;--nx-red-fill:#E60000;--nx-red-text:#C80000;--nx-ink:#0F0F0F;--nx-body:#4A4A4A;--nx-muted:#6B6B6B;--nx-tint:#FDECEC;--nx-tint2:#FAD9D9;--nx-grey:#F2F2F2;--nx-line:#E6E6E6;--nx-input:rgba(255,0,0,.28);--nx-dark:#232427;--nx-sec:#C80000;--nx-sectint:#FDECEC;
+.nx{--nx-red:#FF0000;--nx-red-fill:#E60000;--nx-red-text:#C80000;--nx-ink:#0F0F0F;--nx-body:#4A4A4A;--nx-muted:#6B6B6B;--nx-tint:#EDEDED;--nx-tint2:#DDDDDD;--nx-grey:#F2F2F2;--nx-line:#E6E6E6;--nx-input:rgba(255,0,0,.28);--nx-dark:#232427;--nx-sec:#232427;--nx-sectint:#EDEDED;
  font-family:'Jost','Roboto',system-ui,sans-serif;color:var(--nx-ink);font-size:17px;line-height:1.6}
 .nx *,.nx *::before,.nx *::after{box-sizing:border-box}
 .nx a{color:inherit;text-decoration:none}
 .nx h1,.nx h2,.nx h3,.nx h4{font-family:'Source Serif 4',Georgia,serif;color:var(--nx-ink);margin:0;font-weight:700;letter-spacing:0}
 .nx p{margin:0}
 .nx img{max-width:100%;display:block}
-.nx-s-fiction{--nx-sec:#0F0F0F;--nx-sectint:#F2F2F2}
+.nx-s-fiction{--nx-sec:#232427;--nx-sectint:#EDEDED}
 .nx-s-relationships{--nx-sec:#232427;--nx-sectint:#EDEDED}
-.nx-s-jobs-careers{--nx-sec:#8F0000;--nx-sectint:#F8E1E1}
-.nx-s-african-heroes{--nx-sec:#0F0F0F;--nx-sectint:#F2F2F2}
+.nx-s-jobs-careers{--nx-sec:#232427;--nx-sectint:#EDEDED}
+.nx-s-african-heroes{--nx-sec:#232427;--nx-sectint:#EDEDED}
 .nx-wrap{max-width:1200px;margin:0 auto;padding:0 24px}
 .nx-read{max-width:740px;margin:0 auto;padding:0 24px}
 .nx-sec{padding:72px 0}
