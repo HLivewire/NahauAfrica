@@ -328,3 +328,33 @@
 .theme-broadcast .maan-manu-bar .maan-main-manu li.nx-lang,.theme-broadcast .maan-manu-bar .maan-main-manu li.nx-lang>.nx-lang-btn,.maan-main-manu li.nx-lang,.maan-main-manu li.nx-lang>.nx-lang-btn{background:transparent !important;box-shadow:none !important;padding-left:0;padding-right:0}
 .nx-lang-btn .nx-caret path{fill:none !important;stroke:currentColor !important}
 .nx-lang-btn .nx-caret{fill:none !important}
+
+/* ---- Round 6: mobile header ---- */
+.nahau-right li.nx-lang--m{position:relative;display:none}
+@media (max-width:991px){
+  /* the language picker lives in the header bar on phones, not inside the slide-out menu */
+  .maan-main-manu li.nx-lang:not(.nx-lang--m){display:none !important}
+  .theme-broadcast .maan-manu-bar .nahau-right li.nx-lang--m{display:flex !important;position:relative;background:transparent !important}
+  .nahau-right .nx-lang-btn{display:inline-flex;align-items:center;gap:6px;background:transparent !important;border:0 !important;padding:6px 2px !important;box-shadow:none !important;cursor:pointer;color:#0F0F0F}
+  .nahau-right .nx-lang-btn span{display:none}
+  .nahau-right .nx-lang-btn .nx-flag{width:26px;height:26px;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+  .nahau-right .nx-lang-btn .nx-caret{color:#6B6B6B;transition:transform .25s}
+  .nahau-right .nx-lang-btn[aria-expanded="true"] .nx-caret{transform:rotate(180deg);color:#FF0000}
+  .theme-broadcast .maan-manu-bar .nahau-right ul.nx-lang-list{display:block !important;position:absolute !important;right:-6px !important;left:auto !important;top:calc(100% + 12px) !important;width:176px !important;margin:0 !important;padding:8px !important;background:#fff !important;border:1px solid #EDEDED;border-radius:14px;box-shadow:0 18px 40px rgba(0,0,0,.18);z-index:80;list-style:none}
+  .theme-broadcast .maan-manu-bar .nahau-right ul.nx-lang-list[hidden]{display:none !important}
+  .theme-broadcast .maan-manu-bar .nahau-right ul.nx-lang-list>li{display:block !important;margin:0 !important;padding:0 !important;width:100%}
+  .theme-broadcast .maan-manu-bar .nahau-right ul.nx-lang-list>li>a{display:flex !important;align-items:center;gap:12px;padding:11px 12px !important;border-radius:9px;color:#0F0F0F !important;font:500 16px 'Jost',sans-serif;background:transparent !important}
+  .theme-broadcast .maan-manu-bar .nahau-right ul.nx-lang-list>li[aria-selected="true"]>a{background:#F7F7F7 !important;font-weight:600}
+  .theme-broadcast .maan-manu-bar .nahau-right ul.nx-lang-list>li[aria-selected="true"]>a::after{content:"";margin-left:auto;width:7px;height:12px;border:solid #E60000;border-width:0 2px 2px 0;transform:rotate(45deg) translateY(-2px)}
+  .nahau-right .nx-lang-list .nx-flag{width:24px;height:24px;border-radius:50%}
+  /* smaller Get Started and menu icon, bigger logo */
+  .maan-manu-bar .maan-logo{max-width:170px}
+  .maan-manu-bar .nahau-right{gap:8px}
+  .maan-manu-bar .nahau-getstarted--sm{font-size:12.5px !important;padding:8px 13px !important;border-radius:6px}
+  .theme-broadcast .maan-manu-bar .manu-btn{width:24px !important;height:16px !important}
+  .maan-manu-bar{padding:12px 0}
+}
+@media (max-width:991px){
+  .theme-broadcast .maan-manu-bar .nahau-right li.nx-lang--m>button.nx-lang-btn{background:transparent !important;background-color:transparent !important;border:0 !important;box-shadow:none !important;padding:6px 2px !important;min-width:0}
+  .maan-manu-bar .maan-logo{max-width:150px}
+}

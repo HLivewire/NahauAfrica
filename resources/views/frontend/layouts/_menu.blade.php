@@ -8,6 +8,13 @@
             </div>
             <div class="col-6 order-lg-3 col-lg-2">
                 <ul class="maan-right-btns nahau-right">
+                    <li class="nx-lang nx-lang--m d-lg-none" data-nx-lang>
+                            <button type="button" class="nx-lang-btn" aria-haspopup="listbox" aria-expanded="false">@if(nlocale()==='en')<svg class="nx-flag" viewBox="0 0 60 40" width="22" height="22" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="60" height="40" fill="#012169"/><path d="M0 0l60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0l60 40M60 0L0 40" stroke="#C8102E" stroke-width="3"/><path d="M30 0v40M0 20h60" stroke="#fff" stroke-width="13"/><path d="M30 0v40M0 20h60" stroke="#C8102E" stroke-width="8"/></svg><span>English</span>@else<svg class="nx-flag" viewBox="0 0 60 40" width="22" height="22" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="60" height="40" fill="#1EB53A"/><polygon points="60,0 60,40 0,40" fill="#00A3DD"/><line x1="0" y1="40" x2="60" y2="0" stroke="#FCD116" stroke-width="14"/><line x1="0" y1="40" x2="60" y2="0" stroke="#000" stroke-width="8"/></svg><span>Kiswahili</span>@endif<svg class="nx-caret" viewBox="0 0 12 8" width="10" height="7" aria-hidden="true"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                            <ul class="nx-lang-list" role="listbox" aria-label="{{ __('Language') }}" hidden>
+                                <li role="option" @if(nlocale()==='en') aria-selected="true" @endif><a href="{{ nswitch_url('en') }}" hreflang="en" lang="en"><svg class="nx-flag" viewBox="0 0 60 40" width="22" height="22" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="60" height="40" fill="#012169"/><path d="M0 0l60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0l60 40M60 0L0 40" stroke="#C8102E" stroke-width="3"/><path d="M30 0v40M0 20h60" stroke="#fff" stroke-width="13"/><path d="M30 0v40M0 20h60" stroke="#C8102E" stroke-width="8"/></svg><span>English</span></a></li>
+                                <li role="option" @if(nlocale()==='sw') aria-selected="true" @endif><a href="{{ nswitch_url('sw') }}" hreflang="sw" lang="sw"><svg class="nx-flag" viewBox="0 0 60 40" width="22" height="22" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="60" height="40" fill="#1EB53A"/><polygon points="60,0 60,40 0,40" fill="#00A3DD"/><line x1="0" y1="40" x2="60" y2="0" stroke="#FCD116" stroke-width="14"/><line x1="0" y1="40" x2="60" y2="0" stroke="#000" stroke-width="8"/></svg><span>Kiswahili</span></a></li>
+                            </ul>
+                        </li>
                     <li>
                         <button type="button" class="nahau-getstarted nahau-getstarted--sm" data-nahau-open="drawer">{{ __('Get Started') }}</button>
                     </li>
@@ -19,14 +26,6 @@
                         </button>
                     </li>
                 </ul>
-            </div>
-            <div class="col-12 order-3 d-lg-none nahau-mobile-search">
-                <form class="nahau-search" action="{{ nroute('search') }}" method="GET" role="search">
-                    <input type="search" name="q" placeholder="{{ __('Search...') }}" aria-label="{{ __('Search') }}" autocomplete="off">
-                    <button type="submit" aria-label="{{ __('Search') }}">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4-4"></path></svg>
-                    </button>
-                </form>
             </div>
             <div class="col-12 order-lg-2 col-lg-8">
                 <nav class="maan-main-manu">
