@@ -186,3 +186,11 @@ span.dx-link{color:var(--muted-foreground) !important;font-weight:400}
 .main-sidebar .nav-sidebar>.nav-item>.nav-link{display:flex;align-items:center}
 .main-sidebar .nav-sidebar>.nav-item>.nav-link>p{flex:1;display:flex;justify-content:space-between;align-items:center;margin:0;white-space:normal}
 .main-sidebar .nav-sidebar>.nav-item>.nav-link .nav-icon{width:1.6rem;font-size:.95rem}
+
+/* ---- brand: NahauAfrica logo in the admin sidebar ---- */
+.main-sidebar .brand-link .dx-logo{display:block;height:36px;width:auto;max-width:190px;margin:0}
+.main-sidebar .brand-link .dx-logo--dark,.main-sidebar .brand-link .dx-logo-mini{display:none}
+html[data-theme="dark"] .main-sidebar .brand-link .dx-logo--light{display:none}
+html[data-theme="dark"] .main-sidebar .brand-link .dx-logo--dark{display:block}
+.sidebar-collapse .main-sidebar:not(.sidebar-focused):not(:hover) .brand-link .dx-logo{display:none !important}
+.sidebar-collapse .main-sidebar:not(.sidebar-focused):not(:hover) .brand-link .dx-logo-mini{display:block;width:34px;height:34px;object-fit:contain}

@@ -9,7 +9,7 @@
     <!-- favicon -->
     <link rel="icon" href="{{ media_url($settings->favicon) }}">
     <meta name="csrf-token">
-    <title>{{ $settings->title }}</title>
+    <title>NahauAfrica Admin</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="{{ asset('adminassets/fonts/google-font-sans-pro.css') }}">
     <!-- Font Awesome -->

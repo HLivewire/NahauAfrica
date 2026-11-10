@@ -5,9 +5,10 @@
 </style>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ URL('/admin') }}" class="brand-link">
-        <img src="{{ media_url($settings->icon) }}" alt="" class="brand-image img-circle elevation-3" onerror="this.style.display='none'">
-        <span class="brand-text font-weight-light">{{ $settings->short_name }}</span>
+    <a href="{{ URL('/admin') }}" class="brand-link" aria-label="NahauAfrica">
+        <img src="{{ asset('uploads/images/logo/broadcast_logo.png') }}" alt="NahauAfrica" class="dx-logo dx-logo--light">
+        <img src="{{ asset('uploads/images/logo/nahau_logo_admin_dark.png') }}" alt="NahauAfrica" class="dx-logo dx-logo--dark">
+        <img src="{{ asset('uploads/images/logo/nahau_favicon.png') }}" alt="" class="dx-logo-mini" aria-hidden="true">
     </a>
 
     <!-- Sidebar -->
