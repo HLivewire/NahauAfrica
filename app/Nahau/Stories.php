@@ -29,7 +29,7 @@ class Stories
                 'newscategories.slug as section',
                 'm.slug', 'm.format', 'm.label', 'm.language', 'm.dek', 'm.reading_minutes', 'm.author_id',
                 'm.series_id', 'm.chapter_no', 'm.translation_of', 'm.featured', 'm.image_alt', 'm.image_caption',
-                'm.image_credit', 'm.sponsored_by', 'm.corrections', 'm.related_1', 'm.related_2', 'm.related_3',
+                'm.image_credit', 'm.price', 'm.sponsored_by', 'm.corrections', 'm.related_1', 'm.related_2', 'm.related_3',
                 'a.name as author_name', 'a.slug as author_slug',
                 DB::raw("CONCAT(u.first_name,' ',u.last_name) as reporter_name"),
             ])

@@ -62,7 +62,7 @@ class NahauAdminController extends Controller
             'stories' => ['title' => 'Story details', 'model' => NahauStoryMeta::class, 'create' => false, 'cols' => ['slug', 'format', 'label', 'language', 'featured'], 'fields' => [
                 ['format', 'Format', 'text', 'nullable|max:60'], ['label', 'Content label', 'select', 'required', fn () => $labels], ['language', 'Language', 'select', 'required', fn () => ['en' => 'English', 'sw' => 'Kiswahili']],
                 ['dek', 'Dek / standfirst (max 220)', 'textarea', 'nullable|max:220'], ['slug', 'Slug', 'text', 'required|alpha_dash|max:120'], ['author_id', 'Author', 'select', 'nullable', $authors],
-                ['reading_minutes', 'Reading time (minutes, auto if empty)', 'number', 'nullable|integer'], ['featured', 'Featured on Home (only one)', 'checkbox', 'nullable'],
+                ['reading_minutes', 'Reading time (minutes, auto if empty)', 'number', 'nullable|integer'], ['featured', 'Featured on Home (only one)', 'checkbox', 'nullable'], ['price', 'Book price (TZS, empty = not for sale)', 'number', 'nullable|integer|min:0'],
                 ['series_id', 'Series', 'select', 'nullable', fn () => \App\Models\NahauSeries::orderBy('title')->pluck('title', 'id')->all()], ['chapter_no', 'Chapter number', 'number', 'nullable|integer'],
                 ['translation_of', 'Translation of (story)', 'select', 'nullable', fn () => $newsIn(array_keys(config('nahau.sections')))],
                 ['image_alt', 'Lead image alt text', 'text', 'nullable|max:250'], ['image_caption', 'Lead image caption', 'text', 'nullable|max:250'], ['image_credit', 'Lead image credit', 'text', 'nullable|max:250'],

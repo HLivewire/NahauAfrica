@@ -6,6 +6,9 @@
 */
 return [
     'seed_demo' => env('NAHAU_SEED_DEMO', true),
+    'currency' => env('NAHAU_CURRENCY', 'TZS'),
+    'preview_pages' => 3,
+    'words_per_page' => 170,
 
     'locales' => ['en', 'sw'],
 
@@ -52,7 +55,7 @@ return [
     'labels' => ['Fiction', 'Personal experience', 'Opinion', 'Researched biography', 'Interview', 'Sponsored'],
     'opportunity_types' => ['job' => 'Job', 'internship' => 'Internship', 'training' => 'Training', 'grant' => 'Grant'],
     'report_reasons' => ['Asks for payment', 'Fake employer', 'Job no longer available', 'Other'],
-    'contact_reasons' => ['General enquiry', 'Correction request', 'Partnership proposal', 'Reader feedback', 'Report a suspicious advert'],
+    'contact_reasons' => ['General enquiry', 'Correction request', 'Partnership proposal', 'Reader feedback', 'Buying books', 'Report a suspicious advert'],
 
     // Page URL slugs per language
     'pages' => [
@@ -63,6 +66,7 @@ return [
         'authors' => ['en' => 'authors', 'sw' => 'waandishi'],
         'search' => ['en' => 'search', 'sw' => 'tafuta'],
         'write' => ['en' => 'write-for-us', 'sw' => 'andika-nasi'],
+        'read' => ['en' => 'read', 'sw' => 'soma'],
         'about' => ['en' => 'about', 'sw' => 'kuhusu'],
         'contact' => ['en' => 'contact', 'sw' => 'wasiliana'],
         'privacy' => ['en' => 'privacy', 'sw' => 'faragha'],

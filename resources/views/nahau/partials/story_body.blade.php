@@ -27,7 +27,6 @@
                 <a class="{{ $story->language==='sw'?'on':'' }}" lang="sw" hreflang="sw" data-nx-track="language_switch" href="{{ $story->language==='sw' ? $url : Stories::url($translation,'sw') }}">Kiswahili</a>
             </span>
             @endif
-            <span class="nx-seg" aria-label="{{ __('Text size') }}"><button type="button" data-nx-size="-2" aria-label="{{ __('Smaller text') }}">A−</button><button type="button" data-nx-size="2" aria-label="{{ __('Larger text') }}">A+</button></span>
         </div>
     </div>
 </div>

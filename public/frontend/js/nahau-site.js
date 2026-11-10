@@ -210,3 +210,29 @@
             .then(function () { b.disabled = false; });
     });
 })();
+
+/* Add to cart */
+(function () {
+    var meta = function (n) { var m = document.querySelector('meta[name="' + n + '"]'); return m ? m.content : ''; };
+    function toast(html) {
+        var t = document.querySelector('.nx-toast');
+        if (!t) { t = document.createElement('div'); t.className = 'nx-toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }
+        t.innerHTML = html; requestAnimationFrame(function () { t.classList.add('is-on'); });
+        clearTimeout(t._h); t._h = setTimeout(function () { t.classList.remove('is-on'); }, 4200);
+    }
+    document.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-nx-cart]'); if (!b) return;
+        e.preventDefault(); if (b.disabled) return; b.disabled = true;
+        fetch(b.getAttribute('data-url'), { method: 'POST', headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRF-TOKEN': meta('csrf-token') } })
+            .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+            .then(function (x) {
+                if (!x.ok) return;
+                var price = b.textContent.split('·')[1];
+                b.textContent = b.getAttribute('data-added') + (price ? ' ·' + price : '');
+                toast('<span>' + b.getAttribute('data-added') + '</span><a href="' + b.getAttribute('data-cart') + '">' + b.getAttribute('data-view') + ' →</a>');
+                if (window.nahauTrack) window.nahauTrack('add_to_cart', {});
+            })
+            .catch(function () {})
+            .then(function () { b.disabled = false; });
+    });
+})();

@@ -81,6 +81,21 @@ class StoryController extends Controller
         return view($view, compact('story', 'key', 'cfg', 'translation', 'related', 'author', 'hero', 'nav', 'corrections'));
     }
 
+    /** Full-screen reading page for a book (fiction). */
+    public function read(string $slug)
+    {
+        $story = Stories::find('fiction', $slug);
+        abort_unless($story, 404);
+
+        $author = $story->author_id ? NahauAuthor::find($story->author_id) : null;
+        $next = null;
+        if ($story->series_id) {
+            $next = Stories::query()->where('m.series_id', $story->series_id)->where('m.chapter_no', (int) $story->chapter_no + 1)->first();
+        }
+
+        return view('nahau.reader', compact('story', 'author', 'next'));
+    }
+
     public function author(string $slug)
     {
         $author = NahauAuthor::where('slug', $slug)->firstOrFail();

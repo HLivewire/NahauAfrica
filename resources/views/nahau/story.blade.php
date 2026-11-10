@@ -8,5 +8,5 @@
 <script type="application/ld+json">{!! json_encode(['@context'=>'https://schema.org','@type'=>'BreadcrumbList','itemListElement'=>[['@type'=>'ListItem','position'=>1,'name'=>'Home','item'=>nroute('home')],['@type'=>'ListItem','position'=>2,'name'=>nsection($key,'name'),'item'=>nroute($key)],['@type'=>'ListItem','position'=>3,'name'=>$story->title]]], JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}</script>
 @endsection
 @section('nx')
-@include('nahau.partials.story_body')
+@include($key === 'fiction' ? 'nahau.partials.book_body' : 'nahau.partials.story_body')
 @endsection

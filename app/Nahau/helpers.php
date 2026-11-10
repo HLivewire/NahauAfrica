@@ -152,3 +152,36 @@ if (! function_exists('nfav_ids')) {
         return $req->attributes->get('nahau.fav_ids');
     }
 }
+
+/** Split story HTML into book pages of roughly $words words each, never breaking inside a paragraph. */
+if (! function_exists('npages')) {
+    function npages(?string $html, ?int $words = null): array
+    {
+        $words = $words ?: (int) config('nahau.words_per_page', 170);
+        $parts = preg_split('~(?<=</p>)|(?<=</h2>)|(?<=</h3>)|(?<=</blockquote>)~i', nclean((string) $html), -1, PREG_SPLIT_NO_EMPTY) ?: [];
+        $pages = [];
+        $cur = '';
+        $count = 0;
+        foreach ($parts as $part) {
+            $cur .= $part;
+            $count += str_word_count(strip_tags($part));
+            if ($count >= $words) {
+                $pages[] = $cur;
+                $cur = '';
+                $count = 0;
+            }
+        }
+        if (trim(strip_tags($cur)) !== '') {
+            $pages[] = $cur;
+        }
+
+        return $pages;
+    }
+}
+
+if (! function_exists('nmoney')) {
+    function nmoney($amount): string
+    {
+        return config('nahau.currency', 'TZS').' '.number_format((float) $amount, 0, '.', ',');
+    }
+}
