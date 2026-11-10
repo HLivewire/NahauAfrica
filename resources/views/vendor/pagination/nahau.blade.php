@@ -1,5 +1,5 @@
 @if ($paginator->hasPages())
-    <ul class="nahau-pagination" role="navigation" aria-label="{{ __('Pagination') }}">
+    <ul class="nahau-pagination" role="navigation" aria-label="{{ __('Page navigation') }}">
         @if ($paginator->onFirstPage())
             <li class="disabled" aria-disabled="true"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></span></li>
         @else
