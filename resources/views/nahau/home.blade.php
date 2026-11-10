@@ -117,33 +117,4 @@
 
 @include('nahau.partials.newsletter', ['uid' => 'home'])
 
-@if($heroes->isNotEmpty())
-<div class="nx-sec nx-spot" data-nx-spotlight data-interval="{{ config('nahau.spotlight_seconds') * 1000 }}">
-    <div class="nx-wrap">
-        <p class="nx-eyebrow">{{ __('African Heroes · Lives worth remembering') }}</p>
-        <h2 class="nx-h2" style="margin-top:10px">{{ __('Heroes in focus') }}</h2>
-        <div data-nx-slides>
-            @foreach($heroes as $i => $h)
-            @php $hs = $heroStories[$h->news_id]; @endphp
-            <div class="nx-spot-slide nx-spot-card" data-slide="{{ $i }}" @if($i) hidden @endif>
-                <div class="nx-spot-photo">@if($h->portrait)<img src="{{ media_url($h->portrait) }}" alt="{{ $h->name }}" width="160" height="160">@else{{ mb_substr($h->name,0,1) }}@endif</div>
-                <div>
-                    <h3>{{ $h->name }}</h3>
-                    <p class="nx-meta">{{ collect([$h->country, trim($h->born.($h->died ? '–'.$h->died : '')), $h->known_for])->filter()->implode(' · ') }}</p>
-                    <p class="sum">{{ $h->spotlight_summary ?: Stories::dek($hs) }}</p>
-                    <a class="nx-link" data-nx-track="hero_spotlight_click" href="{{ Stories::url($hs) }}">{{ __('Read the full story') }} →</a>
-                </div>
-            </div>
-            @endforeach
-        </div>
-        <div class="nx-spot-ctrl" role="group" aria-label="{{ __('Heroes in focus controls') }}">
-            <button type="button" data-nx-prev aria-label="{{ __('Previous hero') }}">←</button>
-            <button type="button" data-nx-pause aria-pressed="false">{{ __('Pause') }}</button>
-            <button type="button" data-nx-next aria-label="{{ __('Next hero') }}">→</button>
-            @foreach($heroes as $i => $h)<button type="button" data-nx-jump="{{ $i }}" @if(!$i) class="is-on" @endif>{{ $h->name }}</button>@endforeach
-        </div>
-        <p style="margin-top:28px"><a class="nx-link" style="color:#fff !important" href="{{ nroute('african-heroes') }}">{{ __('See all African Heroes') }} →</a></p>
-    </div>
-</div>
-@endif
 @endsection

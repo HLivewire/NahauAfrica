@@ -45,10 +45,10 @@
 .nx-banner .nx-tag{font-family:'Source Serif 4',Georgia,serif;font-size:22px;font-weight:600;color:var(--nx-sec);margin:10px 0 14px}
 .nx-banner p.nx-lead{max-width:720px}
 /* hero (home) */
-.nx-hero{padding:88px 0 72px;text-align:center;background:#fff}
-.nx-hero h1{max-width:900px;margin:16px auto 22px}
-.nx-hero .nx-lead{max-width:720px;margin:0 auto 30px}
-.nx-hero .nx-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.nx-hero{padding:88px 0 72px;text-align:left;background:#fff}
+.nx-hero h1{max-width:900px;margin:16px 0 22px}
+.nx-hero .nx-lead{max-width:720px;margin:0 0 30px}
+.nx-hero .nx-actions{display:flex;gap:14px;justify-content:flex-start;flex-wrap:wrap}
 /* cards */
 .nx-grid{display:grid;gap:28px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 .nx-grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
