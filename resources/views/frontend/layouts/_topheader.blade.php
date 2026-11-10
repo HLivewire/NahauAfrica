@@ -14,6 +14,7 @@
             </div>
             <div class="col-sm-4 col-md-3  col-xl-2">
                 <div class="maan-social-link">
+                    <span class="nx-langsw" aria-label="{{ __('Language') }}"><a href="{{ nswitch_url('en') }}" hreflang="en" lang="en" class="{{ nlocale()==='en' ? 'on' : '' }}" @if(nlocale()==='en') aria-current="true" @endif>EN</a><a href="{{ nswitch_url('sw') }}" hreflang="sw" lang="sw" class="{{ nlocale()==='sw' ? 'on' : '' }}" @if(nlocale()==='sw') aria-current="true" @endif>SW</a></span>
                     <ul>
                         @foreach($socials as $social)
                             <li><a href="{{$social->url}}"><i class="{{$social->icon_code}}"></i></a></li>

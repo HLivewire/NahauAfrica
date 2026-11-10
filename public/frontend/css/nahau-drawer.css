@@ -157,3 +157,8 @@ body.nahau-lock{overflow:hidden}
 .nahau-hero h1{max-width:1000px !important}
 .nahau-hero .nahau-hero-rule{width:100% !important;height:0;margin:52px 0 !important;background:none}
 .nahau-hero h1,.nahau-hero h2{text-transform:none}
+/* Continue with Google */
+.nahau-google{display:flex;align-items:center;justify-content:center;gap:12px;height:54px;border:1px solid rgba(255,0,0,.28);border-radius:8px;background:#fff;color:#0F0F0F !important;font-weight:500;font-size:16px;text-decoration:none;transition:border-color .25s,box-shadow .25s;margin-top:6px}
+.nahau-google:hover{border-color:#FF0000;box-shadow:0 0 0 4px rgba(255,0,0,.08);color:#0F0F0F !important}
+.nahau-or{display:flex;align-items:center;gap:14px;margin:16px 0 4px;color:#6B6B6B;font-size:14px}
+.nahau-or::before,.nahau-or::after{content:'';flex:1;height:1px;background:#E6E6E6}

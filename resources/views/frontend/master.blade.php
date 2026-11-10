@@ -20,7 +20,7 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
-    <title>{{ $settings->title }}</title>
+    <title>@yield('title', $settings->title)</title>
 
     <!-- Apple Favicon -->
     <link rel="apple-touch-icon" href="{{ media_url($settings->favicon) }}">
@@ -56,6 +56,9 @@
     <!-- color change for maannews-->
     <link rel="stylesheet" href="{{ asset('frontend/css/color-change.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/nahau-drawer.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/nahau-home.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/nahau-site.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap">
 
     @stack('styles')
 
@@ -110,7 +113,7 @@
     <!-- Maan Manu Bar End -->
     <main>
         <!-- Maan Breaking News Start -->
-    @if(Route::currentRouteName() !='signup'&& Route::currentRouteName() !='signin')
+    @if(Route::currentRouteName() !='signup'&& Route::currentRouteName() !='signin' && !Route::is('n.*','home','search'))
         @if (!empty($headers)&& $headers->name_slug !='header_7' && $headers->name_slug !='header_2')
                 <section class="maan-breaking-news-section">
                     @include('frontend.layouts._breakingnews')
@@ -124,18 +127,7 @@
     @yield('main_content')
     <!-- Main Content End -->
     </main>
-        @empty($footer)
-            @include('frontend.layouts._footer')
-        @else
-            @switch($footer->name_slug)
-                @case($footer->name_slug!='footer_1')
-                    @include('frontend.layouts.footers.'.$footer->name_slug)
-                    {{-- @endif--}}
-                    @break
-                @default
-                    @include('frontend.layouts._footer')
-            @endswitch
-        @endempty
+        @include('nahau.partials.footer')
 
 </div>
 
@@ -175,6 +167,7 @@
 {{-- images use native loading="lazy"; the old $('img').lazyLoad() plugin is not installed --}}
 
     <script src="{{ asset('frontend/js/nahau-drawer.js') }}"></script>
+    <script src="{{ asset('frontend/js/nahau-site.js') }}" defer></script>
 </body>
 
 </html>

@@ -1,391 +1,415 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://127.0.0.1:5656</loc>
-    <lastmod>2026-11-04T01:17:52+00:00</lastmod>
+    <loc>http://127.0.0.1:8000</loc>
+    <lastmod>2026-11-09T00:14:47+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/business-news</loc>
+    <loc>http://127.0.0.1:8000/business-news</loc>
     <lastmod>2023-05-09T13:19:18+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/sports-news</loc>
+    <loc>http://127.0.0.1:8000/sports-news</loc>
     <lastmod>2022-06-22T03:12:13+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/lifestyle-news</loc>
+    <loc>http://127.0.0.1:8000/lifestyle-news</loc>
     <lastmod>2023-05-10T15:17:54+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/politics-news</loc>
+    <loc>http://127.0.0.1:8000/politics-news</loc>
     <lastmod>2022-06-22T03:12:16+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/entertainment-news</loc>
+    <loc>http://127.0.0.1:8000/entertainment-news</loc>
     <lastmod>2022-06-22T03:12:17+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/technology-news</loc>
+    <loc>http://127.0.0.1:8000/technology-news</loc>
     <lastmod>2022-06-22T03:12:18+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/national-news</loc>
+    <loc>http://127.0.0.1:8000/national-news</loc>
     <lastmod>2022-06-22T03:12:19+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/world-news</loc>
+    <loc>http://127.0.0.1:8000/world-news</loc>
     <lastmod>2022-06-22T03:12:20+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/bookshop</loc>
+    <loc>http://127.0.0.1:8000/bookshop</loc>
     <lastmod>2023-05-09T15:13:29+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/lifestyle-news/details/59/look-of-the-week-blackpink-headline-coachella-in-korean-hanboks</loc>
+    <loc>http://127.0.0.1:8000/fiction</loc>
+    <lastmod>2026-11-08T22:52:08+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://127.0.0.1:8000/relationships</loc>
+    <lastmod>2026-11-08T22:52:08+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://127.0.0.1:8000/jobs-careers</loc>
+    <lastmod>2026-11-08T22:52:08+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://127.0.0.1:8000/african-heroes</loc>
+    <lastmod>2026-11-08T22:52:08+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://127.0.0.1:8000/lifestyle-news/details/59/look-of-the-week-blackpink-headline-coachella-in-korean-hanboks</loc>
     <lastmod>2023-05-10T15:17:54+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/lifestyle-news/details/58/rarely-seen-photos-from-the-met-gala-show-celebrities-letting-loose</loc>
+    <loc>http://127.0.0.1:8000/lifestyle-news/details/58/rarely-seen-photos-from-the-met-gala-show-celebrities-letting-loose</loc>
     <lastmod>2023-05-30T11:57:48+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/lifestyle-news/details/57/everything-we-know-about-the-theme-hosts-and-guests</loc>
+    <loc>http://127.0.0.1:8000/lifestyle-news/details/57/everything-we-know-about-the-theme-hosts-and-guests</loc>
     <lastmod>2023-05-29T15:22:01+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/bookshop/details/56/on-sunrise-viewpoint-at-ja-bo-village-mae-hong-son-province-thailand</loc>
+    <loc>http://127.0.0.1:8000/bookshop/details/56/on-sunrise-viewpoint-at-ja-bo-village-mae-hong-son-province-thailand</loc>
     <lastmod>2023-05-30T11:56:59+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/bookshop/details/55/a-photo-on-phu-sub-lek-viewpoint-at-sunset-lopburi-thailand</loc>
+    <loc>http://127.0.0.1:8000/bookshop/details/55/a-photo-on-phu-sub-lek-viewpoint-at-sunset-lopburi-thailand</loc>
     <lastmod>2023-05-30T11:58:01+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/bookshop/details/54/fancy-a-different-type-of-getaway-this-christmas</loc>
+    <loc>http://127.0.0.1:8000/bookshop/details/54/fancy-a-different-type-of-getaway-this-christmas</loc>
     <lastmod>2023-05-09T15:06:02+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/lifestyle-news/details/53/sportswear-brands-go-all-out-to-target-women-consumers-globally</loc>
+    <loc>http://127.0.0.1:8000/lifestyle-news/details/53/sportswear-brands-go-all-out-to-target-women-consumers-globally</loc>
     <lastmod>2023-05-09T14:23:44+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/business-news/details/52/the-term-stock-market-refers-to-several-exchanges-in-which-shares</loc>
+    <loc>http://127.0.0.1:8000/business-news/details/52/the-term-stock-market-refers-to-several-exchanges-in-which-shares</loc>
     <lastmod>2023-05-10T07:30:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/politics-news/details/51/taina-blue-retreat-is-a-converted-tower-on-the-greek-coast</loc>
+    <loc>http://127.0.0.1:8000/politics-news/details/51/taina-blue-retreat-is-a-converted-tower-on-the-greek-coast</loc>
     <lastmod>2023-05-29T15:35:35+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/entertainment-news/details/49/reating-a-vision-for-the-future-how-technology-will-revolutionise-the-business-finance-function</loc>
+    <loc>http://127.0.0.1:8000/entertainment-news/details/49/reating-a-vision-for-the-future-how-technology-will-revolutionise-the-business-finance-function</loc>
     <lastmod>2023-05-30T11:57:25+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/world-news/details/48/entertainment-partners-chill-at-home-with-a-few-must-see-movies-or-head-out-for</loc>
+    <loc>http://127.0.0.1:8000/world-news/details/48/entertainment-partners-chill-at-home-with-a-few-must-see-movies-or-head-out-for</loc>
     <lastmod>2023-05-20T14:34:24+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/politics-news/details/47/with-the-thrills-of-a-casino-the-excitement-of-live-harness-racing-and-the-delight-of-fine-food-and-spirits-you-can-kick-back</loc>
+    <loc>http://127.0.0.1:8000/politics-news/details/47/with-the-thrills-of-a-casino-the-excitement-of-live-harness-racing-and-the-delight-of-fine-food-and-spirits-you-can-kick-back</loc>
     <lastmod>2023-05-29T15:26:01+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/entertainment-news/details/46/amazon-has-143-billion-reasons-to-keep-strech-lining-hemline-above-knee-burgundy-glossy-silk-complete-hid-zip-little-catches-rayon</loc>
+    <loc>http://127.0.0.1:8000/entertainment-news/details/46/amazon-has-143-billion-reasons-to-keep-strech-lining-hemline-above-knee-burgundy-glossy-silk-complete-hid-zip-little-catches-rayon</loc>
     <lastmod>2023-05-12T06:39:30+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/politics-news/details/45/bolsonaros-new-alliance-for-brazil-is-a-lesson-in-the-politics-of-loyalty-and-campaign-finance-for-over-three-decades-bolsonaro-used-different</loc>
+    <loc>http://127.0.0.1:8000/politics-news/details/45/bolsonaros-new-alliance-for-brazil-is-a-lesson-in-the-politics-of-loyalty-and-campaign-finance-for-over-three-decades-bolsonaro-used-different</loc>
     <lastmod>2023-05-07T06:31:06+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/politics-news/details/44/official-press-statement-an-historic-moment-time-and-a-new-journey-to-begin-shirley-chisholm-was-the-first-african-american-woman-elected-to-congress</loc>
+    <loc>http://127.0.0.1:8000/politics-news/details/44/official-press-statement-an-historic-moment-time-and-a-new-journey-to-begin-shirley-chisholm-was-the-first-african-american-woman-elected-to-congress</loc>
     <lastmod>2022-11-16T02:04:38+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/entertainment-news/details/43/green-party-success-is-reshaping-global-politics-are-increasingly-shaping-the-debate-in-countries-around-the-world</loc>
+    <loc>http://127.0.0.1:8000/entertainment-news/details/43/green-party-success-is-reshaping-global-politics-are-increasingly-shaping-the-debate-in-countries-around-the-world</loc>
     <lastmod>2022-07-05T04:42:52+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/technology-news/details/42/computer-technologygeneration-new-computer-technology-stock-our-managed-it-and-it-monitoring-services-allow-you-to-focus</loc>
+    <loc>http://127.0.0.1:8000/technology-news/details/42/computer-technologygeneration-new-computer-technology-stock-our-managed-it-and-it-monitoring-services-allow-you-to-focus</loc>
     <lastmod>2022-08-22T06:33:26+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/entertainment-news/details/41/manages-and-administers-a-specific-function-of-the-police-departments-it-systems-including-support-in-computer-hardware</loc>
+    <loc>http://127.0.0.1:8000/entertainment-news/details/41/manages-and-administers-a-specific-function-of-the-police-departments-it-systems-including-support-in-computer-hardware</loc>
     <lastmod>2022-10-26T08:50:03+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/sports-news/details/40/two-georgian-silver-medallists-were-told-to-leave-the-olympic-games-for-taking-a-sightseeing-trip-in-tokyo-is-the-worlds-largest-city</loc>
+    <loc>http://127.0.0.1:8000/sports-news/details/40/two-georgian-silver-medallists-were-told-to-leave-the-olympic-games-for-taking-a-sightseeing-trip-in-tokyo-is-the-worlds-largest-city</loc>
     <lastmod>2022-04-20T23:14:54+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/technology-news/details/39/this-article-is-about-mechanical-robots-for-software-agents-see-bot</loc>
+    <loc>http://127.0.0.1:8000/technology-news/details/39/this-article-is-about-mechanical-robots-for-software-agents-see-bot</loc>
     <lastmod>2023-05-09T13:33:05+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/sports-news/details/38/ice-hockey-pictures-the-contemporary-sport-of-ice-hockey-was-developed-in-canada-most-notably</loc>
+    <loc>http://127.0.0.1:8000/sports-news/details/38/ice-hockey-pictures-the-contemporary-sport-of-ice-hockey-was-developed-in-canada-most-notably</loc>
     <lastmod>2023-05-07T05:32:35+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/business-news/details/37/a-matter-of-imfact-ou-didn-t-find-the-perfect-wallpaper-to-beautify-your-desktop</loc>
+    <loc>http://127.0.0.1:8000/business-news/details/37/a-matter-of-imfact-ou-didn-t-find-the-perfect-wallpaper-to-beautify-your-desktop</loc>
     <lastmod>2022-07-04T05:42:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/world-news/details/36/taina-blue-retreat-is-a-converted-tower-on-the-greek-coast</loc>
+    <loc>http://127.0.0.1:8000/world-news/details/36/taina-blue-retreat-is-a-converted-tower-on-the-greek-coast</loc>
     <lastmod>2022-04-19T12:23:31+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/world-news/details/35/patricia-urquiola-coats-transparent-glas-tables-for-livings-in-were-front-patricia-urquiola-glas-tables-for-livings</loc>
+    <loc>http://127.0.0.1:8000/world-news/details/35/patricia-urquiola-coats-transparent-glas-tables-for-livings-in-were-front-patricia-urquiola-glas-tables-for-livings</loc>
     <lastmod>2022-04-20T11:54:06+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/national-news/details/34/delicious-hot-air-balloons-like-candy-hd-mirror-wallpaper-delicious-hot-air-balloons-like-candy-delicious</loc>
+    <loc>http://127.0.0.1:8000/national-news/details/34/delicious-hot-air-balloons-like-candy-hd-mirror-wallpaper-delicious-hot-air-balloons-like-candy-delicious</loc>
     <lastmod>2022-07-03T08:44:14+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/national-news/details/33/shopping-for-a-used-car-reliability-and-dependability-are-important-factors</loc>
+    <loc>http://127.0.0.1:8000/national-news/details/33/shopping-for-a-used-car-reliability-and-dependability-are-important-factors</loc>
     <lastmod>2022-04-20T14:14:38+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/technology-news/details/32/spider-man-wallpapers-a-collection-of-the-top-45-spider-man-wallpapers-and-backgrounds-available</loc>
+    <loc>http://127.0.0.1:8000/technology-news/details/32/spider-man-wallpapers-a-collection-of-the-top-45-spider-man-wallpapers-and-backgrounds-available</loc>
     <lastmod>2022-04-20T07:44:15+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/entertainment-news/details/30/steve-cohens-dazzling-live-show-performed-weekly</loc>
+    <loc>http://127.0.0.1:8000/entertainment-news/details/30/steve-cohens-dazzling-live-show-performed-weekly</loc>
     <lastmod>2022-07-03T08:09:15+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/technology-news/details/29/a-new-control-technology-has-been-developed-by-scientists-for-a-four-legged-robot</loc>
+    <loc>http://127.0.0.1:8000/technology-news/details/29/a-new-control-technology-has-been-developed-by-scientists-for-a-four-legged-robot</loc>
     <lastmod>2022-04-20T21:55:26+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/entertainment-news/details/28/east-bengal-and-kerala-blasters-have-lost-most-number-of-east-bengal-and-kerala-blasters-have</loc>
+    <loc>http://127.0.0.1:8000/entertainment-news/details/28/east-bengal-and-kerala-blasters-have-lost-most-number-of-east-bengal-and-kerala-blasters-have</loc>
     <lastmod>2022-04-18T15:07:33+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/national-news/details/27/us-fuel-markets-are-getting-even-tighter-as-europes-scramble</loc>
+    <loc>http://127.0.0.1:8000/national-news/details/27/us-fuel-markets-are-getting-even-tighter-as-europes-scramble</loc>
     <lastmod>2022-04-19T23:17:40+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/bookshop/details/26/tourists-will-soon-be-able-to-visit-beautiful-villages-along-indo-china-border</loc>
+    <loc>http://127.0.0.1:8000/bookshop/details/26/tourists-will-soon-be-able-to-visit-beautiful-villages-along-indo-china-border</loc>
     <lastmod>2022-04-19T13:26:10+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/national-news/details/25/serena-williams-on-her-star-studded-gucci-bodysuit</loc>
+    <loc>http://127.0.0.1:8000/national-news/details/25/serena-williams-on-her-star-studded-gucci-bodysuit</loc>
     <lastmod>2023-05-06T05:18:59+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/national-news/details/24/the-seven-member-group-filmed-a-music-video-in-the-world-bodys-new-york-headquarters</loc>
+    <loc>http://127.0.0.1:8000/national-news/details/24/the-seven-member-group-filmed-a-music-video-in-the-world-bodys-new-york-headquarters</loc>
     <lastmod>2023-05-06T06:20:06+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/national-news/details/23/a-woman-gave-birth-to-a-baby-boy-on-a-plane-in-paris-early-tuesday-morning</loc>
+    <loc>http://127.0.0.1:8000/national-news/details/23/a-woman-gave-birth-to-a-baby-boy-on-a-plane-in-paris-early-tuesday-morning</loc>
     <lastmod>2022-10-25T06:21:16+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/world-news/details/22/new-york-to-attend-76th-united-nations-general-assembly</loc>
+    <loc>http://127.0.0.1:8000/world-news/details/22/new-york-to-attend-76th-united-nations-general-assembly</loc>
     <lastmod>2023-05-07T06:30:59+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/world-news/details/21/world-leaders-return-to-un-with-focus-on-pandemic-climate</loc>
+    <loc>http://127.0.0.1:8000/world-news/details/21/world-leaders-return-to-un-with-focus-on-pandemic-climate</loc>
     <lastmod>2023-05-07T05:40:03+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/world-news/details/20/bidens-first-speech-as-us-president-to-the-annual-united-nations-general-assembly-in-new-york-faces-a-tough-reception</loc>
+    <loc>http://127.0.0.1:8000/world-news/details/20/bidens-first-speech-as-us-president-to-the-annual-united-nations-general-assembly-in-new-york-faces-a-tough-reception</loc>
     <lastmod>2022-10-15T08:12:25+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/technology-news/details/19/when-walked-on-these-wooden-floors-harvest-enough-energy-to-turn-on-a-lightbulb</loc>
+    <loc>http://127.0.0.1:8000/technology-news/details/19/when-walked-on-these-wooden-floors-harvest-enough-energy-to-turn-on-a-lightbulb</loc>
     <lastmod>2022-04-17T16:07:24+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/technology-news/details/18/safran-innovates-to-anticipate-its-customers</loc>
+    <loc>http://127.0.0.1:8000/technology-news/details/18/safran-innovates-to-anticipate-its-customers</loc>
     <lastmod>2022-04-18T02:20:34+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/entertainment-news/details/17/dance-at-chapman-university-offers-students</loc>
+    <loc>http://127.0.0.1:8000/entertainment-news/details/17/dance-at-chapman-university-offers-students</loc>
     <lastmod>2022-04-20T16:10:01+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/world-news/details/16/barak-obama-retreat-is-a-converted-tower-on-the-greek-coast</loc>
+    <loc>http://127.0.0.1:8000/world-news/details/16/barak-obama-retreat-is-a-converted-tower-on-the-greek-coast</loc>
     <lastmod>2022-04-19T09:32:08+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/politics-news/details/15/bank-account-details-sought-to-intimidate-journalists-threat-to-independent-journalism-and-freedom-of-expression-in-bangladesh</loc>
+    <loc>http://127.0.0.1:8000/politics-news/details/15/bank-account-details-sought-to-intimidate-journalists-threat-to-independent-journalism-and-freedom-of-expression-in-bangladesh</loc>
     <lastmod>2022-07-04T04:23:27+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/lifestyle-news/details/14/unravel-the-mystery-of-the-sundarbans-with-go-zayaan-the-best-time-to-visit-the-sundarbans</loc>
+    <loc>http://127.0.0.1:8000/lifestyle-news/details/14/unravel-the-mystery-of-the-sundarbans-with-go-zayaan-the-best-time-to-visit-the-sundarbans</loc>
     <lastmod>2022-10-13T12:42:40+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/lifestyle-news/details/13/he-is-due-to-be-part-of-a-four-person-crew-for-a-planned-11-minute</loc>
+    <loc>http://127.0.0.1:8000/lifestyle-news/details/13/he-is-due-to-be-part-of-a-four-person-crew-for-a-planned-11-minute</loc>
     <lastmod>2022-04-19T18:56:11+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/lifestyle-news/details/12/one-morning-this-paris-fashion-week-i-found-myself-making-some-unusual-plans-i-was-one-of-few-editors-on-the-ground-during-the-citys</loc>
+    <loc>http://127.0.0.1:8000/lifestyle-news/details/12/one-morning-this-paris-fashion-week-i-found-myself-making-some-unusual-plans-i-was-one-of-few-editors-on-the-ground-during-the-citys</loc>
     <lastmod>2022-06-22T08:02:10+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/lifestyle-news/details/11/with-the-met-gala-already-behind-us-septembers-biggest-events-have-come-and-gone-in-a-flash</loc>
+    <loc>http://127.0.0.1:8000/lifestyle-news/details/11/with-the-met-gala-already-behind-us-septembers-biggest-events-have-come-and-gone-in-a-flash</loc>
     <lastmod>2023-05-12T06:39:30+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/entertainment-news/details/9/historical-records-offer-an-unusual-window-into-your-familys-past</loc>
+    <loc>http://127.0.0.1:8000/entertainment-news/details/9/historical-records-offer-an-unusual-window-into-your-familys-past</loc>
     <lastmod>2022-04-21T02:05:55+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/entertainment-news/details/8/james-gunn-jokingly-blames-paper-cuts</loc>
+    <loc>http://127.0.0.1:8000/entertainment-news/details/8/james-gunn-jokingly-blames-paper-cuts</loc>
     <lastmod>2022-04-20T21:54:58+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/entertainment-news/details/7/latest-breaking-movie-news-from-the-footballs</loc>
+    <loc>http://127.0.0.1:8000/entertainment-news/details/7/latest-breaking-movie-news-from-the-footballs</loc>
     <lastmod>2023-05-07T05:49:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/sports-news/details/6/official-icc-fooball-live-matches-commentary-rankings</loc>
+    <loc>http://127.0.0.1:8000/sports-news/details/6/official-icc-fooball-live-matches-commentary-rankings</loc>
     <lastmod>2022-10-13T12:38:43+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/sports-news/details/5/search-top-women-in-tennis-get-results-from-6-search-engines-explore-the-best-info-now</loc>
+    <loc>http://127.0.0.1:8000/sports-news/details/5/search-top-women-in-tennis-get-results-from-6-search-engines-explore-the-best-info-now</loc>
     <lastmod>2022-06-22T00:47:40+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/sports-news/details/4/one-georgian-silver-medallists-were-told-to-leave-the-olympics-after-breaking</loc>
+    <loc>http://127.0.0.1:8000/sports-news/details/4/one-georgian-silver-medallists-were-told-to-leave-the-olympics-after-breaking</loc>
     <lastmod>2022-04-20T02:09:57+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/business-news/details/3/stock-markets-are-where-individual-and-institutional-investors-come-together-to-buy-and-sell-shares-in-a-public-venue-nowadays-these-exchanges</loc>
+    <loc>http://127.0.0.1:8000/business-news/details/3/stock-markets-are-where-individual-and-institutional-investors-come-together-to-buy-and-sell-shares-in-a-public-venue-nowadays-these-exchanges</loc>
     <lastmod>2023-05-03T06:57:07+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://127.0.0.1:5656/business-news/details/2/everything-you-wanted-to-know-about-business</loc>
+    <loc>http://127.0.0.1:8000/business-news/details/2/everything-you-wanted-to-know-about-business</loc>
     <lastmod>2023-05-03T06:57:14+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

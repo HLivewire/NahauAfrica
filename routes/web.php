@@ -55,12 +55,13 @@ use Illuminate\Support\Facades\Artisan;
 */
 
 
-Route::get('/',[HomeController::class,'maanIndex'])->name('home');
+// NahauAfrica public site (registered first so it wins for / , /search and the four sections)
+require __DIR__.'/nahau.php';
+
 Route::get('/home-one',[HomeController::class,'maanIndex'])->name('home-one');
 Route::get('/home-two',[HomeController::class,'maanIndex'])->name('home-two');
 Route::get('/subscribe/ajax',[HomeController::class,'subscribeAjax'])->name('subscribe');
 //route search
-Route::get('/search',[SearchController::class,'maanSearch'])->name('search');
 
 // News category routes ("business", "business.details" ...) are registered at runtime by
 // App\Providers\CategoryRouteServiceProvider so that routes can be cached.
@@ -76,6 +77,8 @@ Route::get('/contactus',[\App\Http\Controllers\Frontend\ContactusController::cla
 Route::post('/contactus',[\App\Http\Controllers\Frontend\ContactusController::class,'maanNewsContactusStore'])->name('contactus.store');
 
 //route signup
+Route::get('/auth/google',[\App\Http\Controllers\Frontend\GoogleLoginController::class,'redirect'])->name('auth.google');
+Route::get('/auth/google/callback',[\App\Http\Controllers\Frontend\GoogleLoginController::class,'callback'])->name('auth.google.callback');
 Route::get('/signup',[SignupController::class,'maanSignupIndex'])->name('signup');
 Route::post('/signup',[SignupController::class,'maanSignupStore']);
 
@@ -126,6 +129,16 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function (){
         Route::delete('/user/destroy/{user}',[UserController::class,'maanUserDestroy'])->name('user.destroy');
 
         //Route settings
+        Route::prefix('nahau')->name('nahau.')->controller(\App\Http\Controllers\Admin\NahauAdminController::class)->group(function () {
+            Route::get('/','dashboard')->name('dashboard');
+            Route::get('{res}','index')->name('index');
+            Route::get('{res}/create','create')->name('create');
+            Route::post('{res}','store')->name('store');
+            Route::get('{res}/{id}/edit','edit')->whereNumber('id')->name('edit');
+            Route::put('{res}/{id}','update')->whereNumber('id')->name('update');
+            Route::delete('{res}/{id}','destroy')->whereNumber('id')->name('destroy');
+        });
+
         Route::get('/settings',[SettingsController::class,'maanSettingsIndex'])->name('settings.index');
         Route::post('/settings',[SettingsController::class,'maanSettingsStore'])->name('settings.store');
         Route::match(['put', 'patch'],'/settings/update/{settings}',[SettingsController::class,'maanSettingsUpdate'])->name('settings.update');

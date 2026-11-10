@@ -194,6 +194,18 @@
 
                     </ul>
                 </li>
+                    <li class="nav-item {{ Request::routeIs('admin.nahau.*') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ Request::routeIs('admin.nahau.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-feather-alt"></i>
+                            <p>NahauAfrica <i class="fas fa-angle-left right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item"><a href="{{ route('admin.nahau.dashboard') }}" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Editor dashboard</p></a></li>
+                            @foreach(['stories'=>'Story details','authors'=>'Authors','series'=>'Series','heroes'=>'Hero profiles','opportunities'=>'Opportunities','submissions'=>'Story submissions','opportunity-submissions'=>'Opportunity submissions','messages'=>'Contact messages','subscribers'=>'Subscribers','pages'=>'Policy pages','team'=>'Team'] as $k=>$l)
+                            <li class="nav-item"><a href="{{ route('admin.nahau.index',$k) }}" class="nav-link"><i class="far fa-circle nav-icon"></i><p>{{ $l }}</p></a></li>
+                            @endforeach
+                        </ul>
+                    </li>
                     <li class="nav-item {{ Request::routeIs('admin.contact') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link {{ Request::routeIs('admin.contact') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-envelope-open-text"></i>

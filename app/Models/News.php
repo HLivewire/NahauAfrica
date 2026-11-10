@@ -11,6 +11,20 @@ class News extends Model
     use HasFactory;
     protected $guarded = [] ;
 
+    protected static function booted(): void
+    {
+        // Every story gets a Nahau meta row (slug, reading time ...) automatically.
+        static::saved(function (News $news) {
+            try {
+                if (\Illuminate\Support\Facades\Schema::hasTable('nahau_story_meta')) {
+                    \App\Nahau\Stories::ensureMeta($news);
+                }
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        });
+    }
+
     public function subCategories()
     {
         return $this->belongsTo(Newssubcategory::class,'subcategory_id');

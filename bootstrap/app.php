@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Route middleware alias used by the admin area: role:super-admin,admin,...
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'nlocale' => \App\Http\Middleware\SetNahauLocale::class,
         ]);
 
         // Guests are sent to the admin login page (same behaviour as before).

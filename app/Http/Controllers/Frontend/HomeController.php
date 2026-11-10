@@ -191,7 +191,9 @@ class HomeController extends Controller
         $this->sitemap();
         $themeActivation =  themeActivation();
         //return request()->getRequestUri();
-        return view(Route::currentRouteName()=='home-one'?'frontend.pages.home':(Route::currentRouteName()=='home-two'?'frontend.pages.home_2':($themeActivation->page_slug=='home_1'?'frontend.pages.home':'frontend.pages.'.$themeActivation->page_slug)),compact('latestnews','newscategories','popularsnews','popularsnewsall','popularsnewsworld','popularsnewslifestyle','popularsnewsentertainment','popularsnewssports','popularsnewstechnology','latestnewsnational','latestnewsworld','latestnewspolitics','latestnewslifestyle','latestphotogalleries','latestnewsentertainment','latestnewssports','latestnewstechnology','latestnewsbusiness','latestVideoGalleries','latestReviewNews','features'));
+        $homeView = Route::currentRouteName()=='home-one'?'frontend.pages.home':(Route::currentRouteName()=='home-two'?'frontend.pages.home_2':($themeActivation->page_slug=='home_1'?'frontend.pages.home_nahau':'frontend.pages.'.$themeActivation->page_slug));
+        $nahau = $homeView === 'frontend.pages.home_nahau' ? $this->nahauHomeData() : null;
+        return view($homeView,compact('latestnews','newscategories','popularsnews','popularsnewsall','popularsnewsworld','popularsnewslifestyle','popularsnewsentertainment','popularsnewssports','popularsnewstechnology','latestnewsnational','latestnewsworld','latestnewspolitics','latestnewslifestyle','latestphotogalleries','latestnewsentertainment','latestnewssports','latestnewstechnology','latestnewsbusiness','latestVideoGalleries','latestReviewNews','features','nahau'));
     }
     public function maanIndex2()
     {
@@ -249,8 +251,37 @@ class HomeController extends Controller
         }
     }
 
+    /**
+     * Data for the NahauAfrica home page (frontend.pages.home_nahau).
+     */
+    protected function nahauHomeData(): array
+    {
+        $base = fn () => News::join('newssubcategories','news.subcategory_id','=','newssubcategories.id')
+            ->join('newscategories','newssubcategories.category_id','=','newscategories.id')
+            ->join('users','news.reporter_id','=','users.id')
+            ->select('news.id','news.title','news.summary','news.image','news.date','news.viewers','newscategories.name as news_category','newscategories.slug as news_categoryslug',DB::raw("CONCAT(users.first_name,' ',users.last_name) AS reporter_name"))
+            ->where('news.status',1);
+
+        $hero   = $base()->latest('news.created_at')->first();
+        $latest = $base()->when($hero, fn ($q) => $q->where('news.id','!=',$hero->id))->latest('news.created_at')->take(5)->get();
+        $most   = $base()->orderByDesc('news.viewers')->take(5)->get();
+
+        $doors = Newscategory::where('type','news')->where('menu_publish',1)->orderBy('id')->get();
+        $counts = DB::table('news')
+            ->join('newssubcategories','news.subcategory_id','=','newssubcategories.id')
+            ->where('news.status',1)
+            ->groupBy('newssubcategories.category_id')
+            ->pluck(DB::raw('count(*)'),'newssubcategories.category_id');
+        $doors->each(fn ($c) => $c->published_count = (int) ($counts[$c->id] ?? 0));
+
+        $heroes = $base()->where('newscategories.slug','african-heroes')->latest('news.created_at')->take(3)->get();
+
+        return compact('hero','latest','most','doors','heroes');
+    }
+
     public function subscribeAjax(Request $request)
     {
+        $request->validate(['email' => 'required|email']);
         $count = Maanuser::where('email',$request->email)->count();
         if ($count>0) {
            $this->setError('Existing');

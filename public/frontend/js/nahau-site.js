@@ -1,0 +1,173 @@
+/* NahauAfrica public site behaviour (no third-party scripts). */
+(function () {
+  'use strict';
+  var d = document;
+  function $(s, c) { return (c || d).querySelector(s); }
+  function $$(s, c) { return Array.prototype.slice.call((c || d).querySelectorAll(s)); }
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+
+  /* Analytics: sends to Plausible / GA4 / dataLayer if present, otherwise does nothing. */
+  window.nahauTrack = function (name, props) {
+    try {
+      if (window.plausible) window.plausible(name, { props: props || {} });
+      if (window.gtag) window.gtag('event', name, props || {});
+      (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: name }, props || {}));
+    } catch (e) {}
+  };
+  d.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-nx-track]');
+    if (!t) return;
+    var p = {};
+    if (t.dataset.channel) p.channel = t.dataset.channel;
+    if (t.dataset.id) p.listing = t.dataset.id;
+    nahauTrack(t.dataset.nxTrack, p);
+  });
+
+  /* Text size (16–28px, remembered) */
+  var body = $('[data-nx-body]');
+  var size = parseInt(store('nx-size'), 10) || 20;
+  function applySize() { d.documentElement.style.setProperty('--nx-fs', size + 'px'); }
+  if (body) applySize();
+  $$('[data-nx-size]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      size = Math.max(16, Math.min(28, size + parseInt(b.dataset.nxSize, 10)));
+      store('nx-size', String(size)); applySize(); nahauTrack('text_size_change', { size: size });
+    });
+  });
+
+  /* Copy link */
+  $$('[data-nx-copy]').forEach(function (b) {
+    var label = b.textContent;
+    b.addEventListener('click', function () {
+      var url = b.closest('[data-nx-share]').dataset.url;
+      function done() { b.textContent = b.dataset.copied; setTimeout(function () { b.textContent = label; }, 3000); nahauTrack('share_click', { channel: 'copy' }); }
+      if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(url).then(done, fallback); } else { fallback(); }
+      function fallback() { var i = d.createElement('input'); i.value = url; d.body.appendChild(i); i.select(); try { d.execCommand('copy'); } catch (e) {} d.body.removeChild(i); done(); }
+    });
+  });
+
+  /* Completed read: scrolled past 90% of the body */
+  var story = $('[data-nx-story]');
+  if (story && body) {
+    nahauTrack('story_read_start', { section: story.dataset.section, lang: story.dataset.lang });
+    var fired = false;
+    window.addEventListener('scroll', function () {
+      if (fired) return;
+      var r = body.getBoundingClientRect();
+      if (r.height && (window.innerHeight - r.top) / r.height >= 0.9) { fired = true; nahauTrack('story_read_complete', { section: story.dataset.section }); }
+    }, { passive: true });
+  }
+
+  /* Toggle buttons (report form, opportunity form) */
+  $$('[data-nx-toggle]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = $(b.dataset.nxToggle); if (!t) return;
+      var open = t.hasAttribute('hidden');
+      if (open) t.removeAttribute('hidden'); else t.setAttribute('hidden', '');
+      b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) { var f = t.querySelector('input,select,textarea'); if (f) f.focus(); }
+    });
+  });
+  $$('[data-nx-toggle]').forEach(function (b) { var t = $(b.dataset.nxToggle); if (t && !t.hasAttribute('hidden')) b.setAttribute('aria-expanded', 'true'); });
+
+  /* Report this advert (AJAX, falls back to normal post) */
+  $$('form[data-nx-report]').forEach(function (f) {
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      fetch(f.action, { method: 'POST', headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: new FormData(f) })
+        .then(function (r) { if (!r.ok) throw 0; f.outerHTML = '<p role="status" style="font-weight:600">' + (d.documentElement.lang === 'sw' ? 'Asante — wahariri wetu watakagua tangazo hili.' : 'Thanks — our editors will review this advert.') + '</p>'; nahauTrack('opportunity_report'); })
+        .catch(function () { f.submit(); });
+    });
+  });
+
+  /* Newsletter (AJAX, falls back to normal post) */
+  $$('form[data-nx-newsletter]').forEach(function (f) {
+    f.addEventListener('submit', function (e) {
+      var email = f.querySelector('input[type=email]');
+      var err = f.querySelector('[role=alert]');
+      if (!email.value || !/^\S+@\S+\.\S+$/.test(email.value)) {
+        e.preventDefault(); err.textContent = d.documentElement.lang === 'sw' ? 'Tafadhali weka barua pepe kama name@example.com' : 'Please enter an email address like name@example.com'; email.focus(); return;
+      }
+      e.preventDefault();
+      fetch(f.action, { method: 'POST', headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: new FormData(f) })
+        .then(function (r) { if (!r.ok) throw 0; var h = d.documentElement.lang === 'sw' ? 'Asante! Uko kwenye orodha — tazama hadithi yetu ijayo.' : "Asante! You're on the list — look out for our next story."; f.outerHTML = '<div role="status"><h2>' + h + '</h2></div>'; })
+        .catch(function () { f.submit(); });
+    });
+  });
+
+  /* Section filters + search without a full reload (URL updates, back button works) */
+  var listing = $('[data-nx-listing]');
+  function loadList(url, push) {
+    var target = $('#nx-results');
+    fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest', 'X-Nahau-Fragment': '1' } })
+      .then(function (r) { return r.text(); })
+      .then(function (html) { target.innerHTML = html; if (push) history.pushState({ nx: 1 }, '', url); })
+      .catch(function () { location.href = url; });
+  }
+  if (listing) {
+    var chips = $('.nx-toolbar .nx-chips');
+    d.addEventListener('click', function (e) {
+      var a = e.target.closest('.nx-toolbar .nx-chip, #nx-results .pagination a, #nx-results .maan-pagination a');
+      if (!a || !a.href) return;
+      e.preventDefault();
+      loadList(a.href, true);
+      if (a.classList.contains('nx-chip')) { $$('.nx-toolbar .nx-chip').forEach(function (c) { c.classList.remove('is-on'); c.setAttribute('aria-pressed', 'false'); }); a.classList.add('is-on'); a.setAttribute('aria-pressed', 'true'); }
+    });
+    var form = $('[data-nx-filter]');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var params = new URLSearchParams(new FormData(form));
+      var url = form.action + '?' + params.toString();
+      loadList(url, true);
+    });
+    window.addEventListener('popstate', function () { loadList(location.href, false); });
+  }
+  var opps = $('[data-nx-opps]');
+  if (opps) {
+    d.addEventListener('click', function (e) {
+      var a = e.target.closest('[data-nx-opps] .nx-chips .nx-chip');
+      if (!a) return; e.preventDefault();
+      fetch(a.href, { headers: { 'X-Requested-With': 'XMLHttpRequest' } }).then(function (r) { return r.text(); })
+        .then(function (html) { $('#nx-opp-results').innerHTML = html; history.pushState({}, '', a.href); $$('[data-nx-opps] .nx-chips .nx-chip').forEach(function (c) { c.classList.remove('is-on'); c.setAttribute('aria-pressed', 'false'); }); a.classList.add('is-on'); a.setAttribute('aria-pressed', 'true'); })
+        .catch(function () { location.href = a.href; });
+    });
+  }
+
+  /* Heroes in focus: rotate every 6s; stops on reduced motion, hidden tab, hover/focus, or any manual control */
+  var spot = $('[data-nx-spotlight]');
+  if (spot) {
+    var slides = $$('.nx-spot-slide', spot), jumps = $$('[data-nx-jump]', spot);
+    var pauseBtn = $('[data-nx-pause]', spot), live = $('[data-nx-slides]', spot);
+    var i = 0, timer = null, userStopped = false, inside = false;
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var ms = parseInt(spot.dataset.interval, 10) || 6000;
+    function show(n) {
+      i = (n + slides.length) % slides.length;
+      slides.forEach(function (s, k) { if (k === i) s.removeAttribute('hidden'); else s.setAttribute('hidden', ''); });
+      jumps.forEach(function (j, k) { j.classList.toggle('is-on', k === i); });
+    }
+    function running() { return !userStopped && !reduce && !inside && !d.hidden; }
+    function tick() { stop(); if (running()) timer = setTimeout(function () { show(i + 1); tick(); }, ms); }
+    function stop() { if (timer) { clearTimeout(timer); timer = null; } }
+    function manual() { userStopped = true; stop(); pauseBtn.textContent = lang('Play'); pauseBtn.setAttribute('aria-pressed', 'true'); live.setAttribute('aria-live', 'polite'); }
+    function lang(w) { var sw = d.documentElement.lang === 'sw'; return ({ Pause: sw ? 'Simamisha' : 'Pause', Play: sw ? 'Cheza' : 'Play' })[w]; }
+    $('[data-nx-prev]', spot).addEventListener('click', function () { manual(); show(i - 1); });
+    $('[data-nx-next]', spot).addEventListener('click', function () { manual(); show(i + 1); });
+    jumps.forEach(function (j, k) { j.addEventListener('click', function () { manual(); show(k); }); });
+    pauseBtn.addEventListener('click', function () {
+      if (userStopped) { userStopped = false; pauseBtn.textContent = lang('Pause'); pauseBtn.setAttribute('aria-pressed', 'false'); live.removeAttribute('aria-live'); tick(); } else { manual(); }
+    });
+    spot.addEventListener('mouseenter', function () { inside = true; stop(); });
+    spot.addEventListener('mouseleave', function () { inside = false; tick(); });
+    spot.addEventListener('focusin', function () { inside = true; stop(); });
+    spot.addEventListener('focusout', function () { inside = false; tick(); });
+    d.addEventListener('visibilitychange', function () { if (d.hidden) stop(); else tick(); });
+    if (reduce) { pauseBtn.textContent = lang('Play'); pauseBtn.setAttribute('aria-pressed', 'true'); }
+    tick();
+  }
+
+  /* Search analytics */
+  var sc = $('[data-nx-search-count]');
+  if (sc) nahauTrack('search', { term: sc.dataset.term, results: sc.dataset.nxSearchCount });
+  $$('form[data-nx-submit]').forEach(function (f) { f.addEventListener('submit', function () { nahauTrack(f.dataset.nxSubmit); }); });
+})();
