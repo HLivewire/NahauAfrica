@@ -417,3 +417,22 @@
 .nx-lookinside .nx-book-actions .nx-btn{flex:0 1 280px}
 @media (max-width:991px){.nx-lookinside .nx-pages{height:440px;padding:14px}.nx-lookinside .nx-preview-head h2{font-size:24px}}
 @media (max-width:480px){.nx-lookinside .nx-book-actions .nx-btn{flex-basis:100%}}
+
+/* ---- Round 8: narrow phones — header must never overlap ---- */
+@media (max-width:991px){
+  .theme-broadcast .maan-manu-bar .maan-logo{flex:0 1 auto;min-width:0;margin-right:auto}
+  .theme-broadcast .maan-manu-bar .maan-logo img{display:block;width:100%;max-width:100%;height:auto}
+  .theme-broadcast .maan-manu-bar .nahau-right{flex:0 0 auto;margin-left:10px}
+}
+@media (max-width:430px){
+  .maan-manu-bar .maan-logo{max-width:128px !important}
+  .maan-manu-bar .nahau-right{gap:6px}
+  .nahau-right .nx-lang-btn{gap:3px;padding:6px 0 !important}
+  .nahau-right .nx-lang-btn .nx-flag{width:24px;height:24px}
+  .nahau-right .nx-lang-btn .nx-caret{width:12px;height:12px}
+  .maan-manu-bar .nahau-getstarted--sm{font-size:12px !important;padding:8px 11px !important}
+}
+@media (max-width:350px){
+  .maan-manu-bar .maan-logo{max-width:108px !important}
+  .nahau-right .nx-lang-btn .nx-caret{display:none}
+}
