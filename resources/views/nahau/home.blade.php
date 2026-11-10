@@ -100,15 +100,10 @@
 @if($voices->isNotEmpty())
 <div class="nx-sec">
     <div class="nx-wrap">
-        <div class="nx-car-head">
-            <h2 class="nx-h2" style="margin:0">{{ __('Meet the voices') }}</h2>
-            <div class="nx-car-ctrl" data-nx-car-ctrl>
-                <button type="button" data-car="prev" aria-label="{{ __('Previous') }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
-                <button type="button" data-car="toggle" aria-label="{{ __('Pause') }}" data-pause="{{ __('Pause') }}" data-play="{{ __('Play') }}" aria-pressed="false"><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg></button>
-                <button type="button" data-car="next" aria-label="{{ __('Next') }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
-            </div>
-        </div>
+        <div class="nx-car-head"><h2 class="nx-h2" style="margin:0">{{ __('Meet the voices') }}</h2></div>
         <div class="nx-carousel" data-nx-carousel data-interval="3600" role="region" aria-roledescription="carousel" aria-label="{{ __('Meet the voices') }}">
+            <button type="button" class="nx-car-arrow nx-car-arrow--prev" data-car="prev" aria-label="{{ __('Previous') }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <button type="button" class="nx-car-arrow nx-car-arrow--next" data-car="next" aria-label="{{ __('Next') }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
             <div class="nx-car-track" tabindex="0">
             @foreach($voices as $a)
             <div class="nx-car-item" role="group" aria-roledescription="slide"><div class="nx-person">

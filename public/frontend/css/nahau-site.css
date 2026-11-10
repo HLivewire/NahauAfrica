@@ -478,3 +478,12 @@
 @media (max-width:1023px){.nx .nx-car-item{flex-basis:calc((100% - 24px) / 2)}}
 @media (max-width:640px){.nx .nx-car-item{flex-basis:88%}.nx .nx-car-track{gap:16px}.nx .nx-car-ctrl button{width:40px;height:40px}}
 @media (prefers-reduced-motion:reduce){.nx .nx-car-track{scroll-behavior:auto}}
+/* carousel: arrows sit left and right of the cards */
+.nx .nx-car-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:46px;height:46px;border-radius:50%;border:1px solid #D0D0D0;background:#fff;color:#232427;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 6px 18px rgba(0,0,0,.12);transition:border-color .25s ease,color .25s ease}
+.nx .nx-car-arrow--prev{left:-60px}.nx .nx-car-arrow--next{right:-60px}
+.nx .nx-car-arrow:hover{border-color:rgba(255,0,0,.45);color:#E60000}
+.nx .nx-car-arrow:focus-visible{outline:3px solid #0F0F0F;outline-offset:2px}
+.nx .nx-car-arrow[hidden]{display:none}
+.nx .nx-car-arrow svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:1320px){.nx .nx-carousel{padding:0 30px}.nx .nx-car-arrow--prev{left:-6px}.nx .nx-car-arrow--next{right:-6px}}
+@media (max-width:640px){.nx .nx-carousel{padding:0 24px}.nx .nx-car-arrow{width:40px;height:40px}.nx .nx-car-arrow--prev{left:-10px}.nx .nx-car-arrow--next{right:-10px}}
