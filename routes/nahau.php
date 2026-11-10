@@ -66,3 +66,7 @@ Route::prefix('nahau')->name('nahau.')->group(function () {
     Route::get('newsletter/confirm/{token}', [FormController::class, 'confirm'])->name('newsletter.confirm');
     Route::get('newsletter/unsubscribe/{token}', [FormController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
 });
+
+// Favourites (readers must be logged in)
+Route::post('/favorites/{news}', [\App\Http\Controllers\Nahau\FavoriteController::class, 'toggle'])->whereNumber('news')->middleware('throttle:60,1')->name('nahau.favorite');
+Route::get('/favourites', [\App\Http\Controllers\Nahau\FavoriteController::class, 'index'])->name('nahau.favorites');

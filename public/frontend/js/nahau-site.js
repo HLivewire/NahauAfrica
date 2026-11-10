@@ -171,3 +171,42 @@
   if (sc) nahauTrack('search', { term: sc.dataset.term, results: sc.dataset.nxSearchCount });
   $$('form[data-nx-submit]').forEach(function (f) { f.addEventListener('submit', function () { nahauTrack(f.dataset.nxSubmit); }); });
 })();
+
+/* Language dropdown */
+(function () {
+    document.querySelectorAll('[data-nx-lang]').forEach(function (box) {
+        var btn = box.querySelector('.nx-lang-btn'), list = box.querySelector('.nx-lang-list');
+        if (!btn || !list) return;
+        function set(open) { list.hidden = !open; btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+        btn.addEventListener('click', function (e) { e.stopPropagation(); set(list.hidden); });
+        document.addEventListener('click', function (e) { if (!box.contains(e.target)) set(false); });
+        box.addEventListener('keydown', function (e) { if (e.key === 'Escape') { set(false); btn.focus(); } });
+    });
+})();
+
+/* Favourite heart on book covers (login required) */
+(function () {
+    var meta = function (n) { var m = document.querySelector('meta[name="' + n + '"]'); return m ? m.content : ''; };
+    function openLogin() {
+        var opener = Array.prototype.slice.call(document.querySelectorAll('[data-nahau-open="drawer"]')).filter(function (e) { return e.offsetParent !== null; })[0] || document.querySelector('[data-nahau-open="drawer"]');
+        if (opener) opener.click();
+    }
+    document.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-nx-fav]');
+        if (!b) return;
+        e.preventDefault(); e.stopPropagation();
+        if (meta('nahau-auth') !== '1') { openLogin(); return; }
+        if (b.disabled) return;
+        b.disabled = true;
+        fetch(b.getAttribute('data-url'), { method: 'POST', headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRF-TOKEN': meta('csrf-token') } })
+            .then(function (r) { return r.json().then(function (j) { return { s: r.status, j: j }; }); })
+            .then(function (x) {
+                if (x.s === 401) { openLogin(); return; }
+                var on = !!x.j.favorite;
+                b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false');
+                if (window.nahauTrack) window.nahauTrack(on ? 'favorite_add' : 'favorite_remove', { id: b.getAttribute('data-nx-fav') });
+            })
+            .catch(function () {})
+            .then(function () { b.disabled = false; });
+    });
+})();

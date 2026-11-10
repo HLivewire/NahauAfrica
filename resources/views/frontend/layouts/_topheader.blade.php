@@ -8,13 +8,11 @@
                     <span class="maan-current-week" id="maan-current-week-day"></span> {{ __(':') }} <span class="maan-current-day" id="maan-current-date"> </span>
 
                 </div>
-                <div class="digital-clock" id="clock"></div>
 
 
             </div>
             <div class="col-sm-4 col-md-3  col-xl-2">
                 <div class="maan-social-link">
-                    <span class="nx-langsw" aria-label="{{ __('Language') }}"><a href="{{ nswitch_url('en') }}" hreflang="en" lang="en" class="{{ nlocale()==='en' ? 'on' : '' }}" @if(nlocale()==='en') aria-current="true" @endif>EN</a><a href="{{ nswitch_url('sw') }}" hreflang="sw" lang="sw" class="{{ nlocale()==='sw' ? 'on' : '' }}" @if(nlocale()==='sw') aria-current="true" @endif>SW</a></span>
                     <ul>
                         @foreach($socials as $social)
                             <li><a href="{{$social->url}}"><i class="{{$social->icon_code}}"></i></a></li>
@@ -26,29 +24,4 @@
         </div>
     </div>
 </div>
-<script>
-    function currentTime() {
-        var date = new Date(); /* creating object of Date class */
-        var hour = date.getHours();
-        var min = date.getMinutes();
-        var sec = date.getSeconds();
-        hour = updateTime(hour);
-        min = updateTime(min);
-        sec = updateTime(sec);
-        var midday = "AM";
-        midday = (hour >= 12) ? "PM" : "AM";
-        hour = (hour == 0) ? 12 : ((hour > 12) ? (hour - 12): hour);
-        document.getElementById("clock").innerText = hour + " : " + min + " : " + sec + " " + midday; /* adding time to the div */
-        var t = setTimeout(function(){ currentTime() }, 1000); /* setting timer */
-    }
 
-    function updateTime(k) {
-        if (k < 10) {
-            return "0" + k;
-        }
-        else {
-            return k;
-        }
-    }
-    currentTime(); /* calling currentTime() function to initiate the process */
-</script>

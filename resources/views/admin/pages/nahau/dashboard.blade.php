@@ -10,7 +10,7 @@
         @endforeach
     </div>
     <p class="mt-3"><a class="btn btn-danger" href="{{ route('admin.news') }}">Add or edit stories (All News)</a>
-        <span class="text-muted ml-2">Put a story in Fiction, Relationships, Jobs &amp; Careers or African Heroes, then use “Story details” to set format, label, author, language and more.</span></p>
+        <span class="text-muted ml-2">Put a story in Fiction, Relationships, Jobs or African Heroes, then use “Story details” to set format, label, author, language and more.</span></p>
     </div></section>
 </div>
 @endsection

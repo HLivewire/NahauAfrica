@@ -3,7 +3,7 @@
         <div class="cols">
             <div>
                 <a href="{{ nroute('home') }}"><img src="{{ asset('uploads/images/logo/nahau_logo_light.png') }}" alt="{{ __('Nahau Africa home') }}"></a>
-                <p class="brand">Nahau Africa — {{ __('Our Stories. Our Voices.') }}</p>
+                <p class="brand">{{ __('Our Stories. Our Voices.') }}</p>
                 <p>{{ __('Fiction, lived experiences, and remarkable lives from African perspectives.') }}</p>
             </div>
             <div>
@@ -18,6 +18,7 @@
                     <li><a href="{{ nroute('about') }}">{{ __('About Us') }}</a></li>
                     <li><a href="{{ nroute('write') }}">{{ __('Write for Us') }}</a></li>
                     <li><a href="{{ nroute('contact') }}">{{ __('Contact') }}</a></li>
+                    <li><a href="{{ route('nahau.favorites') }}">{{ __('My favourites') }}</a></li>
                     <li><a href="{{ nroute('standards') }}">{{ __('Editorial standards') }}</a></li>
                 </ul>
             </div>

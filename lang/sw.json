@@ -275,5 +275,11 @@
  "Features & Research Editor": "Mhariri wa Makala na Utafiti",
  "Language ": "Lugha",
  "Heroes ": "Mashujaa",
- "min read": "dakika za kusoma"
+ "min read": "dakika za kusoma",
+ "Save to favourites": "Hifadhi kwenye vipendwa",
+ "Please log in to save favourites.": "Tafadhali ingia ili kuhifadhi vipendwa.",
+ "Please log in to see your favourites.": "Tafadhali ingia ili uone vipendwa vyako.",
+ "My favourites": "Vipendwa vyangu",
+ "Stories you saved with the heart.": "Hadithi ulizohifadhi kwa moyo.",
+ "You have not saved any stories yet. Tap the heart on a book cover to save it here.": "Bado hujahifadhi hadithi yoyote. Gusa moyo kwenye kifuniko cha kitabu ili kukihifadhi hapa."
 }

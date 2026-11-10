@@ -31,7 +31,7 @@ return [
         ],
         'jobs-careers' => [
             'slug' => ['en' => 'jobs-careers', 'sw' => 'kazi'],
-            'name' => ['en' => 'Jobs & Careers', 'sw' => 'Kazi na Taaluma'],
+            'name' => ['en' => 'Jobs', 'sw' => 'Ajira'],
             'tagline' => ['en' => 'Work, Ambition, and Everyday Progress', 'sw' => 'Kazi, Matamanio na Maendeleo ya Kila Siku'],
             'intro' => ['en' => 'Working-life stories, career changes, business journeys and lessons from setbacks.', 'sw' => 'Hadithi za maisha ya kazi, mabadiliko ya taaluma, safari za biashara na mafunzo kutokana na changamoto.'],
             'formats' => ['Interview', 'Personal essay', 'Business journey', 'Lessons'],

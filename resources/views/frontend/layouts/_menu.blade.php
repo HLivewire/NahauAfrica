@@ -41,6 +41,13 @@
 
                         <li><a href="{{ nroute('about') }}">{{ __('About') }}</a></li>
                         <li><a href="{{ nroute('write') }}">{{ __('Write for Us') }}</a></li>
+                        <li class="nx-lang" data-nx-lang>
+                            <button type="button" class="nx-lang-btn" aria-haspopup="listbox" aria-expanded="false">@if(nlocale()==='en')<svg class="nx-flag" viewBox="0 0 60 40" width="22" height="15" aria-hidden="true"><rect width="60" height="40" fill="#012169"/><path d="M0 0l60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0l60 40M60 0L0 40" stroke="#C8102E" stroke-width="3"/><path d="M30 0v40M0 20h60" stroke="#fff" stroke-width="13"/><path d="M30 0v40M0 20h60" stroke="#C8102E" stroke-width="8"/></svg><span>English</span>@else<svg class="nx-flag" viewBox="0 0 60 40" width="22" height="15" aria-hidden="true"><rect width="60" height="40" fill="#1EB53A"/><polygon points="60,0 60,40 0,40" fill="#00A3DD"/><line x1="0" y1="40" x2="60" y2="0" stroke="#FCD116" stroke-width="14"/><line x1="0" y1="40" x2="60" y2="0" stroke="#000" stroke-width="8"/></svg><span>Kiswahili</span>@endif<i aria-hidden="true">&#9662;</i></button>
+                            <ul class="nx-lang-list" role="listbox" aria-label="{{ __('Language') }}" hidden>
+                                <li role="option" @if(nlocale()==='en') aria-selected="true" @endif><a href="{{ nswitch_url('en') }}" hreflang="en" lang="en"><svg class="nx-flag" viewBox="0 0 60 40" width="22" height="15" aria-hidden="true"><rect width="60" height="40" fill="#012169"/><path d="M0 0l60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0l60 40M60 0L0 40" stroke="#C8102E" stroke-width="3"/><path d="M30 0v40M0 20h60" stroke="#fff" stroke-width="13"/><path d="M30 0v40M0 20h60" stroke="#C8102E" stroke-width="8"/></svg><span>English</span></a></li>
+                                <li role="option" @if(nlocale()==='sw') aria-selected="true" @endif><a href="{{ nswitch_url('sw') }}" hreflang="sw" lang="sw"><svg class="nx-flag" viewBox="0 0 60 40" width="22" height="15" aria-hidden="true"><rect width="60" height="40" fill="#1EB53A"/><polygon points="60,0 60,40 0,40" fill="#00A3DD"/><line x1="0" y1="40" x2="60" y2="0" stroke="#FCD116" stroke-width="14"/><line x1="0" y1="40" x2="60" y2="0" stroke="#000" stroke-width="8"/></svg><span>Kiswahili</span></a></li>
+                            </ul>
+                        </li>
 
                     </ul>
 

@@ -10,7 +10,7 @@ return new class extends Migration
     private array $new = [
         ['Fiction', 'fiction'],
         ['Relationships', 'relationships'],
-        ['Jobs & Careers', 'jobs-careers'],
+        ['Jobs', 'jobs-careers'],
         ['African Heroes', 'african-heroes'],
     ];
 

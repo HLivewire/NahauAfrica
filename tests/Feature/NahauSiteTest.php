@@ -24,7 +24,7 @@ class NahauSiteTest extends TestCase
                   '/sw/kazi/fursa', '/african-heroes', '/sw/mashujaa', '/write-for-us', '/sw/andika-nasi', '/about', '/sw/kuhusu',
                   '/contact', '/privacy', '/terms', '/copyright', '/editorial-standards', '/search?q=bus', '/sw/tafuta?q=bus',
                   '/fiction/the-last-bus-to-morogoro', '/african-heroes/wangari-maathai', '/series/mto-wa-kesho',
-                  '/series/mto-wa-kesho/chapter-2', '/authors/amina-mwakyusa'] as $url) {
+                  '/series/mto-wa-kesho/chapter-2', '/authors/juma-mwakyusa'] as $url) {
             $this->get($url)->assertOk();
         }
         $this->get('/no-such-page')->assertNotFound()->assertSee("We couldn't find that page");

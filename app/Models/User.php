@@ -42,4 +42,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /** Plain text assigned to the password is hashed; an existing bcrypt hash is kept as it is. */
+    public function setPasswordAttribute($value): void
+    {
+        $this->attributes['password'] = (is_string($value) && preg_match('/^\\$2[aby]\\$\\d{2}\\$.{53}$/', $value)) ? $value : \Illuminate\Support\Facades\Hash::make($value);
+    }
 }

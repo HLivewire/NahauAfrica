@@ -69,7 +69,14 @@ if (! function_exists('nimage')) {
         }
         $list = json_decode($raw, true);
         $first = is_array($list) ? ($list[0] ?? null) : $raw;
-        return $first ? media_url($first) : null;
+        if (! $first) {
+            return null;
+        }
+        // Local file that is missing: let the page show its placeholder instead of a broken image.
+        if (is_string($first) && ! preg_match('#^(https?:)?//#i', $first) && config('filesystems.media_disk', 'media') === 'media' && ! is_file(public_path(media_key($first)))) {
+            return null;
+        }
+        return media_url($first);
     }
 }
 
@@ -129,5 +136,19 @@ if (! function_exists('nclean')) {
         $html = preg_replace('/(href|src)\s*=\s*(["\'])\s*javascript:[^"\']*\2/i', '$1="#"', $html);
 
         return $html;
+    }
+}
+
+/** Story ids the signed-in reader has saved as favourites (one query per request). */
+if (! function_exists('nfav_ids')) {
+    function nfav_ids(): array
+    {
+        $req = request();
+        if (! $req->attributes->has('nahau.fav_ids')) {
+            $u = auth('maanuser')->user();
+            $req->attributes->set('nahau.fav_ids', $u ? \App\Models\NahauFavorite::where('maanuser_id', $u->id)->pluck('news_id')->all() : []);
+        }
+
+        return $req->attributes->get('nahau.fav_ids');
     }
 }

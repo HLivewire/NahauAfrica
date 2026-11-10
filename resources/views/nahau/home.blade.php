@@ -104,7 +104,7 @@
         <div class="nx-grid nx-grid--3">
             @foreach($voices as $a)
             <div class="nx-person">
-                <div class="nx-avatar">@if($a->photo)<img src="{{ media_url($a->photo) }}" alt="">@else{{ mb_strtoupper(mb_substr($a->name,0,1)) }}@endif</div>
+                <div class="nx-avatar">@if($a->photo && ($av = nimage($a->photo)))<img src="{{ $av }}" alt="{{ $a->name }}" width="64" height="64" loading="lazy">@else<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5z"/></svg>@endif</div>
                 <div><a class="nx-stretch" href="{{ nroute('author',['slug'=>$a->slug]) }}" style="font-weight:600;font-size:18px">{{ $a->name }}</a>
                     <div class="nx-meta">{{ trim($a->role.($a->city ? ' · '.$a->city : ''),' ·') }}</div>
                     <div class="nx-link" style="font-size:15px">{{ $a->story_count }} {{ trans_choice('{1} story|[2,*] stories', $a->story_count) }} →</div></div>
