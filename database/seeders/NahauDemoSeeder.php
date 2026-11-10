@@ -57,6 +57,10 @@ class NahauDemoSeeder extends Seeder
                 'speciality_id' => $spec, 'image' => '["public\\/uploads\\/images\\/newsimages\\/maannewsimage18092021_101225_b-post-2.jpg"]', 'reporter_id' => $user->id, 'user_id' => $user->id,
                 'description' => $body ?: '<p>The conductor of the last bus had one rule: no ticket, no seat. He had kept that rule for eleven years, through floods, elections and one unforgettable goat.</p><p>So when the woman in the blue kitenge climbed aboard with nothing but a small bag and a tired smile, he held out his hand and waited.</p><p>“I will pay you at the stand,” she said. “My brother is waiting.”</p><p>He had heard that sentence a hundred times. He opened his mouth to say so, and then the bus lurched forward and the lights of the city slid away behind them.</p>',
             ]);
+            $sample = ['The Last Bus to Morogoro' => 8, 'Nyumba ya Bibi' => 4, 'River of Tomorrow · Chapter 1: The Drought' => 6, 'River of Tomorrow · Chapter 2: The Inheritance' => 7, 'River of Tomorrow · Chapter 3: What the River Kept' => 5, 'Sunday Calls with Mama' => 9, 'Wangari Maathai' => 1, 'Bibi Titi Mohammed' => 2][$title] ?? null;
+            if ($sample && is_file(public_path("uploads/images/nahau/sample_{$sample}.jpg"))) {
+                $news->update(['image' => json_encode(["public/uploads/images/nahau/sample_{$sample}.jpg"])]);
+            }
             NahauStoryMeta::updateOrCreate(['news_id' => $news->id], array_merge(['slug' => \App\Nahau\Stories::makeSlug($title, $news->id), 'format' => $format, 'label' => $label, 'dek' => $dek, 'author_id' => $author, 'language' => 'en', 'reading_minutes' => rand(4, 14)], $extra));
 
             return $news;

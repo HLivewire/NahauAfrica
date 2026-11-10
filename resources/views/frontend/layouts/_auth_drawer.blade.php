@@ -21,8 +21,6 @@
             <p class="nahau-sub nahau-d-item" style="--i:2">{{ __('Sign in to continue') }}</p>
             @if ($nahauAlert)<div class="nahau-d-alert" role="alert">{{ $nahauAlert }}</div>@endif
             @if ($nahauNotice && in_array($nahauStart, ['login', null], true))<div class="nahau-d-ok" role="status">{{ $nahauNotice }}</div>@endif
-            <a class="nahau-google nahau-d-item" style="--i:2" href="{{ route('auth.google') }}"><svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.6l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.8 6.1C12.3 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.4 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.8-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.8-6.1z"/><path fill="#34A853" d="M24 48c6.2 0 11.6-2 15.4-5.6l-7.5-5.8c-2 1.4-4.7 2.3-7.9 2.3-6.3 0-11.7-4.1-13.6-9.8l-7.8 6.1C6.5 42.6 14.6 48 24 48z"/></svg><span>{{ __('Continue with Google') }}</span></a>
-            <div class="nahau-or nahau-d-item" style="--i:2"><span>{{ __('or') }}</span></div>
             <form action="{{ route('signin') }}" method="POST" class="nahau-form">
                 @csrf
                 <label class="nahau-d-item" style="--i:3" for="nahauEmail">{{ __('Email') }}</label>
@@ -31,6 +29,8 @@
                 <input class="nahau-d-item" style="--i:4" type="password" id="nahauPass" name="password" placeholder="{{ __('Your password') }}" required autocomplete="current-password">
                 <button type="submit" class="nahau-login-btn nahau-d-item" style="--i:5">{{ __('Login') }}</button>
             </form>
+            <div class="nahau-or nahau-d-item" style="--i:9"><span>{{ __('or') }}</span></div>
+            <a class="nahau-google nahau-d-item" style="--i:9" href="{{ route('auth.google') }}"><svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.6l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.8 6.1C12.3 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.4 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.8-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.8-6.1z"/><path fill="#34A853" d="M24 48c6.2 0 11.6-2 15.4-5.6l-7.5-5.8c-2 1.4-4.7 2.3-7.9 2.3-6.3 0-11.7-4.1-13.6-9.8l-7.8 6.1C6.5 42.6 14.6 48 24 48z"/></svg><span>{{ __('Continue with Google') }}</span></a>
             <div class="nahau-links nahau-d-item" style="--i:6">
                 <a href="#" data-nahau-panel="forgot">{{ __('Forgot password?') }}</a>
                 <a href="#" data-nahau-panel="register">{{ __('Create new account') }}</a>
@@ -41,8 +41,6 @@
         <section class="nahau-panel" data-panel="register">
             <h3 class="nahau-d-item" style="--i:1">{{ __('Create your Account') }}</h3>
             <p class="nahau-sub nahau-d-item" style="--i:2">{{ __('It only takes a minute') }}</p>
-            <a class="nahau-google nahau-d-item" style="--i:2" href="{{ route('auth.google') }}"><svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.6l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.8 6.1C12.3 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.4 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.8-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.8-6.1z"/><path fill="#34A853" d="M24 48c6.2 0 11.6-2 15.4-5.6l-7.5-5.8c-2 1.4-4.7 2.3-7.9 2.3-6.3 0-11.7-4.1-13.6-9.8l-7.8 6.1C6.5 42.6 14.6 48 24 48z"/></svg><span>{{ __('Continue with Google') }}</span></a>
-            <div class="nahau-or nahau-d-item" style="--i:2"><span>{{ __('or') }}</span></div>
             <form action="{{ route('signup') }}" method="POST" class="nahau-form">
                 @csrf
                 <input type="hidden" name="nahau_drawer" value="1">
@@ -82,6 +80,8 @@
                 </div>
                 <button type="submit" class="nahau-login-btn nahau-d-item" style="--i:7">{{ __('Create account') }}</button>
             </form>
+            <div class="nahau-or nahau-d-item" style="--i:9"><span>{{ __('or') }}</span></div>
+            <a class="nahau-google nahau-d-item" style="--i:9" href="{{ route('auth.google') }}"><svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.6l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.8 6.1C12.3 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.4 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.8-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.8-6.1z"/><path fill="#34A853" d="M24 48c6.2 0 11.6-2 15.4-5.6l-7.5-5.8c-2 1.4-4.7 2.3-7.9 2.3-6.3 0-11.7-4.1-13.6-9.8l-7.8 6.1C6.5 42.6 14.6 48 24 48z"/></svg><span>{{ __('Continue with Google') }}</span></a>
             <div class="nahau-links nahau-d-item" style="--i:8">
                 <span class="nahau-muted">{{ __('Already member?') }}</span>
                 <a href="#" data-nahau-panel="login">{{ __('Sign in here') }}</a>
