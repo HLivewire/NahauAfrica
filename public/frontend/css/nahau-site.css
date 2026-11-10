@@ -436,3 +436,24 @@
   .maan-manu-bar .maan-logo{max-width:108px !important}
   .nahau-right .nx-lang-btn .nx-caret{display:none}
 }
+
+/* Story lead image: show the whole picture, never cropped (heroes, relationships, jobs) */
+.nx .nx-media.nx-leadmedia{aspect-ratio:auto !important;max-height:none !important;display:flex;align-items:center;justify-content:center;background:#EDEDED;border-radius:14px;padding:0;overflow:hidden}
+.nx .nx-media.nx-leadmedia img{width:auto !important;height:auto !important;max-width:100%;max-height:min(78vh,720px);object-fit:contain !important;display:block}
+/* African Heroes cards: keep faces in frame */
+.nx-s-african-heroes .nx-media img{object-position:center top}
+@media (max-width:767px){.nx .nx-media.nx-leadmedia img{max-height:70vh}}
+
+/* ---- Round 9: brand share icons + whole hero image ---- */
+.nx .nx-share{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:34px 0 40px}
+.nx .nx-share .nx-share-label{font:600 15px 'Jost',sans-serif;color:var(--nx-ink);margin-right:4px}
+.nx .nx-share .nx-sb{width:44px;height:44px;min-height:44px;padding:0;border:0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff !important;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,filter .2s ease;text-decoration:none}
+.nx .nx-share .nx-sb svg{width:22px;height:22px;fill:currentColor;display:block}
+.nx .nx-share .nx-sb--wa{background:#25D366}.nx .nx-share .nx-sb--fb{background:#1877F2}.nx .nx-share .nx-sb--x{background:#000}.nx .nx-share .nx-sb--in{background:#0A66C2}
+.nx .nx-share .nx-sb--copy{background:#EDEDED;color:#232427 !important}.nx .nx-share .nx-sb--copy svg{fill:none;width:20px;height:20px}
+.nx .nx-share .nx-sb--copy.is-copied{background:#16A34A;color:#fff !important}
+.nx .nx-share .nx-sb:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,0,0,.2);filter:brightness(1.06)}
+.nx .nx-share .nx-sb:focus-visible{outline:3px solid #0F0F0F;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.nx .nx-share .nx-sb{transition:none}.nx .nx-share .nx-sb:hover{transform:none}}
+/* lead picture: always the whole image, a little larger for small portraits */
+.nx .nx-media.nx-leadmedia img{min-height:min(60vh,520px)}

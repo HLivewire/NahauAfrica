@@ -32,7 +32,7 @@
 </div>
 
 @if($lead)
-<div class="nx-wrap" style="padding-top:34px"><figure style="margin:0"><div class="nx-media" style="aspect-ratio:21/9"><img src="{{ $lead }}" alt="{{ $story->image_alt }}" fetchpriority="high"></div>
+<div class="nx-wrap" style="padding-top:34px"><figure style="margin:0"><div class="nx-media nx-leadmedia"><img src="{{ $lead }}" alt="{{ $story->image_alt }}" fetchpriority="high"></div>
     @if($story->image_caption || $story->image_credit)<figcaption class="nx-meta" style="margin-top:8px">{{ $story->image_caption }}@if($story->image_credit) · {{ $story->image_credit }}@endif</figcaption>@endif</figure></div>
 @endif
 
@@ -68,13 +68,7 @@
     </nav>
     @endif
 
-    <div class="nx-share" data-nx-share data-url="{{ $url }}"><span style="font-weight:600;margin-right:6px">{{ __('Share') }}</span>
-        <a data-nx-track="share_click" data-channel="whatsapp" target="_blank" rel="noopener" href="https://wa.me/?text={{ $titleEnc }}%20{{ $enc }}">WhatsApp</a>
-        <a data-nx-track="share_click" data-channel="facebook" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u={{ $enc }}">Facebook</a>
-        <a data-nx-track="share_click" data-channel="x" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text={{ $titleEnc }}&url={{ $enc }}">X</a>
-        <a data-nx-track="share_click" data-channel="linkedin" target="_blank" rel="noopener" href="https://www.linkedin.com/sharing/share-offsite/?url={{ $enc }}">LinkedIn</a>
-        <button type="button" data-nx-copy data-copied="{{ __('Link copied') }}">{{ __('Copy link') }}</button>
-    </div>
+    @include('nahau.partials.share')
 
     @if($author)
     <div class="nx-author">

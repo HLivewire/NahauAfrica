@@ -58,13 +58,7 @@
         <div class="nx-box" style="margin-top:20px"><strong>{{ __('Corrections') }}</strong><ul style="margin:6px 0 0 18px">@foreach($corrections as $c)<li>{{ ndate($c[0]) }}@if(isset($c[1])) — {{ $c[1] }}@endif</li>@endforeach</ul></div>
         @endif
 
-        <div class="nx-share" data-nx-share data-url="{{ $url }}"><span style="font-weight:600;margin-right:6px">{{ __('Share') }}</span>
-            <a data-nx-track="share_click" data-channel="whatsapp" target="_blank" rel="noopener" href="https://wa.me/?text={{ $titleEnc }}%20{{ $enc }}">WhatsApp</a>
-            <a data-nx-track="share_click" data-channel="facebook" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u={{ $enc }}">Facebook</a>
-            <a data-nx-track="share_click" data-channel="x" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text={{ $titleEnc }}&url={{ $enc }}">X</a>
-            <a data-nx-track="share_click" data-channel="linkedin" target="_blank" rel="noopener" href="https://www.linkedin.com/sharing/share-offsite/?url={{ $enc }}">LinkedIn</a>
-            <button type="button" data-nx-copy data-copied="{{ __('Link copied') }}">{{ __('Copy link') }}</button>
-        </div>
+        @include('nahau.partials.share')
 
         @if($author)
         <div class="nx-author">

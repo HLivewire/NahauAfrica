@@ -37,10 +37,10 @@
 
   /* Copy link */
   $$('[data-nx-copy]').forEach(function (b) {
-    var label = b.textContent;
+    var label = b.innerHTML, check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
     b.addEventListener('click', function () {
       var url = b.closest('[data-nx-share]').dataset.url;
-      function done() { b.textContent = b.dataset.copied; setTimeout(function () { b.textContent = label; }, 3000); nahauTrack('share_click', { channel: 'copy' }); }
+      function done() { b.innerHTML = check; b.classList.add('is-copied'); b.setAttribute('title', b.dataset.copied); setTimeout(function () { b.innerHTML = label; b.classList.remove('is-copied'); b.setAttribute('title', b.getAttribute('aria-label')); }, 2500); nahauTrack('share_click', { channel: 'copy' }); }
       if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(url).then(done, fallback); } else { fallback(); }
       function fallback() { var i = d.createElement('input'); i.value = url; d.body.appendChild(i); i.select(); try { d.execCommand('copy'); } catch (e) {} d.body.removeChild(i); done(); }
     });
