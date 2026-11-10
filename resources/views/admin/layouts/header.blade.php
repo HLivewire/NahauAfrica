@@ -76,7 +76,9 @@
 
     <!-- Right navbar links -->
 
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto align-items-center">
+        <li class="nav-item d-none d-md-block"><button type="button" class="dx-iconbtn" id="dxFull" aria-label="{{ __('Toggle fullscreen') }}"><i class="fas fa-expand"></i></button></li>
+        <li class="nav-item"><button type="button" class="dx-iconbtn" id="dxTheme" aria-label="{{ __('Toggle theme') }}"><i class="fas fa-sun i-sun"></i><i class="fas fa-moon i-moon"></i></button></li>
 
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">

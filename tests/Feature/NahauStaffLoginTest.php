@@ -22,6 +22,6 @@ class NahauStaffLoginTest extends TestCase
     {
         $this->get('/login')->assertRedirect('/')->assertSessionHas('nahau_panel', 'login');
         $u = User::where('user_type','>=','3')->first();
-        $this->actingAs($u)->get(route('admin.dashboard'))->assertOk()->assertSee('wv-kpi', false)->assertSee('nahau-admin-dark.css', false);
+        $this->actingAs($u)->get(route('admin.dashboard'))->assertOk()->assertSee('dx-gcard', false)->assertSee('nahau-admin-dropx.css', false)->assertSee('DataDropX', false);
     }
 }

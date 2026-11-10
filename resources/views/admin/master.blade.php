@@ -36,11 +36,12 @@
     <link rel="stylesheet" href="{{ asset('adminassets/plugins/toastr/toastr.css') }}">
     <!-- toastr -->
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
-    <!-- NahauAfrica admin dark skin -->
-    <link rel="stylesheet" href="{{ asset('adminassets/css/nahau-admin-dark.css') }}?v={{ @filemtime(public_path('adminassets/css/nahau-admin-dark.css')) }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500;700&display=swap">
+    <script>try{var t=localStorage.getItem('nahau_admin_theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)}catch(e){document.documentElement.setAttribute('data-theme','light')}</script>
+    <!-- NahauAfrica admin skin (adapted from DropX Admin by DataDropX) -->
+    <link rel="stylesheet" href="{{ asset('adminassets/css/nahau-admin-dropx.css') }}?v={{ @filemtime(public_path('adminassets/css/nahau-admin-dropx.css')) }}">
 </head>
-<body  class="hold-transition sidebar-mini layout-fixed dark-mode">
+<body  class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
     <!-- Navbar -->
