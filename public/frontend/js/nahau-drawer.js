@@ -64,3 +64,25 @@
   var start = drawer.getAttribute('data-nahau-start');
   if (start) setTimeout(function () { open(start); }, 150);
 })();
+
+/* password eye + submit spinner */
+(function () {
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-nahau-eye]');
+    if (!b) return;
+    var inp = b.parentNode.querySelector('input');
+    var show = inp.type === 'password';
+    inp.type = show ? 'text' : 'password';
+    b.setAttribute('aria-pressed', show ? 'true' : 'false');
+    inp.focus();
+  });
+  document.addEventListener('submit', function (e) {
+    var btn = e.target.querySelector && e.target.querySelector('.nahau-login-btn');
+    if (!btn || !e.target.checkValidity()) return;
+    btn.classList.add('is-loading');
+    btn.setAttribute('aria-busy', 'true');
+  });
+  window.addEventListener('pageshow', function () {
+    document.querySelectorAll('.nahau-login-btn.is-loading').forEach(function (b) { b.classList.remove('is-loading'); b.removeAttribute('aria-busy'); });
+  });
+})();

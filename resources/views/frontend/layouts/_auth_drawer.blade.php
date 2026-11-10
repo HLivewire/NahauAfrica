@@ -24,10 +24,10 @@
             <form action="{{ route('signin') }}" method="POST" class="nahau-form">
                 @csrf
                 <label class="nahau-d-item" style="--i:3" for="nahauEmail">{{ __('Email') }}</label>
-                <input class="nahau-d-item" style="--i:3" type="email" id="nahauEmail" name="email" placeholder="you@example.com" required autocomplete="username">
+                <input class="nahau-d-item" style="--i:3" type="email" id="nahauEmail" name="email" value="{{ old('email') }}" placeholder="you@example.com" required autocomplete="username">
                 <label class="nahau-d-item" style="--i:4" for="nahauPass">{{ __('Password') }}</label>
-                <input class="nahau-d-item" style="--i:4" type="password" id="nahauPass" name="password" placeholder="{{ __('Your password') }}" required autocomplete="current-password">
-                <button type="submit" class="nahau-login-btn nahau-d-item" style="--i:5">{{ __('Login') }}</button>
+                <div class="nahau-pass nahau-d-item" style="--i:4"><input type="password" id="nahauPass" name="password" placeholder="{{ __('Your password') }}" required autocomplete="current-password"><button type="button" class="nahau-eye" data-nahau-eye aria-label="{{ __('Show password') }}" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/><path class="nahau-eye-slash" d="M3 3l18 18"/></svg></button></div>
+                <button type="submit" class="nahau-login-btn nahau-d-item" style="--i:5"><span class="nahau-spin" aria-hidden="true"></span><span class="nahau-btn-t">{{ __('Login') }}</span></button>
             </form>
             <div class="nahau-or nahau-d-item" style="--i:9"><span>{{ __('or') }}</span></div>
             <a class="nahau-google nahau-d-item" style="--i:9" href="{{ route('auth.google') }}"><svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.6l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.8 6.1C12.3 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.4 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.8-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.8-6.1z"/><path fill="#34A853" d="M24 48c6.2 0 11.6-2 15.4-5.6l-7.5-5.8c-2 1.4-4.7 2.3-7.9 2.3-6.3 0-11.7-4.1-13.6-9.8l-7.8 6.1C6.5 42.6 14.6 48 24 48z"/></svg><span>{{ __('Continue with Google') }}</span></a>

@@ -68,7 +68,7 @@
                         <div class="login-input-item">
                             <div class="input-group">
                                 <span class="left-img"><img src="{{ asset('adminassets/img/login/user.svg') }}" alt="icon"></span>
-                                <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+                                <input type="email" name="email" id="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
                             </div>
                         </div>
                         <div class="login-input-item">
@@ -88,7 +88,7 @@
                             </label>
                             <a href="#" class="forget-pass">{{ __('Forgot Password?') }}</a>
                         </div>
-                        <button type="submit" class="login-btn">{{ __('LogIn') }}</button>
+                        <button type="submit" class="login-btn" id="loginBtn"><span class="lg-spin" style="display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.5);border-top-color:#fff;border-radius:50%;animation:lgspin .7s linear infinite;vertical-align:-2px;margin-right:8px"></span>{{ __('LogIn') }}</button><style>@keyframes lgspin{to{transform:rotate(360deg)}}</style>
                         <div class="login-button-group">
                             <a href="#" class="login-btn" onclick="copy('superadmin21@gmail.com', 'superadmin21')" data-toggle="tooltip" data-placement="top">
                                 <i class="fas fa-lock"></i>
@@ -113,7 +113,7 @@
                                 {{ __('Accountant') }}
                             </a>
                         </div>
-                    </form>
+                    <script>document.currentScript.parentNode.addEventListener("submit",function(e){var b=document.getElementById("loginBtn");b.style.pointerEvents="none";b.querySelector(".lg-spin").style.display="inline-block"});</script></form>
                 </div>
             </div>
         </div>

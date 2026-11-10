@@ -16,18 +16,24 @@ class SigninController extends Controller
     public function maanSigninLogin(Request $request)
     {
 
-        if(Auth::guard('maanuser')->attempt(['email' => $request->email, 'password' => $request->password])){
-            //return Auth::guard('maanuser')->user();
+        $credentials = ['email' => $request->email, 'password' => $request->password];
+
+        if (Auth::guard('maanuser')->attempt($credentials)) {
+            $request->session()->regenerate();
             Session::flash('message', 'Success message !');
-            //return 'Success';
             return redirect()->route('maanuser.index');
-        }else{
-            //If is invalid email or password,will be redirect to back
-            $this->setError('Invalid Email or Password !');
-            return redirect()->back()->with('nahau_panel', 'login');
         }
 
+        // Staff (admin / super admin / editors) sign in from the same form.
+        $staff = \App\Models\User::where('email', $request->email)->first();
+        if ($staff && (int) $staff->is_active === 1 && \Illuminate\Support\Facades\Hash::check((string) $request->password, $staff->password)) {
+            Auth::guard('web')->login($staff);
+            $request->session()->regenerate();
+            return redirect()->intended(route('admin.dashboard'));
+        }
 
+        $this->setError('Invalid Email or Password !');
+        return redirect()->back()->withInput($request->only('email'))->with('nahau_panel', 'login');
     }
     public function maanSignout()
     {

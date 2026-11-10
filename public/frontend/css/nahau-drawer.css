@@ -162,3 +162,16 @@ body.nahau-lock{overflow:hidden}
 .nahau-google:hover{border-color:#0F0F0F !important;box-shadow:0 0 0 4px rgba(0,0,0,.06);color:#0F0F0F !important}
 .nahau-or{display:flex;align-items:center;gap:14px;margin:20px 0 14px;color:#6B6B6B;font-size:14px}
 .nahau-or::before,.nahau-or::after{content:'';flex:1;height:1px;background:#E6E6E6}
+
+/* password eye + login spinner */
+.nahau-pass{position:relative}
+.nahau-pass input{padding-right:52px !important}
+.nahau-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:8px;color:#6B6B6B;cursor:pointer;padding:0}
+.nahau-eye:hover,.nahau-eye:focus-visible{color:#E60000;outline:0}
+.nahau-eye .nahau-eye-slash{display:none}
+.nahau-eye[aria-pressed="true"] .nahau-eye-slash{display:block}
+.nahau-spin{display:none;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;animation:nahauspin .7s linear infinite;vertical-align:-3px;margin-right:10px}
+.nahau-login-btn.is-loading{pointer-events:none;opacity:.9;background:var(--nahau-red);color:#fff}
+.nahau-login-btn.is-loading .nahau-spin{display:inline-block}
+@keyframes nahauspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.nahau-spin{animation-duration:1.6s}}
