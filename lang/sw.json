@@ -328,5 +328,8 @@
  "Medium": "Wastani",
  "Wide": "Pana",
  "Reset to default": "Rudisha kawaida",
- "The end of this part.": "Mwisho wa sehemu hii."
+ "The end of this part.": "Mwisho wa sehemu hii.",
+ "Previous": "Iliyopita",
+ "Next": "Inayofuata",
+ "Play": "Cheza"
 }

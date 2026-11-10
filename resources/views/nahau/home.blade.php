@@ -100,16 +100,25 @@
 @if($voices->isNotEmpty())
 <div class="nx-sec">
     <div class="nx-wrap">
-        <h2 class="nx-h2">{{ __('Meet the voices') }}</h2>
-        <div class="nx-grid nx-grid--3">
+        <div class="nx-car-head">
+            <h2 class="nx-h2" style="margin:0">{{ __('Meet the voices') }}</h2>
+            <div class="nx-car-ctrl" data-nx-car-ctrl>
+                <button type="button" data-car="prev" aria-label="{{ __('Previous') }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+                <button type="button" data-car="toggle" aria-label="{{ __('Pause') }}" data-pause="{{ __('Pause') }}" data-play="{{ __('Play') }}" aria-pressed="false"><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg></button>
+                <button type="button" data-car="next" aria-label="{{ __('Next') }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+            </div>
+        </div>
+        <div class="nx-carousel" data-nx-carousel data-interval="3600" role="region" aria-roledescription="carousel" aria-label="{{ __('Meet the voices') }}">
+            <div class="nx-car-track" tabindex="0">
             @foreach($voices as $a)
-            <div class="nx-person">
+            <div class="nx-car-item" role="group" aria-roledescription="slide"><div class="nx-person">
                 <div class="nx-avatar">@if($a->photo && ($av = nimage($a->photo)))<img src="{{ $av }}" alt="{{ $a->name }}" width="64" height="64" loading="lazy">@else<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5z"/></svg>@endif</div>
                 <div><a class="nx-stretch" href="{{ nroute('author',['slug'=>$a->slug]) }}" style="font-weight:600;font-size:18px">{{ $a->name }}</a>
                     <div class="nx-meta">{{ trim($a->role.($a->city ? ' · '.$a->city : ''),' ·') }}</div>
                     <div class="nx-link" style="font-size:15px">{{ $a->story_count }} {{ trans_choice('{1} story|[2,*] stories', $a->story_count) }} →</div></div>
-            </div>
+            </div></div>
             @endforeach
+            </div>
         </div>
     </div>
 </div>

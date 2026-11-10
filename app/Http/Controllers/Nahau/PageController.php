@@ -23,7 +23,7 @@ class PageController extends Controller
             $chapters = Stories::query()->where('m.series_id', $series->id)->reorder('m.chapter_no')->get();
         }
 
-        $voices = NahauAuthor::where('show_on_home', 1)->orderBy('home_order')->limit(3)->get()->map(function ($a) {
+        $voices = NahauAuthor::where('show_on_home', 1)->orderBy('home_order')->limit(12)->get()->map(function ($a) {
             $a->story_count = Stories::query()->where('m.author_id', $a->id)->count();
             return $a;
         });

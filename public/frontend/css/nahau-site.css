@@ -457,3 +457,24 @@
 @media (prefers-reduced-motion:reduce){.nx .nx-share .nx-sb{transition:none}.nx .nx-share .nx-sb:hover{transform:none}}
 /* lead picture: always the whole image, a little larger for small portraits */
 .nx .nx-media.nx-leadmedia img{min-height:min(60vh,520px)}
+
+/* ---- Round 10: Meet the voices carousel ---- */
+.nx .nx-car-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:26px}
+.nx .nx-car-ctrl{display:flex;gap:8px}
+.nx .nx-car-ctrl button{width:44px;height:44px;border-radius:50%;border:1px solid #D0D0D0;background:#fff;color:#232427;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:border-color .25s ease,color .25s ease}
+.nx .nx-car-ctrl button:hover{border-color:rgba(255,0,0,.45);color:#E60000}
+.nx .nx-car-ctrl button:focus-visible{outline:3px solid #0F0F0F;outline-offset:2px}
+.nx .nx-car-ctrl svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nx .nx-car-ctrl .i-play{display:none;fill:currentColor;stroke:none}
+.nx .nx-car-ctrl button[aria-pressed="true"] .i-pause{display:none}.nx .nx-car-ctrl button[aria-pressed="true"] .i-play{display:block}
+.nx .nx-carousel{position:relative}
+.nx .nx-car-track{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:4px 2px 8px}
+.nx .nx-car-track::-webkit-scrollbar{display:none}
+.nx .nx-car-track:focus-visible{outline:3px solid #0F0F0F;outline-offset:4px;border-radius:12px}
+.nx .nx-car-item{flex:0 0 calc((100% - 48px) / 3);scroll-snap-align:start;min-width:0}
+.nx .nx-car-item .nx-person{height:100%}
+.nx .nx-carousel.is-static .nx-car-track{overflow:visible}
+.nx [data-nx-car-ctrl][hidden]{display:none}
+@media (max-width:1023px){.nx .nx-car-item{flex-basis:calc((100% - 24px) / 2)}}
+@media (max-width:640px){.nx .nx-car-item{flex-basis:88%}.nx .nx-car-track{gap:16px}.nx .nx-car-ctrl button{width:40px;height:40px}}
+@media (prefers-reduced-motion:reduce){.nx .nx-car-track{scroll-behavior:auto}}
