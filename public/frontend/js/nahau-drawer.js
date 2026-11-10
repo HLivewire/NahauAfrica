@@ -74,6 +74,7 @@
     var show = inp.type === 'password';
     inp.type = show ? 'text' : 'password';
     b.setAttribute('aria-pressed', show ? 'true' : 'false');
+    b.setAttribute('aria-label', b.getAttribute(show ? 'data-hide' : 'data-show') || '');
     inp.focus();
   });
   document.addEventListener('submit', function (e) {

@@ -166,10 +166,15 @@ body.nahau-lock{overflow:hidden}
 /* password eye + login spinner */
 .nahau-pass{position:relative}
 .nahau-pass input{padding-right:52px !important}
-.nahau-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:8px;color:#6B6B6B;cursor:pointer;padding:0}
-.nahau-eye:hover,.nahau-eye:focus-visible{color:#E60000;outline:0}
-.nahau-eye .nahau-eye-slash{display:none}
-.nahau-eye[aria-pressed="true"] .nahau-eye-slash{display:block}
+.nahau-eye{position:absolute;right:7px;top:50%;transform:translateY(-50%);width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#F4F4F5;border:0;border-radius:10px;color:#3A3A3C;cursor:pointer;padding:0;transition:background .25s,color .25s,box-shadow .25s}
+.nahau-eye svg{display:block;transition:transform .25s}
+.nahau-eye:hover{background:#FFECEC;color:#E60000}
+.nahau-eye:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(230,0,0,.25);color:#E60000}
+.nahau-eye:active svg{transform:scale(.9)}
+.nahau-eye .eye-off{display:none}
+.nahau-eye[aria-pressed="true"]{background:#FFECEC;color:#E60000}
+.nahau-eye[aria-pressed="true"] .eye-on{display:none}
+.nahau-eye[aria-pressed="true"] .eye-off{display:block}
 .nahau-spin{display:none;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;animation:nahauspin .7s linear infinite;vertical-align:-3px;margin-right:10px}
 .nahau-login-btn.is-loading{pointer-events:none;opacity:.9;background:var(--nahau-red);color:#fff}
 .nahau-login-btn.is-loading .nahau-spin{display:inline-block}

@@ -6,7 +6,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ URL('/admin') }}" class="brand-link">
-        <img src="{{ media_url($settings->icon) }}" alt="MAANEWS icon" class="brand-image img-circle elevation-3">
+        <img src="{{ media_url($settings->icon) }}" alt="" class="brand-image img-circle elevation-3" onerror="this.style.display='none'">
         <span class="brand-text font-weight-light">{{ $settings->short_name }}</span>
     </a>
 

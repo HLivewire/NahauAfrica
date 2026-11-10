@@ -17,4 +17,11 @@ class NahauStaffLoginTest extends TestCase
             $this->get(route('admin.dashboard'))->assertOk();
         } finally { $u->forceFill(['password'=>$old])->save(); }
     }
+
+    public function test_login_url_opens_the_site_drawer_and_dashboard_uses_dark_design(): void
+    {
+        $this->get('/login')->assertRedirect('/')->assertSessionHas('nahau_panel', 'login');
+        $u = User::where('user_type','>=','3')->first();
+        $this->actingAs($u)->get(route('admin.dashboard'))->assertOk()->assertSee('wv-kpi', false)->assertSee('nahau-admin-dark.css', false);
+    }
 }

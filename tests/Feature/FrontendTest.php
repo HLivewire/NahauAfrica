@@ -17,7 +17,7 @@ class FrontendTest extends TestCase
 
     public function test_public_pages_load(): void
     {
-        foreach (['/', '/home-one', '/home-two', '/photogallery', '/contactus', '/signup', '/signin', '/login', '/search?search=news'] as $url) {
+        foreach (['/', '/home-one', '/home-two', '/photogallery', '/contactus', '/signup', '/signin', '/search?search=news'] as $url) {
             $this->get($url)->assertOk();
         }
     }

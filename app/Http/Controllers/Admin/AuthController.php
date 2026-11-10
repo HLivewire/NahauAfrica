@@ -14,7 +14,11 @@ class AuthController extends Controller
      */
     public function maanIndex()
     {
-        return view('login.login');
+        // One sign-in for everybody: the site's own login drawer (the "Get Started" button).
+        if (auth()->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+        return redirect('/')->with('nahau_panel', 'login');
     }
     /**
      * Check login user email password.
@@ -28,7 +32,7 @@ class AuthController extends Controller
         }else{
             //If is invalid email or password,will be redirect to back
             $this->setError('Invalid Email or Password !');
-            return redirect()->back()->withInput($request->only('email'));
+            return redirect('/')->withInput($request->only('email'))->with('nahau_panel', 'login');
         }
 
 
