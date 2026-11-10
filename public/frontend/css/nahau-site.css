@@ -55,7 +55,7 @@
 .nx-grid--4{grid-template-columns:repeat(4,minmax(0,1fr))}
 .nx-card{display:flex;flex-direction:column;gap:10px;position:relative}
 .nx-card h3{font-size:22px;line-height:1.25}
-.nx-card:hover h3{text-decoration:underline}
+
 .nx-card .nx-stretch::after{content:'';position:absolute;inset:0}
 .nx-media{position:relative;border-radius:10px;overflow:hidden;background:var(--nx-sectint);aspect-ratio:16/10}
 .nx-media img{width:100%;height:100%;object-fit:cover}
@@ -231,8 +231,8 @@
 
 /* ---- Round 3 changes ---- */
 /* red underline on hover for titles and menu links */
-.nx a:hover,.nx .nx-card:hover h3,.nx .nx-featured:hover h2{text-decoration-color:var(--nx-red) !important}
-.nx h2 a:hover,.nx h3 a:hover,.nx .nx-link:hover,.nx .nx-card:hover h3,.nx .nx-featured:hover h2 a,.nx-footer a:hover,.nx.nx-footer a:hover,.nx .nx-opp h3 a:hover{text-decoration:underline !important;text-decoration-color:var(--nx-red) !important;text-decoration-thickness:2px !important;text-underline-offset:6px}
+.nx a:hover{text-decoration-color:var(--nx-red) !important}
+.nx h2 a:hover,.nx h3 a:hover,.nx .nx-link:hover,.nx-footer a:hover,.nx.nx-footer a:hover{text-decoration:underline !important;text-decoration-color:var(--nx-red) !important;text-decoration-thickness:2px !important;text-underline-offset:6px}
 .maan-main-manu>ul>li>a:hover,.maan-main-manu>ul>li>a:focus-visible{text-decoration:underline !important;text-decoration-color:#FF0000 !important;text-decoration-thickness:2px !important;text-underline-offset:8px}
 /* language dropdown in the menu */
 .maan-main-manu li.nx-lang{position:relative;list-style:none}
@@ -254,8 +254,8 @@
 .nx-tabs .nx-chip.is-on{color:var(--nx-ink) !important;border-bottom-color:var(--nx-red) !important}
 /* book covers: show the whole cover, zoom on hover */
 .nx-media{overflow:hidden}
-.nx-media img{transition:transform .5s ease;will-change:transform}
-.nx-card:hover .nx-media img,.nx-featured:hover .nx-media img{transform:scale(1.07)}
+
+
 .nx-s-fiction .nx-media{background:#F2F2F2}
 .nx-s-fiction .nx-media img{object-fit:contain !important;object-position:center !important;width:100%;height:100%}
 .nx-s-fiction.nx-card .nx-media{aspect-ratio:3/4}
@@ -281,9 +281,8 @@
 .nx-sec>.nx-wrap>.nx-h2{margin-bottom:22px}
 
 /* ---- Round 4: white cards, no border until hover, heart, full featured cover ---- */
-.nx-seccard,.nx-tile,.nx-author,.nx-opp,.nx-person,.nx-formbox,.nx-card,.nx-featured{background:#fff !important;border:1px solid transparent !important;transition:border-color .45s ease .12s,box-shadow .45s ease .12s,transform .35s ease}
+.nx-seccard,.nx-tile,.nx-author,.nx-opp,.nx-person,.nx-formbox,.nx-card,.nx-featured{background:#fff !important;border:1px solid transparent !important;}
 .nx-formbox{box-shadow:none}
-.nx-seccard:hover,.nx-tile:hover,.nx-author:hover,.nx-opp:hover,.nx-person:hover,.nx-formbox:hover,.nx-card:hover,.nx-featured:hover,.nx-card:focus-within,.nx-opp:focus-within{border-color:rgba(255,0,0,.45) !important;box-shadow:0 0 0 4px rgba(255,0,0,.07)}
 .nx-card{padding:10px;border-radius:14px !important}
 .nx-featured{padding:14px;border-radius:16px !important}
 .nx-grey .nx-seccard,.nx-grey .nx-tile,.nx-grey .nx-card{background:#fff !important}
@@ -292,8 +291,8 @@
 .nx-card{position:relative}
 .nx-heart{position:absolute;top:20px;right:20px;z-index:5;width:40px;height:40px;border-radius:50%;border:0 !important;background:rgba(255,255,255,.94) !important;box-shadow:0 2px 10px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0 !important;min-height:0 !important;transition:transform .25s ease,background .25s ease}
 .nx-heart svg{fill:none;stroke:#0F0F0F;stroke-width:2;stroke-linejoin:round;transition:fill .25s,stroke .25s}
-.nx-heart:hover{transform:scale(1.1)}
-.nx-heart:hover svg{stroke:#E60000}
+
+
 .nx-heart.is-on svg{fill:#E60000;stroke:#E60000}
 .nx-heart:focus-visible{outline:3px solid #0F0F0F;outline-offset:2px}
 /* featured cover on the home page: whole cover, nicely arranged, also on mobile */
@@ -307,3 +306,25 @@
   .nx-heart{top:16px;right:16px}
 }
 .nx-card{isolation:isolate}.nx-heart{z-index:2}
+
+/* No hover effects on cards */
+.nx-seccard,.nx-tile,.nx-author,.nx-opp,.nx-person,.nx-formbox,.nx-card,.nx-featured{transition:none !important;transform:none !important}
+.nx-media img,.nx-card:hover .nx-media img,.nx-featured:hover .nx-media img,.nx-opp:hover img{transform:none !important;transition:none !important}
+.nx .nx-card:hover h3,.nx .nx-card:hover h3 a,.nx .nx-featured:hover h2,.nx .nx-featured:hover h2 a,.nx .nx-card h3 a:hover,.nx .nx-opp h3 a:hover,.nx .nx-seccard:hover h3{text-decoration:none !important}
+
+/* ---- Round 5: language switch as a refined menu item (not a button) ---- */
+.maan-main-manu li.nx-lang{margin-left:6px}
+.maan-main-manu .nx-lang-btn{display:inline-flex;align-items:center;gap:9px;background:transparent !important;border:0 !important;border-radius:0 !important;padding:6px 0 !important;font:400 16px 'Jost',sans-serif;color:inherit;letter-spacing:.01em;box-shadow:none !important;cursor:pointer}
+.maan-main-manu .nx-lang-btn:hover span,.maan-main-manu .nx-lang-btn[aria-expanded="true"] span{text-decoration:underline;text-decoration-color:#FF0000;text-decoration-thickness:2px;text-underline-offset:8px}
+.maan-main-manu .nx-lang-btn .nx-flag{width:22px;height:22px;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+.maan-main-manu .nx-lang-btn .nx-caret{color:#6B6B6B;transition:transform .25s ease}
+.maan-main-manu .nx-lang-btn[aria-expanded="true"] .nx-caret{transform:rotate(180deg);color:#FF0000}
+.nx-lang-list .nx-flag{width:24px;height:24px;border-radius:50%}
+.theme-broadcast .maan-manu-bar .maan-main-manu ul.nx-lang-list{border-radius:14px;border:1px solid #EDEDED;box-shadow:0 18px 40px rgba(0,0,0,.14);padding:8px !important;top:calc(100% + 14px) !important;width:190px !important}
+.theme-broadcast .maan-manu-bar .maan-main-manu ul.nx-lang-list>li>a{border-radius:9px;padding:10px 12px !important;font-size:16px;gap:12px}
+.theme-broadcast .maan-manu-bar .maan-main-manu ul.nx-lang-list>li[aria-selected="true"]>a{background:#F7F7F7 !important;font-weight:600}
+.theme-broadcast .maan-manu-bar .maan-main-manu ul.nx-lang-list>li[aria-selected="true"]>a::after{content:"";display:block !important;margin-left:auto;width:7px;height:12px;border:solid #E60000;border-width:0 2px 2px 0;transform:rotate(45deg) translateY(-2px)}
+.nx-avatar img{object-position:center 22%}
+.theme-broadcast .maan-manu-bar .maan-main-manu li.nx-lang,.theme-broadcast .maan-manu-bar .maan-main-manu li.nx-lang>.nx-lang-btn,.maan-main-manu li.nx-lang,.maan-main-manu li.nx-lang>.nx-lang-btn{background:transparent !important;box-shadow:none !important;padding-left:0;padding-right:0}
+.nx-lang-btn .nx-caret path{fill:none !important;stroke:currentColor !important}
+.nx-lang-btn .nx-caret{fill:none !important}
