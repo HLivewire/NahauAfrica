@@ -5,6 +5,8 @@
 | Edit sections, taglines, formats and slugs here; interface words live in lang/sw.json.
 */
 return [
+    'seed_demo' => env('NAHAU_SEED_DEMO', true),
+
     'locales' => ['en', 'sw'],
 
     // key => [category slug in newscategories, URL slugs, copy, formats]
