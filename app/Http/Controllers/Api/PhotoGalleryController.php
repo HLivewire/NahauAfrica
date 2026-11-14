@@ -31,7 +31,7 @@ class PhotoGalleryController extends Controller
             ->select('photogalleries.id', 'photogalleries.title', 'photogalleries.image', 'photogalleries.created_at', DB::raw("CONCAT(users.first_name,' ',users.last_name) AS user_name"))
             ->where('status', 1)
             ->latest()
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($latestphotogalleries, $this->load_success['message']);
     }
 

@@ -166,15 +166,7 @@
     e.preventDefault();
     var email = f.email.value.trim();
     if (!/^\S+@\S+\.\S+$/.test(email)) { msg.textContent = @json(__('Please enter a valid email address.')); return; }
-    fetch(@json(route('subscribe')), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
-      },
-      body: JSON.stringify({ email: email })
-    })
+    fetch(@json(route('subscribe')) + '?email=' + encodeURIComponent(email), { headers: { 'Accept': 'application/json' } })
       .then(function (r) { msg.textContent = r.ok ? @json(__('Thank you. You are subscribed.')) : @json(__('Please enter a valid email address.')); if (r.ok) f.reset(); })
       .catch(function () { msg.textContent = @json(__('Something went wrong. Please try again.')); });
   });

@@ -69,7 +69,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $post->title }}</td>
                                             <td>{{ $post->summary }}</td>
-                                            <td>{!! nclean($post->description) !!}</td>
+                                            <td>{!! $post->description !!} </td>
                                             <td>
                                                 @if ($post->image)
                                                     @php

@@ -7,11 +7,37 @@
 @endsection
 
 @section('nx')
-<div class="nx-hero" style="background:#D9D9D9;border-bottom:1px solid #bfbfbf;padding:64px 0 56px">
+<div class="nx-xs-band">
+<div class="nx-wrap nx-xs-top"><p class="nx-eyebrow" style="color:var(--nx-red-text)">{{ __('Our Stories. Our Voices.') }}</p></div>
+@if($heroes->isNotEmpty())
+<section class="nx-xs-band-in" data-nx-herocar data-interval="6500" role="region" aria-roledescription="carousel" aria-label="{{ __('African Heroes') }}">
+    <div class="nx-xs-stage">
+        @foreach($heroes as $h)
+        @php
+            $hs = $heroStories[$h->news_id];
+            $himg = ($h->portrait ? nimage($h->portrait) : null) ?: nimage($hs);
+            $hsum = \Illuminate\Support\Str::limit(strip_tags($h->spotlight_summary ?: ($hs->summary ?? '')), 130);
+        @endphp
+        <article class="nx-xs{{ $loop->first ? ' is-active' : '' }}" style="--pc:{{ $loop->odd ? '#232427' : '#5A0B0B' }}" role="group" aria-roledescription="slide" aria-label="{{ $loop->iteration }} / {{ $heroes->count() }}" @if(! $loop->first) aria-hidden="true" @endif>
+            <div class="nx-xs-panel"></div>
+            <div class="nx-xs-photo">@if($himg)<img src="{{ $himg }}" alt="{{ $h->name }}" loading="{{ $loop->first ? 'eager' : 'lazy' }}">@endif</div>
+            <div class="nx-xs-title"><span>{{ __('African Heroes') }}</span><h2>{{ $h->name }}</h2></div>
+            <span class="nx-xs-sq"></span>
+            <p class="nx-xs-sum">{{ $hsum }}</p>
+            <a class="nx-xs-btn" href="{{ Stories::url($hs) }}" @if(! $loop->first) tabindex="-1" @endif>{{ __('Read more') }}</a>
+        </article>
+        @endforeach
+        <button type="button" class="nx-xs-arrow nx-xs-prev" aria-label="{{ __('Previous') }}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button type="button" class="nx-xs-arrow nx-xs-next" aria-label="{{ __('Next') }}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+</section>
+@endif
+</div>
+
+<div class="nx-hero nx-hero--below">
     <div class="nx-wrap">
-        <p class="nx-eyebrow" style="color:#C80000;margin-bottom:8px">{{ __('Our Stories. Our Voices.') }}</p>
-        <h1 class="nx-h1" style="color:#0F0F0F;margin:0 0 16px">{{ __('African stories. Told in our voices.') }}</h1>
-        <p class="nx-lead" style="color:#4A4A4A;max-width:720px;margin:0 0 28px">{{ __('Discover fiction, lived experiences, relationship stories, working lives, and remarkable people from across Africa.') }}</p>
+        <h1 class="nx-h1">{{ __('African stories. Told in our voices.') }}</h1>
+        <p class="nx-lead">{{ __('Discover fiction, lived experiences, relationship stories, working lives, and remarkable people from across Africa.') }}</p>
         <div class="nx-actions">
             <a class="nx-btn" href="{{ nroute('fiction') }}">{{ __('Explore Stories') }}</a>
             <a class="nx-btn nx-btn--ghost" href="{{ nroute('write') }}">{{ __('Write for Us') }}</a>
@@ -93,69 +119,6 @@
             <li><span><strong>{{ __('Chapter') }} {{ ($last->chapter_no ?? 0) + 1 }}</strong></span><span class="nx-status nx-status--soon">{{ __('Coming soon') }} · {{ ndate($series->next_chapter_date) }}</span></li>
             @endif
         </ul>
-    </div>
-</div>
-@endif
-
-@if($heroes->isNotEmpty())
-<div class="nx-sec nx-sec--tight">
-    <div class="nx-wrap">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:20px">
-            <div>
-                <p class="nx-eyebrow" style="margin-bottom:4px;color:#E60000">{{ __('African Heroes') }}</p>
-                <h2 class="nx-h2" style="margin:0">{{ __('Lives worth remembering') }}</h2>
-            </div>
-            <a class="nx-link" href="{{ nroute('african-heroes') }}">{{ __('See all heroes') }} →</a>
-        </div>
-
-        <div class="nx-hero-carousel-wrap" data-nx-heroes-carousel data-interval="6500" role="region" aria-roledescription="carousel" aria-label="{{ __('African Heroes') }}">
-            <div class="nx-hero-carousel-slides">
-                @foreach($heroes as $idx => $h)
-                    @php
-                        $hs = $heroStories->get($h->news_id);
-                        $hUrl = $hs ? \App\Nahau\Stories::url($hs) : nroute('african-heroes');
-                        $hImg = ($h->portrait ? media_url($h->portrait) : null) ?: ($hs ? nimage($hs) : null) ?: asset('uploads/images/nahau/sample_1.jpg');
-                        $dates = trim(($h->born ?? '').($h->died ? '–'.$h->died : ''));
-                        $metaBadge = trim(($h->country ?? '').($dates ? ' · '.$dates : ''));
-                    @endphp
-                    <div class="nx-hero-slide {{ $idx === 0 ? 'is-active' : '' }}" data-slide-index="{{ $idx }}" role="group" aria-roledescription="slide" aria-label="{{ $h->name }}">
-                        <div class="nx-hero-slide-grid">
-                            <!-- Left: Hero Picture -->
-                            <div class="nx-hero-slide-media">
-                                <div class="nx-hero-slide-imgbox">
-                                    <img src="{{ $hImg }}" alt="{{ $h->name }}" loading="{{ $idx === 0 ? 'eager' : 'lazy' }}">
-                                    @if($metaBadge)
-                                        <span class="nx-hero-slide-tag">{{ $metaBadge }}</span>
-                                    @endif
-                                </div>
-                            </div>
-                            <!-- Right: Sweet small word & Read more button -->
-                            <div class="nx-hero-slide-info">
-                                <span class="nx-hero-slide-kicker">{{ __('African Heroes') }}</span>
-                                <h3 class="nx-hero-slide-title">{{ $h->name }}</h3>
-                                @if($h->known_for)
-                                    <p class="nx-hero-slide-known">{{ $h->known_for }}</p>
-                                @endif
-                                <p class="nx-hero-slide-quote">
-                                    “{{ $h->spotlight_summary ?: ($hs ? $hs->summary : '') }}”
-                                </p>
-                                <div class="nx-hero-slide-cta">
-                                    <a class="nx-hero-read-btn" href="{{ $hUrl }}">
-                                        <span>{{ __('Read more') }}</span>
-                                        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-            @if($heroes->count() > 1)
-                <div class="nx-hero-carousel-prog" aria-hidden="true">
-                    <div class="nx-hero-carousel-bar"></div>
-                </div>
-            @endif
-        </div>
     </div>
 </div>
 @endif

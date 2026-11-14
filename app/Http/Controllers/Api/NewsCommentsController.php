@@ -32,30 +32,30 @@ class NewsCommentsController extends Controller
      */
     public function newsComments($id):JsonResponse
     {
-        $newscomments = Newscomment::where('news_id',$id)->paginate($this->perPage());
+        $newscomments = Newscomment::where('news_id',$id)->paginate(request('per_page',10));
         return $this->successResponse($newscomments,$this->load_success['message']);
     }
 
     public function store(Request $request) :JsonResponse
     {
-        $validated = $request->validate([
-            'news_id' => 'required|integer|exists:news,id',
-            'name' => 'required|string|max:100',
-            'email' => 'required|email|max:150',
-            'comment' => 'required|string|max:2000'
+        $request->validate([
+            'news_id'=>'required',
+            'name'=>'required|string|max:250',
+            'email'=>'required|email',
+            'comment'=>'required'
         ]);
         try {
             $newscomments = new Newscomment();
-            $newscomments->news_id = $validated['news_id'];
-            $newscomments->name = strip_tags($validated['name']);
-            $newscomments->email = $validated['email'];
-            $newscomments->comment = strip_tags($validated['comment']);
+            $newscomments->news_id = $request->news_id;
+            $newscomments->name = $request->name;
+            $newscomments->email = $request->email;
+            $newscomments->comment = $request->comment;
             $newscomments->save();
             if ($newscomments)
                 return $this->successResponse($newscomments, $this->create_success_message['message']);
             else
                 return $this->successResponse('', $this->create_fail_message['message']);
-        }catch(\Throwable $exception){
+        }catch(Exception $exception){
             Log::error($exception->getMessage());
             return $this->errorResponse($this->create_fail_message['message']);
         }

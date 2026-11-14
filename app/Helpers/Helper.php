@@ -80,30 +80,6 @@ function media_put($file, $directory, $fileName)
             'image' => 'This file type is not allowed. Please upload an image or a video.',
         ]);
     }
-
-    // Block SVG files containing executable scripts, dangerous tags, or event handlers.
-    if ($ext === 'svg') {
-        $content = (string) file_get_contents($file->getRealPath());
-        $disallowed = [
-            '/<script\b/i',
-            '/<\/script>/i',
-            '/\son\w+\s*=/i',
-            '/href\s*=\s*["\']\s*javascript:/i',
-            '/xlink:href\s*=\s*["\']\s*javascript:/i',
-            '/<foreignObject\b/i',
-            '/<iframe\b/i',
-            '/<embed\b/i',
-            '/<object\b/i',
-            '/<use\b[^>]*href\s*=\s*["\']\s*data:/i',
-        ];
-        foreach ($disallowed as $pattern) {
-            if (preg_match($pattern, $content)) {
-                throw \Illuminate\Validation\ValidationException::withMessages([
-                    'image' => 'The uploaded SVG file contains forbidden scripts or executable content.',
-                ]);
-            }
-        }
-    }
     $key = trim(media_key(rtrim($directory, '/\\') . '/'), '/') . '/' . $fileName;
     $stream = fopen($file->getRealPath(), 'r');
     $saved = media_disk()->put($key, $stream, 'public');

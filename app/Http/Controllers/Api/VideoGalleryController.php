@@ -31,7 +31,7 @@ class VideoGalleryController extends Controller
             ->select('videogalleries.id', 'videogalleries.title', 'videogalleries.video', 'videogalleries.video_source', 'videogalleries.created_at', DB::raw("CONCAT(users.first_name,' ',users.last_name) AS reporter_name"))
             ->where('status', 1)
             ->latest()
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($videogalleries, $this->load_success['message']);
     }
 

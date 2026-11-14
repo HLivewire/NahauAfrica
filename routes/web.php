@@ -60,7 +60,7 @@ require __DIR__.'/nahau.php';
 
 Route::get('/home-one',[HomeController::class,'maanIndex'])->name('home-one');
 Route::get('/home-two',[HomeController::class,'maanIndex'])->name('home-two');
-Route::post('/subscribe/ajax',[HomeController::class,'subscribeAjax'])->middleware('throttle:10,1')->name('subscribe');
+Route::get('/subscribe/ajax',[HomeController::class,'subscribeAjax'])->name('subscribe');
 //route search
 
 // News category routes ("business", "business.details" ...) are registered at runtime by
@@ -70,7 +70,7 @@ Route::get('/photogallery',[\App\Http\Controllers\Frontend\PhotogalleryControlle
 Route::get('/photogallery/details/{id}/{slug?}',[\App\Http\Controllers\Frontend\PhotogalleryController::class,'maanPhotogalleryDetails'])->name('photogallery.details');
 
 // route news comments
-Route::post('news/comment/{id?}',[\App\Http\Controllers\Frontend\NewsController::class,'maanNewsComment'])->middleware('throttle:10,1')->name('news.comment');
+Route::post('news/comment/{id?}',[\App\Http\Controllers\Frontend\NewsController::class,'maanNewsComment'])->name('news.comment');
 // route contact us
 Route::get('/about-us',[\App\Http\Controllers\Frontend\AboutusController::class,'maanNewsAboutus'])->name('aboutus');
 Route::get('/contactus',[\App\Http\Controllers\Frontend\ContactusController::class,'maanNewsContactus'])->name('contactus');
@@ -110,7 +110,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function (){
 
     });
 
-    Route::group(['middleware'=>['role:super-admin,admin']],function (){
+    Route::group(['middleware'=>['role:super-admin,admin,editor']],function (){
 
         //Route user
         Route::get('/user',[UserController::class,'maanUserIndex'])->name('user');
@@ -128,10 +128,6 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function (){
         //Route user destroy
         Route::delete('/user/destroy/{user}',[UserController::class,'maanUserDestroy'])->name('user.destroy');
 
-    });
-
-    Route::group(['middleware'=>['role:super-admin,admin,editor']],function (){
-
         //Route settings
         Route::prefix('nahau')->name('nahau.')->controller(\App\Http\Controllers\Admin\NahauAdminController::class)->group(function () {
             Route::get('/','dashboard')->name('dashboard');
@@ -141,7 +137,6 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function (){
             Route::get('{res}/{id}/edit','edit')->whereNumber('id')->name('edit');
             Route::put('{res}/{id}','update')->whereNumber('id')->name('update');
             Route::delete('{res}/{id}','destroy')->whereNumber('id')->name('destroy');
-            Route::post('{res}/{id}/toggle-publish', 'togglePublish')->whereNumber('id')->name('toggle-publish');
         });
 
         Route::get('/settings',[SettingsController::class,'maanSettingsIndex'])->name('settings.index');
@@ -316,9 +311,9 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function (){
     });
 
     //Route blog status publish
-    Route::post('/publish/status/ajax',[AjaxController::class,'maanPublishStatus'])->name('publish.status.ajax');
+    Route::get('/publish/status/ajax',[AjaxController::class,'maanPublishStatus'])->name('publish.status.ajax');
     //route theme color change
-    Route::post('/publish/theme-color/ajax',[AjaxController::class,'maanPublishThemeColor'])->name('publish.theme-color.ajax');
+    Route::get('/publish/theme-color/ajax',[AjaxController::class,'maanPublishThemeColor'])->name('publish.theme-color.ajax');
 });
 //route maan user
 Route::prefix('maanuser')->name('maanuser.')->group(function (){

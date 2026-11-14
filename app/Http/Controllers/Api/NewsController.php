@@ -74,7 +74,7 @@ class NewsController extends Controller
                 ->where('newscategories.id', $news_category->id)
                 ->where('news.status', 1)
                 ->orderByDesc('news.id')
-                ->paginate($this->perPage());
+                ->paginate(request('per_page',10));
             return $this->successResponse($category_news, $this->load_success['message']);
         } else {
             return $this->successResponse('', $this->not_found_message['message']);
@@ -93,7 +93,7 @@ class NewsController extends Controller
                 ->where('newscategories.id', $news_category->id)
                 ->where('news.status', 1)
                 ->orderByDesc('news.viewers')
-                ->paginate($this->perPage());
+                ->paginate(request('per_page',10));
 
             return $this->successResponse($popularallnews, $this->load_success['message']);
         } else {
@@ -111,7 +111,7 @@ class NewsController extends Controller
             ->select('news.id', 'news.title', 'news.image', 'news.date', 'news.created_at', 'newssubcategories.name as news_subcategory', 'newscategories.name as news_category', 'newscategories.slug as news_categoryslug', DB::raw("CONCAT(users.first_name,' ',users.last_name) AS reporter_name"))
             ->where('news.status', 1)
             ->latest()
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($latest_news, $this->load_success['message']);
     }
 
@@ -126,7 +126,7 @@ class NewsController extends Controller
             ->where('newscategories.name', 'National')
             ->where('news.status', 1)
             ->latest()
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($latest_news_national, $this->load_success['message']);
     }
 
@@ -141,7 +141,7 @@ class NewsController extends Controller
             ->where('newscategories.name', 'World')
             ->where('news.status', 1)
             ->latest()
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($latestnewsworld, $this->load_success['message']);
     }
 
@@ -154,7 +154,7 @@ class NewsController extends Controller
             ->where('newscategories.name', 'Politics')
             ->where('news.status', 1)
             ->latest()
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($latestnewspolitics, $this->load_success['message']);
     }
 
@@ -167,7 +167,7 @@ class NewsController extends Controller
             ->where('newscategories.name', 'Lifestyle')
             ->where('news.status', 1)
             ->latest()
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($latestnewslifestyle, $this->load_success['message']);
     }
 
@@ -181,7 +181,7 @@ class NewsController extends Controller
             ->where('newscategories.name', 'Entertainment')
             ->where('news.status', 1)
             ->latest()
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($latestnewsentertainment, $this->load_success['message']);
     }
 
@@ -195,7 +195,7 @@ class NewsController extends Controller
             ->where('newscategories.name', 'Sports')
             ->where('news.status', 1)
             ->latest()
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($latestnewssports, $this->load_success['message']);
     }
 
@@ -208,7 +208,7 @@ class NewsController extends Controller
             ->where('newscategories.name', 'Technology')
             ->where('news.status', 1)
             ->latest()
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($latestnewstechnology, $this->load_success['message']);
     }
 
@@ -221,7 +221,7 @@ class NewsController extends Controller
             ->where('newscategories.name', 'Business')
             ->where('news.status', 1)
             ->latest()
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($latestnewsbusiness, $this->load_success['message']);
     }
 
@@ -235,7 +235,7 @@ class NewsController extends Controller
             ->select('news.id', 'news.title', 'news.image', 'news.date', 'newscategories.name as news_category', 'newscategories.slug as news_categoryslug', DB::raw("CONCAT(users.first_name,' ',users.last_name) AS reporter_name"))
             ->where('news.status', 1)
             ->orderByDesc('news.viewers')
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($popularsnews, $this->load_success['message']);
     }
 
@@ -247,7 +247,7 @@ class NewsController extends Controller
             ->select('news.id', 'news.title', 'news.image', 'news.date', 'newscategories.name as news_category', 'newscategories.slug as news_categoryslug', DB::raw("CONCAT(users.first_name,' ',users.last_name) AS reporter_name"))
             ->where('news.status', 1)
             ->orderByDesc('news.viewers')
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($popularsnewsall, $this->load_success['message']);
     }
 
@@ -260,7 +260,7 @@ class NewsController extends Controller
             ->where('newscategories.name', 'World')
             ->where('news.status', 1)
             ->orderByDesc('news.viewers')
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($popularsnewsworld, $this->load_success['message']);
     }
 
@@ -273,7 +273,7 @@ class NewsController extends Controller
             ->where('newscategories.name', 'Lifestyle')
             ->where('news.status', 1)
             ->orderByDesc('news.viewers')
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($popularsnewslifestyle, $this->load_success['message']);
     }
 
@@ -286,7 +286,7 @@ class NewsController extends Controller
             ->where('newscategories.name', 'Entertainment')
             ->where('news.status', 1)
             ->orderByDesc('news.viewers')
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($popularsnewsentertainment, $this->load_success['message']);
     }
 
@@ -299,7 +299,7 @@ class NewsController extends Controller
             ->where('newscategories.name', 'Sports')
             ->where('news.status', 1)
             ->orderByDesc('news.viewers')
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($popularsnewssports, $this->load_success['message']);
     }
 
@@ -312,7 +312,7 @@ class NewsController extends Controller
             ->where('newscategories.name', 'Technology')
             ->where('news.status', 1)
             ->orderByDesc('news.viewers')
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($popularsnewstechnology, $this->load_success['message']);
     }
 
@@ -334,7 +334,7 @@ class NewsController extends Controller
                     ->orWhere('newssubcategories.name','LIKE', '%'. $request->search. '%');
             })
             ->orderByDesc('news.id')
-            ->paginate($this->perPage());
+            ->paginate(request('per_page',10));
         return $this->successResponse($searchnews, $this->load_success['message']);
     }
 }

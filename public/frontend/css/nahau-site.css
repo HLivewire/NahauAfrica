@@ -44,19 +44,11 @@
 .nx-crumbs a:hover{color:var(--nx-red)}
 .nx-banner .nx-tag{font-family:'Source Serif 4',Georgia,serif;font-size:22px;font-weight:600;color:var(--nx-sec);margin:10px 0 14px}
 .nx-banner p.nx-lead{max-width:720px}
-/* hero (home) in brand color #D9D9D9 */
-.nx-hero{padding:88px 0 72px;text-align:left;background:#D9D9D9;border-bottom:1px solid #bfbfbf}
-.nx-hero h1{max-width:900px;margin:16px 0 22px;color:#0F0F0F}
-.nx-hero .nx-lead{max-width:720px;margin:0 0 30px;color:#4A4A4A}
+/* hero (home) */
+.nx-hero{padding:88px 0 72px;text-align:left;background:#fff}
+.nx-hero h1{max-width:900px;margin:16px 0 22px}
+.nx-hero .nx-lead{max-width:720px;margin:0 0 30px}
 .nx-hero .nx-actions{display:flex;gap:14px;justify-content:flex-start;flex-wrap:wrap}
-
-/* Header in brand color #D9D9D9 */
-.maan-top-bar{background:#D9D9D9 !important;color:#0F0F0F !important;border-bottom:1px solid #bfbfbf !important}
-.maan-top-bar .maan-current-date,.maan-top-bar .maan-current-date *,.maan-top-bar .maan-social-link li a{color:#0F0F0F !important}
-.maan-top-bar .maan-current-date .icon svg{fill:#0F0F0F !important}
-.maan-top-bar .maan-social-link ul{border-left:1px solid #bfbfbf !important}
-.maan-mid-bar{background:#D9D9D9 !important;border-bottom:1px solid #c8c8c8 !important}
-.maan-manu-bar,header.sticky-manu .maan-manu-bar.sticky,header.sticky-mid-manu .maan-manu-bar.sticky{background:#D9D9D9 !important;border-bottom:1px solid #bfbfbf !important}
 /* cards */
 .nx-grid{display:grid;gap:28px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 .nx-grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
