@@ -27,8 +27,8 @@
             <a class="nx-xs-btn" href="{{ Stories::url($hs) }}" @if(! $loop->first) tabindex="-1" @endif>{{ __('Read more') }}</a>
         </article>
         @endforeach
-        <button type="button" class="nx-xs-arrow nx-xs-prev" aria-label="{{ __('Previous') }}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-        <button type="button" class="nx-xs-arrow nx-xs-next" aria-label="{{ __('Next') }}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        <button type="button" class="nx-xs-arrow nx-xs-prev" aria-label="{{ __('Previous') }}"><i aria-hidden="true"></i></button>
+        <button type="button" class="nx-xs-arrow nx-xs-next" aria-label="{{ __('Next') }}"><i aria-hidden="true"></i></button>
     </div>
 </section>
 @endif
