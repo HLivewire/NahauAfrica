@@ -12,19 +12,28 @@ use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
-    public function maanNewsComment(Request $request,$id)
+    public function maanNewsComment(Request $request, $id)
     {
-        $request->validate([
-            'name'=>'required',
-            'email'=>'required|email',
-            'comment'=>'required'
+        // Honeypot check against automated comment spam
+        if ($request->filled('nx_website') || $request->filled('website')) {
+            return redirect()->back();
+        }
+
+        $news = News::where('id', $id)->where('status', 1)->firstOrFail();
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|max:150',
+            'comment' => 'required|string|max:2000',
         ]);
+
         $newscomments = new Newscomment();
-        $newscomments->news_id = $id;
-        $newscomments->name = $request->name;
-        $newscomments->email = $request->email;
-        $newscomments->comment = $request->comment;
+        $newscomments->news_id = $news->id;
+        $newscomments->name = strip_tags($validated['name']);
+        $newscomments->email = $validated['email'];
+        $newscomments->comment = strip_tags($validated['comment']);
         $newscomments->save();
+
         return redirect()->back();
     }
 

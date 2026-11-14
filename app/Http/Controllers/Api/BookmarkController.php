@@ -31,7 +31,7 @@ class BookmarkController extends Controller
         $bookmarks = Bookmark::with('news')
             ->where('user_id', auth('api')->id())
             ->latest()
-            ->paginate(request('per_page',10));
+            ->paginate($this->perPage());
         return $this->successResponse($bookmarks, $this->load_success['message']);
     }
 

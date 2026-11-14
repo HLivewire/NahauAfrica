@@ -77,3 +77,177 @@
   .nh-hero-grid{padding-top:48px !important;padding-bottom:48px !important}
 }
 @media (max-width:575px){.nh-doors,.nh-heroes{grid-template-columns:1fr}.nh-door{min-height:240px}}
+
+/* African Heroes Automated Carousel (Home showcase) */
+.nx-hero-carousel-wrap {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #E2E4E8;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.nx-hero-carousel-wrap:hover {
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.08);
+  border-color: #D0D4DA;
+}
+.nx-hero-carousel-slides {
+  position: relative;
+  min-height: 360px;
+}
+.nx-hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.985);
+  transition: opacity 0.75s cubic-bezier(0.4, 0, 0.2, 1), transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+.nx-hero-slide.is-active {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  pointer-events: auto;
+}
+.nx-hero-slide-grid {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 36px 44px;
+}
+.nx-hero-slide-media {
+  flex: 0 0 42%;
+  min-width: 0;
+}
+.nx-hero-slide-imgbox {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #F2F4F7;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+.nx-hero-slide-imgbox img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.8s ease;
+}
+.nx-hero-carousel-wrap:hover .nx-hero-slide-imgbox img {
+  transform: scale(1.03);
+}
+.nx-hero-slide-tag {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  background: rgba(15, 15, 15, 0.78);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.02em;
+}
+.nx-hero-slide-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.nx-hero-slide-kicker {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #E60000;
+  margin-bottom: 8px;
+}
+.nx-hero-slide-title {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: clamp(30px, 3.2vw, 44px);
+  font-weight: 700;
+  color: #0F0F0F;
+  line-height: 1.15;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+.nx-hero-slide-known {
+  font-size: 15px;
+  color: #6B6B6B;
+  font-weight: 500;
+  margin: 0 0 16px;
+}
+.nx-hero-slide-quote {
+  font-size: 17px;
+  line-height: 1.65;
+  color: #2D3139;
+  margin: 0 0 26px;
+  max-width: 580px;
+}
+.nx-hero-read-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #E60000;
+  color: #ffffff !important;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 13px 30px;
+  border-radius: 30px;
+  text-decoration: none !important;
+  border: 1px solid #E60000;
+  box-shadow: 0 4px 14px rgba(230, 0, 0, 0.22);
+  transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+}
+.nx-hero-read-btn:hover {
+  background: #C80000;
+  border-color: #C80000;
+  transform: translateX(3px);
+  box-shadow: 0 6px 18px rgba(200, 0, 0, 0.32);
+}
+.nx-hero-carousel-prog {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #F0F2F5;
+  overflow: hidden;
+  z-index: 5;
+}
+.nx-hero-carousel-bar {
+  height: 100%;
+  width: 100%;
+  background: #E60000;
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+@media (max-width: 860px) {
+  .nx-hero-slide-grid {
+    flex-direction: column;
+    padding: 24px;
+    gap: 22px;
+  }
+  .nx-hero-slide-media {
+    width: 100%;
+    flex: auto;
+  }
+  .nx-hero-slide-title {
+    font-size: 28px;
+  }
+  .nx-hero-slide-quote {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+}
+

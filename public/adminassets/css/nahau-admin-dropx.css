@@ -22,11 +22,13 @@ body{font-size:14px}
 .content-wrapper h1,.content-wrapper h2,.content-wrapper h3,.content-wrapper h4,.content-wrapper h5,.content-wrapper label,.content-wrapper .card-title{color:var(--foreground)}
 .content-wrapper p,.content-wrapper small,.content-wrapper .text-muted,.content-wrapper .breadcrumb-item,.content-wrapper .breadcrumb-item a{color:var(--muted-foreground) !important}
 .content-wrapper a:not(.btn):not(.nav-link):not(.page-link):not(.dx-btn):not(.dx-qcard):not(.dx-link){color:var(--primary)}
-.main-header,.main-header.navbar{background:color-mix(in srgb,var(--card) 95%,transparent) !important;border-bottom:1px solid var(--border) !important;min-height:68px;backdrop-filter:blur(8px)}
-.main-header .nav-link{color:var(--muted-foreground) !important;border-radius:8px}
-.main-header .nav-link:hover{color:var(--primary) !important;background:color-mix(in srgb,var(--primary) 8%,transparent)}
-.main-header .dx-iconbtn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid var(--border);border-radius:10px;background:var(--background);color:var(--muted-foreground);cursor:pointer;margin-left:8px;box-shadow:var(--shadow-card);transition:color .2s,border-color .2s,background .2s}
-.main-header .dx-iconbtn:hover{color:var(--primary);border-color:color-mix(in srgb,var(--primary) 35%,var(--border));background:color-mix(in srgb,var(--primary) 6%,var(--background))}
+.main-header,.main-header.navbar{background:#D9D9D9 !important;border-bottom:1px solid #bfbfbf !important;min-height:68px;backdrop-filter:none}
+.main-header .nav-link{color:#2a2b2f !important;border-radius:8px}
+.main-header .nav-link:hover{color:#000 !important;background:rgba(0,0,0,.06)}
+.main-header .dx-iconbtn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid #bcbcbc;border-radius:10px;background:rgba(255,255,255,.65);color:#2a2b2f;cursor:pointer;margin-left:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);transition:color .2s,border-color .2s,background .2s}
+.main-header .dx-iconbtn:hover{color:#000;border-color:#999;background:#fff}
+.main-header .dx-userbtn{background:rgba(255,255,255,.65);border-color:#bcbcbc;color:#2a2b2f}
+.main-header .dx-userbtn:hover{background:#fff;border-color:#999}
 .dx-iconbtn .i-sun{display:none}html[data-theme="dark"] .dx-iconbtn .i-sun{display:inline}html[data-theme="dark"] .dx-iconbtn .i-moon{display:none}
 .main-sidebar,.main-sidebar.sidebar-dark-primary{background:var(--sidebar) !important;border-right:1px solid var(--sidebar-border);box-shadow:none !important}
 .main-sidebar .brand-link{height:68px;border-bottom:1px solid var(--sidebar-border) !important;color:var(--foreground) !important;display:flex !important;align-items:center;gap:10px;padding:0 16px !important;overflow:hidden;white-space:nowrap}

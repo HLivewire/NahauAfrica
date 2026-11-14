@@ -24,5 +24,11 @@ Trait ApiResponse
         ], $code);
     }
 
+    protected function perPage(int $default = 10, int $max = 100): int
+    {
+        $perPage = (int) request('per_page', $default);
+        return min(max($perPage > 0 ? $perPage : $default, 1), $max);
+    }
+
 
 }

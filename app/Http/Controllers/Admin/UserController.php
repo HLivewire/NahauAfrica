@@ -41,6 +41,19 @@ class UserController extends Controller
      */
     public function maanUserStore(Request $request)
     {
+        // Enforce privilege boundaries
+        if (!auth()->user()->hasRole('super-admin')) {
+            if ($request->user_type == '4') {
+                abort(403, 'Only super administrators can create super-admin accounts.');
+            }
+            if ($request->role) {
+                $assignedRole = Role::find($request->role);
+                if ($assignedRole && $assignedRole->slug === 'super-admin') {
+                    abort(403, 'Only super administrators can assign the super-admin role.');
+                }
+            }
+        }
+
         // validation posted data
         $validator = Validator::make($request->all(),[
             'first_name'=> 'required',
@@ -53,7 +66,7 @@ class UserController extends Controller
             'present_address'=> 'required',
             'permanent_address'=> 'required',
             'appointed_date'=> 'required',
-            'uesr_type'=> 'required',
+            'user_type'=> 'required',
             'password'=>'required',
             'password_confirmation'=>'required|same:password',
 
@@ -110,9 +123,13 @@ class UserController extends Controller
      */
     public function maanUserEdit(User $user)
     {
-//get all user data
+        // Enforce privilege boundaries
+        if ($user->hasRole('super-admin') && !auth()->user()->hasRole('super-admin')) {
+            abort(403, 'Unauthorized. Only super administrators can modify a super administrator account.');
+        }
 
-        $roles =Role::get();
+        //get all user data
+        $roles = Role::get();
         $userRole = $user->roles->first();
         if ($userRole!=null){
             $rolePermissions = $userRole->permissions;
@@ -129,6 +146,22 @@ class UserController extends Controller
      */
     public function maanUserUpdate(Request $request, User $user)
     {
+        // Enforce privilege boundaries
+        if ($user->hasRole('super-admin') && !auth()->user()->hasRole('super-admin')) {
+            abort(403, 'Unauthorized. Only super administrators can modify a super administrator account.');
+        }
+
+        if (!auth()->user()->hasRole('super-admin')) {
+            if ($request->user_type == '4') {
+                abort(403, 'Only super administrators can set a user type to super admin.');
+            }
+            if ($request->role) {
+                $assignedRole = Role::find($request->role);
+                if ($assignedRole && $assignedRole->slug === 'super-admin') {
+                    abort(403, 'Only super administrators can assign the super-admin role.');
+                }
+            }
+        }
 
         // validation posted data
         $request->validate([
@@ -210,6 +243,14 @@ class UserController extends Controller
      */
     public function maanuserdestroy (User $user)
     {
+        // Enforce privilege boundaries
+        if (auth()->id() === $user->id) {
+            abort(403, 'You cannot delete your own account.');
+        }
+
+        if ($user->hasRole('super-admin') && !auth()->user()->hasRole('super-admin')) {
+            abort(403, 'Unauthorized. Only super administrators can delete a super administrator account.');
+        }
 
         //data delete
         if (media_exists($user->image)){

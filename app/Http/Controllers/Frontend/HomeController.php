@@ -281,14 +281,27 @@ class HomeController extends Controller
 
     public function subscribeAjax(Request $request)
     {
-        $request->validate(['email' => 'required|email']);
-        $count = Maanuser::where('email',$request->email)->count();
-        if ($count>0) {
-           $this->setError('Existing');
-            return $count;
+        $validated = $request->validate([
+            'email' => 'required|email|max:160',
+        ]);
+
+        $exists = Maanuser::where('email', $validated['email'])->exists();
+        if ($exists) {
+            $this->setError('Existing');
+            return response()->json([
+                'status' => 'exists',
+                'message' => __('Your email already exists!'),
+                'count' => 1,
+            ], 200);
         }
-        Maanuser::updateOrCreate(['email'=>$request->email]);
-        return $request;
+
+        Maanuser::create(['email' => $validated['email']]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => __('You Subscribed Successfully.'),
+            'count' => 0,
+        ], 200);
     }
 
 }

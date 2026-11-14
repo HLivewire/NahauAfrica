@@ -99,7 +99,7 @@
 
                                         </div>
                                     </div>
-                                    <p>{!! $getnews->description !!} </p>
+                                    <p>{!! nclean($getnews->description) !!}</p>
                                 </div>
                             </div>
                         </div>

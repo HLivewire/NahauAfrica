@@ -62,8 +62,8 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     Route::get('category_popular_news/{category_id}', [NewsController::class, 'categoryPopularNews']);
     Route::get('news_details/{news_id}', [NewsController::class, 'newsDetails']);
     Route::get('news_comments/{news_id}', [NewsCommentsController::class, 'newsComments']);
-    Route::post('news_comment', [NewsCommentsController::class, 'store']);
-    Route::post('contact_us', [ContactUsController::class, 'store']);
+    Route::post('news_comment', [NewsCommentsController::class, 'store'])->middleware('throttle:10,1');
+    Route::post('contact_us', [ContactUsController::class, 'store'])->middleware('throttle:10,1');
 
     /** user Auth Routes */
     Route::post('user_register', [RegisterController::class, 'register']);

@@ -399,14 +399,17 @@ Tags:
         }
         $.ajax({
             url:'/subscribe/ajax',
-            method:"get",
+            method:"post",
             dataType:"json",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             data:{
                 'email':email
             },
             success: function(data){
-            if (data>0){
-                toastr.warning('You email already exists!')
+            if (data.count > 0 || data.status === 'exists'){
+                toastr.warning('Your email already exists!')
             }else{
                 toastr.success('You Subscribed Successfully.')
             }

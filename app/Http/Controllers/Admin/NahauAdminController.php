@@ -34,10 +34,10 @@ class NahauAdminController extends Controller
                 ['title', 'Title (English)', 'text', 'required|max:160'], ['title_sw', 'Title (Kiswahili)', 'text', 'nullable|max:160'], ['slug', 'Slug (auto if empty)', 'text', 'nullable|alpha_dash'],
                 ['description', 'Description', 'textarea', 'nullable'], ['cover', 'Cover image', 'image', 'nullable|image|max:4096'], ['author_id', 'Author', 'select', 'nullable', $authors],
                 ['rhythm', 'Publishing rhythm', 'text', 'nullable|max:160'], ['featured', 'Featured on Home', 'checkbox', 'nullable'], ['next_chapter_date', 'Next chapter date', 'date', 'nullable|date']]],
-            'heroes' => ['title' => 'Hero profiles', 'model' => \App\Models\NahauHero::class, 'cols' => ['name', 'country', 'show_in_spotlight', 'spotlight_order'], 'fields' => [
-                ['news_id', 'Story (African Heroes news item)', 'select', 'required|integer', fn () => $newsIn(['african-heroes'])], ['name', 'Name', 'text', 'required|max:160'], ['born', 'Born', 'text', 'nullable|max:40'], ['died', 'Died', 'text', 'nullable|max:40'],
-                ['country', 'Country', 'text', 'nullable|max:80'], ['known_for', 'Known for (one line)', 'text', 'nullable|max:200'], ['spotlight_summary', 'Home spotlight summary (max 220)', 'textarea', 'nullable|max:220'],
-                ['show_in_spotlight', 'Show in Home spotlight', 'checkbox', 'nullable'], ['spotlight_order', 'Spotlight order', 'number', 'nullable|integer'],
+            'heroes' => ['title' => 'Hero profiles', 'model' => \App\Models\NahauHero::class, 'cols' => ['portrait', 'name', 'country', 'spotlight_summary', 'show_in_spotlight', 'spotlight_order'], 'fields' => [
+                ['news_id', 'Story (African Heroes news item — auto-created if empty)', 'select', 'nullable|integer', fn () => $newsIn(['african-heroes'])], ['name', 'Name', 'text', 'required|max:160'], ['born', 'Born', 'text', 'nullable|max:40'], ['died', 'Died', 'text', 'nullable|max:40'],
+                ['country', 'Country', 'text', 'nullable|max:80'], ['known_for', 'Known for (one line)', 'text', 'nullable|max:200'], ['spotlight_summary', 'Home carousel summary / Sweet small word (max 220)', 'textarea', 'nullable|max:220'],
+                ['show_in_spotlight', 'Show in Home carousel (Publish)', 'checkbox', 'nullable'], ['spotlight_order', 'Spotlight order', 'number', 'nullable|integer'],
                 ['portrait', 'Portrait', 'image', 'nullable|image|max:4096'], ['portrait_credit', 'Portrait credit and licence', 'text', 'nullable|max:200'], ['sources', 'Sources (one per line: title | URL)', 'textarea', 'nullable']]],
             'opportunities' => ['title' => 'Opportunities', 'model' => \App\Models\NahauOpportunity::class, 'cols' => ['title', 'type', 'employer', 'closing_date', 'status'], 'fields' => [
                 ['title', 'Title', 'text', 'required|max:160'], ['type', 'Type', 'select', 'required', fn () => config('nahau.opportunity_types')], ['employer', 'Employer or organisation', 'text', 'required|max:160'],
@@ -184,10 +184,96 @@ class NahauAdminController extends Controller
         if ($res === 'stories' && empty($data['reading_minutes'])) {
             $data['reading_minutes'] = nreading(News::find($row->news_id)?->description);
         }
+        if ($res === 'heroes') {
+            if (empty($data['news_id'])) {
+                try {
+                    $cat = \App\Models\Newscategory::where('slug', 'african-heroes')->first();
+                    $sub = $cat ? \App\Models\Newssubcategory::where('category_id', $cat->id)->first() : null;
+                    if ($sub) {
+                        $spec = \Illuminate\Support\Facades\DB::table('newsspecialities')->value('id') ?? 1;
+                        $news = News::create([
+                            'title' => $data['name'],
+                            'summary' => $data['spotlight_summary'] ?: ($data['known_for'] ?: $data['name']),
+                            'description' => '<h2>What they did</h2><p>' . e($data['known_for'] ?? '') . '</p><h2>Their contribution</h2><p>' . e($data['spotlight_summary'] ?? '') . '</p>',
+                            'status' => 1,
+                            'date' => now()->toDateString(),
+                            'subcategory_id' => $sub->id,
+                            'speciality_id' => $spec,
+                            'image' => !empty($data['portrait']) ? json_encode([$data['portrait']]) : '["public/uploads/images/nahau/sample_1.jpg"]',
+                            'reporter_id' => auth()->id() ?? 1,
+                            'user_id' => auth()->id() ?? 1,
+                        ]);
+
+                        NahauStoryMeta::create([
+                            'news_id' => $news->id,
+                            'slug' => \App\Nahau\Stories::makeSlug($data['name'], $news->id),
+                            'format' => 'Biography',
+                            'label' => 'Researched biography',
+                            'language' => 'en',
+                            'dek' => $data['spotlight_summary'] ?: $data['known_for'],
+                        ]);
+
+                        $data['news_id'] = $news->id;
+                    }
+                } catch (\Throwable $e) {
+                    // Log or continue
+                }
+            } elseif (!empty($data['portrait'])) {
+                try {
+                    News::where('id', $data['news_id'])->update(['image' => json_encode([$data['portrait']])]);
+                } catch (\Throwable $e) {}
+            }
+        }
 
         $row->fill($data)->save();
 
         return redirect()->route('admin.nahau.index', $res)->with('success', 'Saved.');
+    }
+
+    public function togglePublish(Request $r, string $res, int $id)
+    {
+        $d = $this->def($res);
+        $row = $d['model']::findOrFail($id);
+
+        $state = null;
+        $msg = 'Updated successfully.';
+
+        if ($res === 'heroes') {
+            $row->show_in_spotlight = !$row->show_in_spotlight;
+            $row->save();
+            $state = (bool) $row->show_in_spotlight;
+            $msg = $state ? "Hero '{$row->name}' is now published in the home carousel." : "Hero '{$row->name}' is now hidden from the home carousel.";
+        } elseif ($res === 'authors') {
+            $row->show_on_home = !$row->show_on_home;
+            $row->save();
+            $state = (bool) $row->show_on_home;
+            $msg = $state ? "Author '{$row->name}' is now visible in 'Meet the voices'." : "Author '{$row->name}' is now hidden from home.";
+        } elseif ($res === 'series') {
+            $row->featured = !$row->featured;
+            $row->save();
+            $state = (bool) $row->featured;
+            $msg = $state ? "Series '{$row->title}' featured on home." : "Series '{$row->title}' unfeatured.";
+        } elseif ($res === 'stories') {
+            $newFeatured = !$row->featured;
+            if ($newFeatured) {
+                NahauStoryMeta::where('id', '!=', $row->id)->update(['featured' => false]);
+            }
+            $row->featured = $newFeatured;
+            $row->save();
+            $state = (bool) $row->featured;
+            $msg = $state ? "Story featured on home." : "Story unfeatured.";
+        } elseif ($res === 'opportunities') {
+            $row->status = ($row->status === 'published') ? 'hidden' : 'published';
+            $row->save();
+            $state = $row->status;
+            $msg = "Opportunity status updated to {$row->status}.";
+        }
+
+        if ($r->wantsJson() || $r->ajax()) {
+            return response()->json(['success' => true, 'state' => $state, 'message' => $msg]);
+        }
+
+        return back()->with('success', $msg);
     }
 
     public function destroy(string $res, int $id)

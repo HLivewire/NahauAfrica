@@ -29,8 +29,7 @@ class PageController extends Controller
         });
 
         $heroes = NahauHero::where('show_in_spotlight', 1)->orderBy('spotlight_order')->limit(8)->get();
-        $heroStories = $heroes->isEmpty() ? collect() : Stories::query()->whereIn('news.id', $heroes->pluck('news_id'))->get()->keyBy('id');
-        $heroes = $heroes->filter(fn ($h) => $heroStories->has($h->news_id))->values();
+        $heroStories = $heroes->isEmpty() ? collect() : Stories::query()->whereIn('news.id', $heroes->pluck('news_id')->filter())->get()->keyBy('id');
 
         return view('nahau.home', compact('featured', 'latest', 'series', 'chapters', 'voices', 'heroes', 'heroStories'));
     }

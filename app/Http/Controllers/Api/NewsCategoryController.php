@@ -33,7 +33,7 @@ class NewsCategoryController extends Controller
         $categories = Newscategory::select('id','name','slug','image')
             ->where('type','news')
             ->orderBy('name')
-            ->paginate(request('per_page',10));
+            ->paginate($this->perPage());
         return $this->successResponse($categories,$this->load_success['message']);
     }
 
@@ -47,7 +47,7 @@ class NewsCategoryController extends Controller
     }
     public function subCategory(Request $request, $category_id):JsonResponse
     {
-        $news_sub_category = \App\Models\Newssubcategory::where('category_id',$category_id)->paginate(request('per_page',10));
+        $news_sub_category = \App\Models\Newssubcategory::where('category_id',$category_id)->paginate($this->perPage());
         if($news_sub_category)
             return $this->successResponse($news_sub_category,$this->load_success['message']);
         else

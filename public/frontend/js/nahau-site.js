@@ -273,33 +273,131 @@
   layout();
 })();
 
-/* African Heroes carousel: panels slide from one hero to the next; arrows left/right, auto-advances */
+/* African Heroes automated showcase carousel (hands-free, auto-advances, no controllers) */
 (function () {
-  var root = document.querySelector('[data-nx-herocar]');
+  var root = document.querySelector('[data-nx-heroes-carousel]') || document.querySelector('[data-nx-herocar]');
   if (!root) return;
-  var slides = Array.prototype.slice.call(root.querySelectorAll('.nx-xs'));
+  var slides = Array.prototype.slice.call(root.querySelectorAll('.nx-hero-slide, .nx-xs'));
   if (slides.length < 2) return;
-  var every = parseInt(root.getAttribute('data-interval'), 10) || 6500;
+  var duration = parseInt(root.getAttribute('data-interval'), 10) || 6500;
+  var bar = root.querySelector('.nx-hero-carousel-bar');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var i = 0, timer = null, visible = true;
-  function show(n) {
+
+  var currentIdx = 0;
+  var isHovered = false;
+  var isVisible = true;
+  var startTime = null;
+  var elapsedBeforePause = 0;
+  var animFrameId = null;
+
+  function setSlide(n) {
     n = (n + slides.length) % slides.length;
-    if (n === i) return;
-    slides.forEach(function (s) { s.classList.remove('is-prev'); });
-    var old = slides[i];
-    old.classList.remove('is-active'); old.classList.add('is-prev'); old.setAttribute('aria-hidden', 'true');
-    var a = old.querySelector('a'); if (a) a.tabIndex = -1;
-    i = n;
-    slides[i].classList.add('is-active'); slides[i].removeAttribute('aria-hidden');
-    a = slides[i].querySelector('a'); if (a) a.removeAttribute('tabindex');
-    setTimeout(function () { old.classList.remove('is-prev'); }, 1300);
+    if (n === currentIdx && slides[currentIdx].classList.contains('is-active')) return;
+
+    slides.forEach(function (s, idx) {
+      if (idx === n) {
+        s.classList.add('is-active');
+        s.removeAttribute('aria-hidden');
+        var link = s.querySelector('a');
+        if (link) link.removeAttribute('tabindex');
+      } else {
+        s.classList.remove('is-active');
+        s.setAttribute('aria-hidden', 'true');
+        var link = s.querySelector('a');
+        if (link) link.tabIndex = -1;
+      }
+    });
+
+    currentIdx = n;
+    resetProgress();
   }
-  function stop() { if (timer) { clearInterval(timer); timer = null; } }
-  function start() { stop(); if (reduce || !visible || document.hidden) return; timer = setInterval(function () { show(i + 1); }, every); }
-  var pv = root.querySelector('.nx-xs-prev'), nx = root.querySelector('.nx-xs-next');
-  if (pv) pv.addEventListener('click', function () { show(i - 1); start(); });
-  if (nx) nx.addEventListener('click', function () { show(i + 1); start(); });
-  if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; start(); }, { threshold: 0.25 }).observe(root);
-  document.addEventListener('visibilitychange', start);
+
+  function resetProgress() {
+    elapsedBeforePause = 0;
+    startTime = null;
+    if (bar) bar.style.transform = 'scaleX(0)';
+  }
+
+  function step(timestamp) {
+    if (!isVisible || document.hidden || isHovered || reduce) {
+      return;
+    }
+    if (!startTime) {
+      startTime = timestamp - elapsedBeforePause;
+    }
+    var totalElapsed = timestamp - startTime;
+    var progress = Math.min(totalElapsed / duration, 1);
+
+    if (bar) {
+      bar.style.transform = 'scaleX(' + progress + ')';
+    }
+
+    if (totalElapsed >= duration) {
+      setSlide(currentIdx + 1);
+      startTime = performance.now();
+      animFrameId = requestAnimationFrame(step);
+    } else {
+      animFrameId = requestAnimationFrame(step);
+    }
+  }
+
+  function start() {
+    if (animFrameId) cancelAnimationFrame(animFrameId);
+    if (reduce || !isVisible || document.hidden || isHovered) return;
+    startTime = null;
+    animFrameId = requestAnimationFrame(step);
+  }
+
+  function pause() {
+    if (animFrameId) {
+      cancelAnimationFrame(animFrameId);
+      animFrameId = null;
+    }
+    if (startTime) {
+      elapsedBeforePause = performance.now() - startTime;
+    }
+  }
+
+  function resume() {
+    if (reduce || !isVisible || document.hidden || isHovered) return;
+    startTime = performance.now() - elapsedBeforePause;
+    animFrameId = requestAnimationFrame(step);
+  }
+
+  root.addEventListener('mouseenter', function () {
+    isHovered = true;
+    pause();
+  }, { passive: true });
+
+  root.addEventListener('mouseleave', function () {
+    isHovered = false;
+    resume();
+  }, { passive: true });
+
+  root.addEventListener('focusin', function () {
+    isHovered = true;
+    pause();
+  }, { passive: true });
+
+  root.addEventListener('focusout', function () {
+    isHovered = false;
+    resume();
+  }, { passive: true });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      isVisible = entries[0].isIntersecting;
+      if (isVisible) resume();
+      else pause();
+    }, { threshold: 0.2 }).observe(root);
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) pause();
+    else resume();
+  });
+
+  // Initialize
+  setSlide(0);
   start();
 })();

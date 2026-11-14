@@ -5,7 +5,7 @@
 * */
 "use strict";
 $(document).ready(function(){
-    $.ajaxSetup({ headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]') } });
+    $.ajaxSetup({ headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content') } });
 // news category
     $("#newscategory_id").on("change",function (){
 
@@ -275,7 +275,7 @@ $('.theme-color').each(function () {
         }
         $.ajax({
             url:'/admin/publish/theme-color/ajax',
-            method:"GET",
+            method:"POST",
             dataType:"json",
             data:{
                 'status':status,'theme_color':theme_color,
@@ -313,7 +313,7 @@ $('.color-items').each(function () {
         }
         $.ajax({
             url:'/admin/publish/theme-color/ajax',
-            method:"GET",
+            method:"POST",
             dataType:"json",
             data:{
                 'status':status,'theme_color':theme_color,
@@ -341,7 +341,7 @@ function ajaxFunction(id,statustext,status){
 
     $.ajax({
         url:'/admin/publish/status/ajax',
-        method:"GET",
+        method:"POST",
         dataType:"json",
         data:{
             'status':status,'id':id,'statustext':statustext,

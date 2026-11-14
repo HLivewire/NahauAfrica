@@ -123,6 +123,69 @@
 </div>
 @endif
 
+@if($heroes->isNotEmpty())
+<div class="nx-sec nx-sec--tight">
+    <div class="nx-wrap">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:20px">
+            <div>
+                <p class="nx-eyebrow" style="margin-bottom:4px;color:#E60000">{{ __('African Heroes') }}</p>
+                <h2 class="nx-h2" style="margin:0">{{ __('Lives worth remembering') }}</h2>
+            </div>
+            <a class="nx-link" href="{{ nroute('african-heroes') }}">{{ __('See all heroes') }} →</a>
+        </div>
+
+        <div class="nx-hero-carousel-wrap" data-nx-heroes-carousel data-interval="6500" role="region" aria-roledescription="carousel" aria-label="{{ __('African Heroes') }}">
+            <div class="nx-hero-carousel-slides">
+                @foreach($heroes as $idx => $h)
+                    @php
+                        $hs = $heroStories->get($h->news_id);
+                        $hUrl = $hs ? \App\Nahau\Stories::url($hs) : nroute('african-heroes');
+                        $hImg = ($h->portrait ? media_url($h->portrait) : null) ?: ($hs ? nimage($hs) : null) ?: asset('uploads/images/nahau/sample_1.jpg');
+                        $dates = trim(($h->born ?? '').($h->died ? '–'.$h->died : ''));
+                        $metaBadge = trim(($h->country ?? '').($dates ? ' · '.$dates : ''));
+                    @endphp
+                    <div class="nx-hero-slide {{ $idx === 0 ? 'is-active' : '' }}" data-slide-index="{{ $idx }}" role="group" aria-roledescription="slide" aria-label="{{ $h->name }}">
+                        <div class="nx-hero-slide-grid">
+                            <!-- Left: Hero Picture -->
+                            <div class="nx-hero-slide-media">
+                                <div class="nx-hero-slide-imgbox">
+                                    <img src="{{ $hImg }}" alt="{{ $h->name }}" loading="{{ $idx === 0 ? 'eager' : 'lazy' }}">
+                                    @if($metaBadge)
+                                        <span class="nx-hero-slide-tag">{{ $metaBadge }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <!-- Right: Sweet small word & Read more button -->
+                            <div class="nx-hero-slide-info">
+                                <span class="nx-hero-slide-kicker">{{ __('African Heroes') }}</span>
+                                <h3 class="nx-hero-slide-title">{{ $h->name }}</h3>
+                                @if($h->known_for)
+                                    <p class="nx-hero-slide-known">{{ $h->known_for }}</p>
+                                @endif
+                                <p class="nx-hero-slide-quote">
+                                    “{{ $h->spotlight_summary ?: ($hs ? $hs->summary : '') }}”
+                                </p>
+                                <div class="nx-hero-slide-cta">
+                                    <a class="nx-hero-read-btn" href="{{ $hUrl }}">
+                                        <span>{{ __('Read more') }}</span>
+                                        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            @if($heroes->count() > 1)
+                <div class="nx-hero-carousel-prog" aria-hidden="true">
+                    <div class="nx-hero-carousel-bar"></div>
+                </div>
+            @endif
+        </div>
+    </div>
+</div>
+@endif
+
 @if($voices->isNotEmpty())
 <div class="nx-sec">
     <div class="nx-wrap">
