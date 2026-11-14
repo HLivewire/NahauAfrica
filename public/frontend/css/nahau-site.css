@@ -535,5 +535,20 @@
 @media (max-width:767px){.nx .nx-xs-arrow{top:150px;width:40px;height:40px}.nx .nx-xs-prev{left:10px}.nx .nx-xs-next{right:10px}}
 @media (prefers-reduced-motion:reduce){.nx .nx-xs *{transition:none !important}}
 .nx .nx-xs-band-in{margin:0 0 16px !important;padding:0 !important;display:block;position:relative;overflow:visible !important}
-.nx .nx-xs-band-in::after{content:'';position:absolute;left:0;bottom:-3px;width:31%;height:3px;border-radius:0;background:#E60000;box-shadow:none}
+.nx .nx-xs-band-in::after{content:'';position:absolute;left:0;bottom:-3px;width:31%;height:3px;border-radius:0;background:#E60000;box-shadow:none;z-index:5}
 @media (max-width:767px){.nx .nx-xs-band-in::after{display:none}.nx .nx-xs-band-in{margin-bottom:0 !important}}
+
+/* Ken Burns: slow zoom on the hero portrait while its slide is showing */
+@keyframes nx-kenburns{from{transform:scale(1)}to{transform:scale(1.14)}}
+.nx .nx-xs-photo img{transform-origin:55% 35%;will-change:transform}
+.nx .nx-xs:nth-child(2n) .nx-xs-photo img{transform-origin:45% 55%}
+.nx .nx-xs:nth-child(3n) .nx-xs-photo img{transform-origin:50% 25%}
+.nx .nx-xs.is-active .nx-xs-photo img,.nx .nx-xs.is-prev .nx-xs-photo img{animation:nx-kenburns 9s ease-out forwards}
+@media (prefers-reduced-motion:reduce){.nx .nx-xs.is-active .nx-xs-photo img,.nx .nx-xs.is-prev .nx-xs-photo img{animation:none}}
+
+/* Ken Burns: slow zoom on the hero portrait while its slide is showing */
+@keyframes nxKenBurns{from{scale:1}to{scale:1.12}}
+.nx .nx-xs-photo img{transform-origin:62% 38%;will-change:transform}
+.nx .nx-xs:nth-child(even) .nx-xs-photo img{transform-origin:40% 60%}
+.nx .nx-xs.is-active .nx-xs-photo img,.nx .nx-xs.is-prev .nx-xs-photo img{animation:nxKenBurns 9s ease-out forwards}
+@media (prefers-reduced-motion:reduce){.nx .nx-xs.is-active .nx-xs-photo img,.nx .nx-xs.is-prev .nx-xs-photo img{animation:none}}
