@@ -7,37 +7,11 @@
 @endsection
 
 @section('nx')
-<div class="nx-xs-band">
-<div class="nx-wrap nx-xs-top"><p class="nx-eyebrow" style="color:var(--nx-red-text)">{{ __('Our Stories. Our Voices.') }}</p></div>
-@if($heroes->isNotEmpty())
-<section class="nx-xs-band-in" data-nx-herocar data-interval="6500" role="region" aria-roledescription="carousel" aria-label="{{ __('African Heroes') }}">
-    <div class="nx-xs-stage">
-        @foreach($heroes as $h)
-        @php
-            $hs = $heroStories[$h->news_id];
-            $himg = ($h->portrait ? nimage($h->portrait) : null) ?: nimage($hs);
-            $hsum = \Illuminate\Support\Str::limit(strip_tags($h->spotlight_summary ?: ($hs->summary ?? '')), 130);
-        @endphp
-        <article class="nx-xs{{ $loop->first ? ' is-active' : '' }}" style="--pc:{{ $loop->odd ? '#232427' : '#5A0B0B' }}" role="group" aria-roledescription="slide" aria-label="{{ $loop->iteration }} / {{ $heroes->count() }}" @if(! $loop->first) aria-hidden="true" @endif>
-            <div class="nx-xs-panel"></div>
-            <div class="nx-xs-photo">@if($himg)<img src="{{ $himg }}" alt="{{ $h->name }}" loading="{{ $loop->first ? 'eager' : 'lazy' }}">@endif</div>
-            <div class="nx-xs-title"><span>{{ __('African Heroes') }}</span><h2>{{ $h->name }}</h2></div>
-            <span class="nx-xs-sq"></span>
-            <p class="nx-xs-sum">{{ $hsum }}</p>
-            <a class="nx-xs-btn" href="{{ Stories::url($hs) }}" @if(! $loop->first) tabindex="-1" @endif>{{ __('Read more') }}</a>
-        </article>
-        @endforeach
-        <button type="button" class="nx-xs-arrow nx-xs-prev" aria-label="{{ __('Previous') }}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-        <button type="button" class="nx-xs-arrow nx-xs-next" aria-label="{{ __('Next') }}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
-    </div>
-</section>
-@endif
-</div>
-
-<div class="nx-hero nx-hero--below">
+<div class="nx-hero" style="background:#D9D9D9;border-bottom:1px solid #bfbfbf;padding:64px 0 56px">
     <div class="nx-wrap">
-        <h1 class="nx-h1">{{ __('African stories. Told in our voices.') }}</h1>
-        <p class="nx-lead">{{ __('Discover fiction, lived experiences, relationship stories, working lives, and remarkable people from across Africa.') }}</p>
+        <p class="nx-eyebrow" style="color:#C80000;margin-bottom:8px">{{ __('Our Stories. Our Voices.') }}</p>
+        <h1 class="nx-h1" style="color:#0F0F0F;margin:0 0 16px">{{ __('African stories. Told in our voices.') }}</h1>
+        <p class="nx-lead" style="color:#4A4A4A;max-width:720px;margin:0 0 28px">{{ __('Discover fiction, lived experiences, relationship stories, working lives, and remarkable people from across Africa.') }}</p>
         <div class="nx-actions">
             <a class="nx-btn" href="{{ nroute('fiction') }}">{{ __('Explore Stories') }}</a>
             <a class="nx-btn nx-btn--ghost" href="{{ nroute('write') }}">{{ __('Write for Us') }}</a>
