@@ -534,6 +534,6 @@
 .nx .nx-xs-arrow:focus-visible{outline:3px solid #E60000;outline-offset:2px}
 @media (max-width:767px){.nx .nx-xs-arrow{top:150px;width:40px;height:40px}.nx .nx-xs-prev{left:10px}.nx .nx-xs-next{right:10px}}
 @media (prefers-reduced-motion:reduce){.nx .nx-xs *{transition:none !important}}
-.nx .nx-xs-band-in{margin:0 0 26px !important;padding:0 !important;display:block;position:relative;overflow:visible !important}
-.nx .nx-xs-band-in::after{content:'';position:absolute;left:0;bottom:-14px;width:31%;height:3px;border-radius:0 8px 8px 0;background:#E60000;box-shadow:0 0 0 4px rgba(255,0,0,.09)}
+.nx .nx-xs-band-in{margin:0 0 22px !important;padding:0 !important;display:block;position:relative;overflow:visible !important}
+.nx .nx-xs-band-in::after{content:'';position:absolute;left:0;bottom:-9px;width:31%;height:3px;border-radius:0;background:#E60000;box-shadow:0 0 0 4px rgba(255,0,0,.09)}
 @media (max-width:767px){.nx .nx-xs-band-in::after{display:none}.nx .nx-xs-band-in{margin-bottom:0 !important}}
