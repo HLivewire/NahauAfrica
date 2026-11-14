@@ -127,18 +127,23 @@
 <div class="nx-sec">
     <div class="nx-wrap">
         <div class="nx-car-head"><h2 class="nx-h2" style="margin:0">{{ __('Meet the voices') }}</h2></div>
-        <div class="nx-carousel" data-nx-carousel data-interval="3600" role="region" aria-roledescription="carousel" aria-label="{{ __('Meet the voices') }}">
-            <button type="button" class="nx-car-arrow nx-car-arrow--prev" data-car="prev" aria-label="{{ __('Previous') }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
-            <button type="button" class="nx-car-arrow nx-car-arrow--next" data-car="next" aria-label="{{ __('Next') }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
-            <div class="nx-car-track" tabindex="0">
-            @foreach($voices as $a)
-            <div class="nx-car-item" role="group" aria-roledescription="slide"><div class="nx-person">
+        @php $mqReps = max(1, (int) ceil(8 / max(1, $voices->count()))); @endphp
+        <div class="nx-marquee" style="--mq-dur:{{ max(24, $voices->count() * $mqReps * 5) }}s" role="region" aria-label="{{ __('Meet the voices') }}">
+            <div class="nx-mq-track">
+                @foreach([0, 1] as $mqCopy)
+                <div class="nx-mq-group"@if($mqCopy) aria-hidden="true"@endif>
+                    @for($r = 0; $r < $mqReps; $r++)
+                    @foreach($voices as $a)
+                    <div class="nx-mq-item"><div class="nx-person">
                 <div class="nx-avatar">@if($a->photo && ($av = nimage($a->photo)))<img src="{{ $av }}" alt="{{ $a->name }}" width="64" height="64" loading="lazy">@else<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5z"/></svg>@endif</div>
-                <div><a class="nx-stretch" href="{{ nroute('author',['slug'=>$a->slug]) }}" style="font-weight:600;font-size:18px">{{ $a->name }}</a>
+                <div><a class="nx-stretch"@if($mqCopy) tabindex="-1"@endif href="{{ nroute('author',['slug'=>$a->slug]) }}" style="font-weight:600;font-size:18px">{{ $a->name }}</a>
                     <div class="nx-meta">{{ trim($a->role.($a->city ? ' · '.$a->city : ''),' ·') }}</div>
                     <div class="nx-link" style="font-size:15px">{{ $a->story_count }} {{ trans_choice('{1} story|[2,*] stories', $a->story_count) }} →</div></div>
             </div></div>
-            @endforeach
+                    @endforeach
+                    @endfor
+                </div>
+                @endforeach
             </div>
         </div>
     </div>
