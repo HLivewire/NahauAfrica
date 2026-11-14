@@ -7,8 +7,10 @@
 @endsection
 
 @section('nx')
+<div class="nx-xs-band">
+<div class="nx-wrap nx-xs-top"><p class="nx-eyebrow" style="color:var(--nx-red-text)">{{ __('Our Stories. Our Voices.') }}</p></div>
 @if($heroes->isNotEmpty())
-<section class="nx-xs-band" data-nx-herocar data-interval="6500" role="region" aria-roledescription="carousel" aria-label="{{ __('African Heroes') }}">
+<section class="nx-xs-band-in" data-nx-herocar data-interval="6500" role="region" aria-roledescription="carousel" aria-label="{{ __('African Heroes') }}">
     <div class="nx-xs-stage">
         @foreach($heroes as $h)
         @php
@@ -30,10 +32,10 @@
     </div>
 </section>
 @endif
+</div>
 
 <div class="nx-hero nx-hero--below">
     <div class="nx-wrap">
-        <p class="nx-eyebrow" style="color:var(--nx-red-text)">{{ __('Our Stories. Our Voices.') }}</p>
         <h1 class="nx-h1">{{ __('African stories. Told in our voices.') }}</h1>
         <p class="nx-lead">{{ __('Discover fiction, lived experiences, relationship stories, working lives, and remarkable people from across Africa.') }}</p>
         <div class="nx-actions">

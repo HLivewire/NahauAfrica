@@ -76,7 +76,7 @@ class NahauDemoSeeder extends Seeder
         $mk('jobs-careers', 'Ten Years at the Kariakoo Stall', 'What a decade of selling second-hand shoes taught one trader about trust.', 'Interview', 'Interview', $aid[1]);
         $mk('jobs-careers', 'I Quit Banking to Farm Avocados', 'A risky move, a hard first harvest and the lessons that stayed.', 'Business journey', 'Personal experience', $aid[1]);
 
-        $heroNames = [['Wangari Maathai', 'Kenya', '1940', '2011', 'Planted millions of trees and won the Nobel Peace Prize.'], ['Bibi Titi Mohammed', 'Tanzania', '1926', '2000', 'Mobilised women for independence.'], ['Miriam Makeba', 'South Africa', '1932', '2008', 'Voice of a continent in exile.']];
+        $heroNames = [['Wangari Maathai', 'Kenya', '1940', '2011', 'Planted millions of trees and won the Nobel Peace Prize.'], ['Bibi Titi Mohammed', 'Tanzania', '1926', '2000', 'Mobilised women for independence.'], ['Julius Nyerere', 'Tanzania', '1922', '1999', 'Mwalimu, the first president of Tanzania and a voice for African unity.']];
         foreach ($heroNames as $i => [$n, $c, $b, $d, $sum]) {
             $news = $mk('african-heroes', $n, $sum, 'Biography', 'Researched biography', $aid[2], [], '<h2>What they did</h2><p>[Sample text for design review only.]</p><h2>Their contribution</h2><p>[Sample text for design review only.]</p>');
             if ($news) {
