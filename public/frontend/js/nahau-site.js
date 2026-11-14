@@ -272,3 +272,34 @@
   window.addEventListener('resize', layout);
   layout();
 })();
+
+/* African Heroes carousel: panels slide from one hero to the next; arrows left/right, auto-advances */
+(function () {
+  var root = document.querySelector('[data-nx-herocar]');
+  if (!root) return;
+  var slides = Array.prototype.slice.call(root.querySelectorAll('.nx-xs'));
+  if (slides.length < 2) return;
+  var every = parseInt(root.getAttribute('data-interval'), 10) || 6500;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var i = 0, timer = null, visible = true;
+  function show(n) {
+    n = (n + slides.length) % slides.length;
+    if (n === i) return;
+    slides.forEach(function (s) { s.classList.remove('is-prev'); });
+    var old = slides[i];
+    old.classList.remove('is-active'); old.classList.add('is-prev'); old.setAttribute('aria-hidden', 'true');
+    var a = old.querySelector('a'); if (a) a.tabIndex = -1;
+    i = n;
+    slides[i].classList.add('is-active'); slides[i].removeAttribute('aria-hidden');
+    a = slides[i].querySelector('a'); if (a) a.removeAttribute('tabindex');
+    setTimeout(function () { old.classList.remove('is-prev'); }, 1300);
+  }
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+  function start() { stop(); if (reduce || !visible || document.hidden) return; timer = setInterval(function () { show(i + 1); }, every); }
+  var pv = root.querySelector('.nx-xs-prev'), nx = root.querySelector('.nx-xs-next');
+  if (pv) pv.addEventListener('click', function () { show(i - 1); start(); });
+  if (nx) nx.addEventListener('click', function () { show(i + 1); start(); });
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; start(); }, { threshold: 0.25 }).observe(root);
+  document.addEventListener('visibilitychange', start);
+  start();
+})();
