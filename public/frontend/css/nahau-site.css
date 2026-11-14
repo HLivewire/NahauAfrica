@@ -552,3 +552,6 @@
 .nx .nx-xs:nth-child(even) .nx-xs-photo img{transform-origin:40% 60%}
 .nx .nx-xs.is-active .nx-xs-photo img,.nx .nx-xs.is-prev .nx-xs-photo img{animation:nxKenBurns 9s ease-out forwards}
 @media (prefers-reduced-motion:reduce){.nx .nx-xs.is-active .nx-xs-photo img,.nx .nx-xs.is-prev .nx-xs-photo img{animation:none}}
+
+/* Header menu bar colour */
+.theme-broadcast .maan-manu-bar{background:#D9D9D9 !important;border-bottom:1px solid #C9C9C9}
