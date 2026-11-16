@@ -53,7 +53,7 @@ class Panel
     /** Which roles may open a Nahau resource screen. */
     public const RES = [
         'authors' => 'AES', 'series' => 'AES', 'heroes' => 'AE', 'opportunities' => 'AE', 'submissions' => 'AES',
-        'messages' => 'AE', 'opportunity-submissions' => 'AE', 'subscribers' => 'A', 'pages' => 'AE', 'team' => 'AE', 'stories' => 'AEST',
+        'messages' => 'AE', 'opportunity-submissions' => 'AE', 'subscribers' => 'A', 'pages' => 'AE', 'team' => 'AE', 'stories' => 'AEST', 'story' => 'AESTC',
     ];
 
     public static function canRes(string $res, ?User $u = null): bool
@@ -78,8 +78,7 @@ class Panel
             ['home', 'Dashboard', route('admin.dashboard'), 'AECST', 'dashboard'],
             ['s' => 'Content'],
             ['file', 'Stories', [
-                ['Hadithi zote', route('admin.news'), 'AESTC', 'news'],
-                ['Maelezo ya hadithi', $n('stories'), 'AEST', 'stories'],
+                ['Hadithi zote', route('admin.stories'), 'AESTC', 'news'],
                 ['Series', $n('series'), 'AES', 'series'],
             ]],
             ['star', 'Heroes', $n('heroes'), 'AE', 'heroes'],
@@ -97,18 +96,9 @@ class Panel
             ['globe', 'Site', [
                 ['Pages za sera', $n('pages'), 'AE', 'pages'],
                 ['Team', $n('team'), 'AE', 'team'],
-                ['Menus', route('admin.header.index'), 'A', 'menus'],
-                ['Footer', route('admin.footer.index'), 'A', 'footer'],
-                ['SEO', route('admin.seo.index'), 'A', 'seo'],
-                ['Settings', route('admin.settings.index'), 'A', 'settings'],
             ]],
             ['s' => 'Admin'],
             ['users', 'Users na Roles', route('admin.panel.users'), 'A', 'users'],
-            ['sliders', 'Classic', [
-                ['Categories', route('admin.news.category'), 'A', 'cat'],
-                ['Subcategories', route('admin.news.subcategory'), 'A', 'subcat'],
-                ['Legacy dashboard', route('admin.classic'), 'A', 'classic'],
-            ]],
         ];
 
         $out = [];

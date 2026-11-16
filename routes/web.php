@@ -102,7 +102,6 @@ Route::prefix('admin')->middleware(['auth', 'adminlang'])->name('admin.')->group
         return redirect()->back(fallback: route('admin.dashboard'))->withCookie(cookie('nh_lang', $lang === 'en' ? 'en' : 'sw', 60 * 24 * 365));
     })->whereIn('lang', ['sw', 'en'])->name('lang');
     Route::get('/',[\App\Http\Controllers\Admin\PanelController::class,'dashboard'])->name('dashboard');
-    Route::get('/classic',[\App\Http\Controllers\Admin\PanelController::class,'classic'])->name('classic')->middleware('role:super-admin,admin');
 
     // NahauAfrica panel: my profile and password (everybody), users and roles (Administrator only)
     Route::prefix('panel')->name('panel.')->controller(\App\Http\Controllers\Admin\PanelController::class)->group(function () {
@@ -118,6 +117,15 @@ Route::prefix('admin')->middleware(['auth', 'adminlang'])->name('admin.')->group
             Route::put('users/{user}', 'userUpdate')->name('users.update');
             Route::delete('users/{user}', 'userDestroy')->name('users.destroy');
         });
+    });
+
+    Route::prefix('stories')->name('stories')->middleware('role:super-admin,admin,editor,section-editor,translator,contributor,reporter')->controller(\App\Http\Controllers\Admin\StoriesAdminController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('create', 'create')->name('.create');
+        Route::post('/', 'store')->name('.store');
+        Route::get('{id}/edit', 'edit')->whereNumber('id')->name('.edit');
+        Route::put('{id}', 'update')->whereNumber('id')->name('.update');
+        Route::delete('{id}', 'destroy')->whereNumber('id')->name('.destroy');
     });
 
     Route::prefix('nahau')->name('nahau.')->middleware('role:super-admin,admin,editor,section-editor,translator')->controller(\App\Http\Controllers\Admin\NahauAdminController::class)->group(function () {
@@ -246,13 +254,13 @@ Route::prefix('admin')->middleware(['auth', 'adminlang'])->name('admin.')->group
         Route::match(['put', 'patch'],'/news/speciality/update/{newsspeciality}',[NewsspecialityController::class,'maanNewsSpecialityUpdate'])->name('news.speciality.update');
 
         //Route news
-        Route::get('/news',[NewsController::class,'maanNewsIndex'])->name('news');
+        Route::get('/news', fn () => redirect()->route('admin.stories'))->name('news');
         //Route news create
-        Route::get('/news/create',[NewsController::class,'maanNewsCreate'])->name('news.create');
+        Route::get('/news/create', fn () => redirect()->route('admin.stories'))->name('news.create');
         //Route news store
         Route::post('/news',[NewsController::class,'maanNewsStore']);
         //Route news edit
-        Route::get('/news/edit/{news?}',[NewsController::class,'maanNewsEdit'])->name('news.edit');
+        Route::get('/news/edit/{news?}', fn ($news = null) => redirect()->route('admin.stories'))->name('news.edit');
         //Route news update
         Route::match(['put','patch'],'/news/update/{news}',[NewsController::class,'maanNewsUpdate'])->name('news.update');
         //Route news delete

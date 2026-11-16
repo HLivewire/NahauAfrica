@@ -89,11 +89,11 @@ class NahauPanelTest extends TestCase
     {
         $this->actingAs($this->userWith('admin'));
         $expect = [   // role => [pages that open, pages that are refused]
-            'admin' => [['/admin/nahau/subscribers', '/admin/panel/users', '/admin/news'], []],
-            'editor' => [['/admin/nahau/heroes', '/admin/news'], ['/admin/panel/users']],
-            'section-editor' => [['/admin/nahau/authors', '/admin/news'], ['/admin/nahau/heroes', '/admin/panel/users']],
-            'translator' => [['/admin/nahau/stories', '/admin/news'], ['/admin/nahau/authors', '/admin/panel/users']],
-            'contributor' => [['/admin/news'], ['/admin/nahau/stories', '/admin/panel/users']],
+            'admin' => [['/admin/nahau/subscribers', '/admin/panel/users', '/admin/stories'], []],
+            'editor' => [['/admin/nahau/heroes', '/admin/stories'], ['/admin/panel/users']],
+            'section-editor' => [['/admin/nahau/authors', '/admin/stories'], ['/admin/nahau/heroes', '/admin/panel/users']],
+            'translator' => [['/admin/nahau/stories', '/admin/stories'], ['/admin/nahau/authors', '/admin/panel/users']],
+            'contributor' => [['/admin/stories'], ['/admin/nahau/stories', '/admin/panel/users']],
         ];
         foreach ($expect as $slug => [$ok, $no]) {
             $this->postJson(route('admin.panel.users.store'), ['first_name' => 'R'.$slug, 'email' => $slug.'@role.test', 'role' => $slug])->assertOk();
@@ -127,5 +127,39 @@ class NahauPanelTest extends TestCase
         $this->withCookie('nh_lang', 'en')->get(route('admin.dashboard'))->assertOk()->assertSee('New story')->assertSee('Most read stories')->assertDontSee('Hadithi mpya');
         $this->withCookie('nh_lang', 'en')->withHeaders(['Accept' => 'application/json'])->post(route('admin.panel.password.save'), ['current_password' => 'x', 'password' => 'NewPassword123', 'password_confirmation' => 'NewPassword123'])
             ->assertStatus(422)->assertSee('The current password is wrong.');
+    }
+
+    public function test_stories_page_creates_edits_and_deletes_a_story_in_the_new_shell(): void
+    {
+        $this->actingAs($this->userWith('editor'));
+        $h = ['X-Requested-With' => 'XMLHttpRequest'];
+        $this->get(route('admin.news'))->assertRedirect(route('admin.stories'));
+        $this->get(route('admin.stories'))->assertOk()->assertSee('Collapsed View', false);
+        $this->get(route('admin.stories.create'), $h)->assertOk()->assertSee('data-ajax', false)->assertDontSee('<html', false);
+        $this->postJson(route('admin.stories.store'), ['title' => ''], $h)->assertStatus(422);
+        $this->postJson(route('admin.stories.store'), ['title' => 'Panel Story Test', 'language' => 'sw', 'section' => 'fiction', 'label' => 'Fiction',
+            'summary' => 'Muhtasari mfupi.', 'description' => '<p>Maneno mengi hapa.</p>', 'date' => '2026-11-17', 'status' => 1], $h)->assertOk();
+        $n = \App\Models\News::where('title', 'Panel Story Test')->firstOrFail();
+        $this->assertSame(1, (int) $n->status);
+        $this->assertDatabaseHas('nahau_story_meta', ['news_id' => $n->id, 'language' => 'sw', 'slug' => 'panel-story-test']);
+        $this->get(route('admin.stories.edit', $n->id), $h)->assertOk()->assertSee('Panel Story Test');
+        $this->putJson(route('admin.stories.update', $n->id), ['title' => 'Panel Story Test 2', 'language' => 'en', 'section' => 'fiction', 'label' => 'Fiction',
+            'summary' => 'S', 'description' => 'D', 'date' => '2026-11-17', 'status' => 0], $h)->assertOk();
+        $this->assertDatabaseHas('news', ['id' => $n->id, 'title' => 'Panel Story Test 2', 'status' => 0]);
+        $this->deleteJson(route('admin.stories.destroy', $n->id), [], $h)->assertOk();
+        $this->assertDatabaseMissing('news', ['id' => $n->id]);
+    }
+
+    public function test_contributor_sees_only_own_stories_and_cannot_publish(): void
+    {
+        $c = $this->userWith('contributor');
+        $this->actingAs($c);
+        $h = ['X-Requested-With' => 'XMLHttpRequest'];
+        $this->postJson(route('admin.stories.store'), ['title' => 'Contributor Piece', 'language' => 'en', 'section' => 'fiction', 'label' => 'Fiction',
+            'summary' => 'S', 'description' => 'D', 'date' => '2026-11-17', 'status' => 1], $h)->assertOk();
+        $n = \App\Models\News::where('title', 'Contributor Piece')->firstOrFail();
+        $this->assertSame(0, (int) $n->status);   // forced to draft
+        $this->get(route('admin.stories'))->assertSee('Contributor Piece')->assertDontSee('Julius Nyerere');
+        $this->deleteJson(route('admin.stories.destroy', $n->id), [], $h)->assertForbidden();
     }
 }

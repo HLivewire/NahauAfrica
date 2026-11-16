@@ -60,7 +60,7 @@ class AdminCrudTest extends TestCase
         $response->assertSessionHasNoErrors();
         $news = News::where('title', 'Feature Test Story')->firstOrFail();
 
-        $this->get(route('admin.news.edit', $news->id))->assertOk();
+        $this->get(route('admin.news.edit', $news->id))->assertRedirect(route('admin.stories'));
         $this->put(route('admin.news.update', $news->id), array_merge($payload, ['title' => 'Feature Test Story 2']))
             ->assertSessionHasNoErrors();
         $this->assertSame('Feature Test Story 2', $news->fresh()->title);

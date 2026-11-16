@@ -53,6 +53,18 @@ class AdminLang
         'Administrator wa mwisho hawezi kushushwa wala kuzimwa.' => 'The last Administrator cannot be demoted or disabled.', 'Huwezi kujishusha mwenyewe. Mwombe Administrator mwingine.' => 'You cannot demote yourself. Ask another Administrator.',
         'Huwezi kujifuta mwenyewe.' => 'You cannot delete yourself.', 'Administrator wa mwisho hawezi kufutwa.' => 'The last Administrator cannot be deleted.',
         'Amezimwa (ana hadithi, kwa hiyo hajafutwa kabisa)' => 'Disabled (has stories, so not fully deleted)', 'Fursa haiwezi kuchapishwa hadi "Verified by" na "Verified on" zijazwe.' => 'An opportunity cannot be published until "Verified by" and "Verified on" are filled in.',
+        // stories
+        'hadithi' => 'stories', 'Hadithi mpya' => 'New story', 'Hariri hadithi' => 'Edit story', 'Hakuna hadithi bado.' => 'No stories yet.', 'Tafuta kichwa…' => 'Search title…',
+        'Sehemu zote' => 'All sections', 'Lugha zote' => 'All languages', 'Hali zote' => 'All statuses', 'Sehemu' => 'Section', 'Maelezo' => 'Details', 'Maandishi' => 'Text', 'Zaidi' => 'More',
+        'Lugha ya hadithi' => 'Story language', 'Lebo hii inaonekana kwa msomaji' => 'This label is shown to the reader', 'Aina ya maudhui' => 'Content type', 'Picha ya jalada' => 'Cover image',
+        'Ukubwa unaopendekezwa 1600×900, si zaidi ya 4MB' => 'Recommended size 1600×900, not more than 4MB', 'Draft tu. Mhariri ndiye anachapisha.' => 'Draft only. The editor publishes.',
+        'Muhtasari (mstari mmoja hadi miwili)' => 'Summary (one or two lines)', 'Maandishi ya hadithi' => 'Story text', 'Muda wa kusoma:' => 'Reading time:', 'dakika' => 'min',
+        '(unahesabiwa kutoka maneno). Unaweza kutumia HTML rahisi kama' => '(counted from the words). You can use simple HTML such as',
+        'Sura namba' => 'Chapter number', 'Tafsiri ya hadithi nyingine (si lazima)' => 'Translation of another story (optional)', 'Maelezo ya Google (meta description)' => 'Google description (meta description)',
+        'Alt text ya picha' => 'Image alt text', 'Maelezo ya picha' => 'Image caption', 'Mpiga picha / chanzo' => 'Photographer / source', 'Imedhaminiwa na' => 'Sponsored by',
+        'Masahihisho (mstari mmoja: tarehe | maelezo)' => 'Corrections (one per line: date | note)', 'Featured kwenye Home (hadithi moja tu)' => 'Featured on Home (one story only)',
+        'Ridhaa ya mwandishi imehifadhiwa (siri)' => 'Author consent on file (private)', 'Hadithi imehifadhiwa' => 'Story saved', 'Hadithi imeongezwa' => 'Story added', 'Hadithi imefutwa' => 'Story deleted',
+        'Mwandishi' => 'Author', 'Tafuta kichwa' => 'Search title', 'Hadithi zote' => 'All stories',
         // JS
         'Inapakia…' => 'Loading…', 'Imeshindwa kufungua' => 'Could not open', 'Huna ruhusa ya kufanya hivi.' => 'You do not have permission to do this.', 'Jaribu tena.' => 'Try again.',
         'Kitendo hiki hakirudishwi.' => 'This cannot be undone.', 'Ndiyo, futa' => 'Yes, delete', 'Ghairi' => 'Cancel', 'Haikufanikiwa' => 'It did not work', 'Kuna kosa kwenye fomu' => 'There is a mistake in the form',

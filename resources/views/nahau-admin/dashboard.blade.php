@@ -3,7 +3,7 @@
 @section('content')
 @php use App\Nahau\Icons; $u = auth()->user(); @endphp
 <div class="ph rise"><div><h2>Habari, {{ $u->first_name ?: 'karibu' }}</h2><p>Hali ya NahauAfrica leo. Namba zote ni halisi kutoka kwenye site.</p></div><div class="sp"></div>
-  @if(App\Nahau\Panel::canRes('stories'))<a class="btn" href="{{ route('admin.news.create') }}">{!! Icons::svg('plus') !!}Hadithi mpya</a>@endif
+  @if(App\Nahau\Panel::canRes('story'))<button class="btn" data-modal="{{ route('admin.stories.create') }}">{!! Icons::svg('plus') !!}Hadithi mpya</button>@endif
   @if(App\Nahau\Panel::canRes('opportunities'))<button class="btn sec" data-modal="{{ route('admin.nahau.create','opportunities') }}">{!! Icons::svg('briefcase') !!}Fursa mpya</button>@endif</div>
 
 <div class="chips rise" style="margin:0">

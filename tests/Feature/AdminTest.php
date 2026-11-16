@@ -26,7 +26,7 @@ class AdminTest extends TestCase
             'admin.company.index', 'admin.theme.index', 'admin.seo.index', 'admin.ads.index', 'admin.social.index',
             'admin.header.index', 'admin.header.create', 'admin.footer.index', 'admin.footer.create',
             'admin.subscriber', 'admin.news.category', 'admin.news.subcategory', 'admin.news.speciality',
-            'admin.news', 'admin.news.create', 'admin.photogallery', 'admin.videogallery', 'admin.videogallery.create',
+             'admin.photogallery', 'admin.videogallery', 'admin.videogallery.create',
             'admin.blog.category', 'admin.blog.subcategory', 'admin.blog', 'admin.blog.create',
             'admin.reporter', 'admin.reporter.create', 'admin.contact',
         ];
@@ -39,7 +39,7 @@ class AdminTest extends TestCase
     {
         $this->actingAs($this->userWithRole('reporter'));
         $this->get(route('admin.user'))->assertNotFound();
-        $this->get(route('admin.news'))->assertOk();
+        $this->get(route('admin.stories'))->assertOk();
     }
 
     public function test_login_form_rejects_bad_credentials(): void

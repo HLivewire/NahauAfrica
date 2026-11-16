@@ -124,6 +124,8 @@
         });
       });
     });
+    var bt = $('#b2', modal), rt = $('#rt', modal);
+    if (bt && rt) { var upd = function () { var n = bt.value.replace(/<[^>]*>/g, ' ').trim().split(/\s+/).filter(Boolean).length; rt.textContent = Math.max(n ? 1 : 0, Math.round(n / 200)) + ' ' + T('dakika'); }; bt.addEventListener('input', upd); upd(); }
     $$('[data-tab]', modal).forEach(function (b) {
       b.onclick = function () {
         $$('[data-tab]', modal).forEach(function (x) { x.setAttribute('aria-selected', x === b); });

@@ -62,7 +62,7 @@
       </div></div>
     <div class="dwrap hide-m"><button class="ib hide-m" data-dd="ddA" aria-label="Njia za mkato" aria-haspopup="true"><svg class="ic" viewBox="0 0 24 24" style="fill:currentColor;stroke:none"><circle cx="5" cy="5" r="1.7"/><circle cx="12" cy="5" r="1.7"/><circle cx="19" cy="5" r="1.7"/><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/><circle cx="5" cy="19" r="1.7"/><circle cx="12" cy="19" r="1.7"/><circle cx="19" cy="19" r="1.7"/></svg></button>
       <div class="dd dd-a" id="ddA" role="menu"><div class="agrid">
-        @if(Panel::canRes('stories'))<a class="qa" href="{{ route('admin.news.create') }}"><i>{!! Icons::svg('file') !!}</i>Hadithi mpya</a>@endif
+        @if(Panel::canRes('story'))<button data-modal="{{ route('admin.stories.create') }}"><i>{!! Icons::svg('file') !!}</i>Hadithi mpya</button>@endif
         @if(Panel::canRes('opportunities'))<button data-modal="{{ route('admin.nahau.create', 'opportunities') }}"><i>{!! Icons::svg('briefcase') !!}</i>Fursa mpya</button>@endif
         @if(Panel::canRes('authors'))<button data-modal="{{ route('admin.nahau.create', 'authors') }}"><i>{!! Icons::svg('user') !!}</i>Mwandishi</button>@endif
         @if(Panel::isAdmin())<button data-modal="{{ route('admin.panel.users.create') }}"><i>{!! Icons::svg('userplus') !!}</i>Alika mtumiaji</button>@endif
