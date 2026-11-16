@@ -18,13 +18,15 @@
             $himg = ($h->portrait ? nimage($h->portrait) : null) ?: nimage($hs);
             $hsum = \Illuminate\Support\Str::limit(strip_tags($h->spotlight_summary ?: ($hs->summary ?? '')), 130);
         @endphp
-        <article class="nx-xs{{ $loop->first ? ' is-active' : '' }}" style="--pc:{{ $loop->odd ? '#232427' : '#5A0B0B' }}" role="group" aria-roledescription="slide" aria-label="{{ $loop->iteration }} / {{ $heroes->count() }}" @if(! $loop->first) aria-hidden="true" @endif>
+        <article class="nx-xs{{ $loop->first ? ' is-active' : '' }}" style="{{ ['--pc:#232427;--fg:#fff;--fg2:rgba(255,255,255,.88);--bb:#fff;--bf:#232427;--sh:rgba(0,0,0,.35)', '--pc:#F7F3EB;--fg:#232427;--fg2:#4a4a4a;--bb:#232427;--bf:#fff;--sh:transparent', '--pc:#EDEDED;--fg:#232427;--fg2:#4a4a4a;--bb:#232427;--bf:#fff;--sh:transparent'][($loop->iteration - 1) % 3] }}" role="group" aria-roledescription="slide" aria-label="{{ $loop->iteration }} / {{ $heroes->count() }}" @if(! $loop->first) aria-hidden="true" @endif>
             <div class="nx-xs-panel"></div>
             <div class="nx-xs-photo">@if($himg)<img src="{{ $himg }}" alt="{{ $h->name }}" loading="{{ $loop->first ? 'eager' : 'lazy' }}">@endif</div>
-            <div class="nx-xs-title"><span>{{ __('African Heroes') }}</span><h2>{{ $h->name }}</h2></div>
-            <span class="nx-xs-sq"></span>
-            <p class="nx-xs-sum">{{ $hsum }}</p>
-            <a class="nx-xs-btn" href="{{ Stories::url($hs) }}" @if(! $loop->first) tabindex="-1" @endif>{{ __('Read more') }}</a>
+            <div class="nx-xs-copy">
+                <span class="nx-xs-kicker">{{ __('African Heroes') }}</span>
+                <h2>{{ $h->name }}</h2>
+                <p class="nx-xs-sum">{{ $hsum }}</p>
+                <a class="nx-xs-btn" href="{{ Stories::url($hs) }}" @if(! $loop->first) tabindex="-1" @endif><span>{{ __('Read more') }}</span><i aria-hidden="true"></i></a>
+            </div>
         </article>
         @endforeach
         <button type="button" class="nx-xs-arrow nx-xs-prev" aria-label="{{ __('Previous') }}"><i aria-hidden="true"></i></button>
