@@ -9,6 +9,7 @@
     $href = $isMail ? 'mailto:'.$o->apply_link : $o->apply_link;
     $left = $o->daysLeft();
     $mode = \App\Models\NahauOpportunity::WORK_MODES[$o->work_mode] ?? null;
+    if (!$mode) { foreach (\App\Models\NahauOpportunity::WORK_MODES as $k => $lbl) { if (stripos((string) $o->terms, $lbl) !== false || stripos((string) $o->terms, str_replace('-', ' ', $k)) !== false) { $mode = $lbl; break; } } }
     $secs = [
         ['About the position', nlines($o->about, 'para')], ['Key responsibilities', nlines($o->responsibilities)],
         ['Qualifications and requirements', nlines($o->qualifications)], ['Remuneration and benefits', nlines($o->benefits)],
@@ -35,7 +36,7 @@
     <ul class="nx-opp-meta nx-jobmeta">
         <li>{!! nxi('pin') !!}{{ $o->location }}</li>
         @if($mode)<li>{!! nxi('brief') !!}{{ __($mode) }}</li>@endif
-        @if(!$mode || strcasecmp($o->terms, $mode))<li>{!! nxi('tag') !!}{{ $o->terms }}</li>@endif
+        @if($o->terms && (!$mode || stripos($o->terms, $mode) === false))<li>{!! nxi('tag') !!}{{ $o->terms }}</li>@endif
         <li>{!! nxi('clock') !!}{{ __('Posted') }} {{ nposted($o->postedAt()) }}</li>
         <li>{!! nxi('cal') !!}{{ __('Deadline') }} {{ ndate($o->closing_date) }}</li>
     </ul>
@@ -50,7 +51,7 @@
         <h2>{{ __('How to apply for this opportunity') }}</h2>
         <p>{{ __('Check the requirements above, then apply on the employer\'s official site using the button below. Have your documents ready and submit before the closing date.') }}</p>
         <p style="margin:10px 0 16px">{{ __('Application deadline') }}: <strong>{{ ndate($o->closing_date) }}</strong></p>
-        <a class="nx-btn" data-nx-track="opportunity_apply_click" data-id="{{ $o->id }}" href="{{ $href }}" target="_blank" rel="noopener nofollow">{{ __("Apply on employer's site") }} ↗</a>
+        <a class="nx-btn" data-nx-track="opportunity_apply_click" data-id="{{ $o->id }}" href="{{ $href }}" target="_blank" rel="noopener nofollow">{{ __('Apply now') }} ↗</a>
     </section>
 
     <section class="nx-aboutco">
@@ -58,6 +59,6 @@
         <div><span class="nx-eyebrow" style="font-size:11px">{{ __('About the employer') }}</span><div style="font:700 19px 'Source Serif 4',Georgia,serif">{{ $o->employer }}</div>@if($o->employer_about)<p style="margin-top:6px;color:var(--nx-body);font-size:16px">{{ $o->employer_about }}</p>@endif</div>
     </section>
 
-    <div class="nx-warn" style="margin-top:30px">{{ __('Nahau Africa never charges to apply.') }} <a href="{{ nroute('contact') }}?reason={{ urlencode('Report a suspicious advert') }}">{{ __('Report a suspicious advert') }}</a></div>
+    <div class="nx-warn" style="margin-top:30px">{{ __('Nahau Africa never charges to apply.') }}</div>
 </div>
 @endsection

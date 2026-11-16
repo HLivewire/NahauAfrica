@@ -623,3 +623,5 @@ body[class] .maan-manu-bar.maan-manu-bar{background:#D9D9D9 !important;border-bo
 .nx-aboutco{display:flex;gap:16px;align-items:center;margin-top:20px;padding:18px 22px;border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(15,15,15,.04),0 8px 24px rgba(15,15,15,.05)}
 @media (max-width:767px){.nx .nx-opp{grid-template-columns:48px minmax(0,1fr);padding:20px 18px}.nx .nx-opp .nx-side{grid-column:1/-1;align-items:stretch}.nx-opp-logo{width:48px;height:48px}.nx-jobhead{align-items:flex-start}.nx-opp-logo--lg{width:56px;height:56px}}
 @media (prefers-reduced-motion:reduce){.nx-new{animation:none}}
+
+.nx .nx-mode{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:#EAF3FF;color:#1B5FB8}.nx .nx-mode svg{width:13px;height:13px}
