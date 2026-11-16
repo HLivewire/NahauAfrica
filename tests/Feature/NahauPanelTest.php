@@ -84,4 +84,38 @@ class NahauPanelTest extends TestCase
         $this->assertTrue(Hash::check('NewPassword123', $u->password));
         $this->assertFalse((bool) $u->must_change_password);
     }
+
+    public function test_each_invited_role_signs_in_and_reaches_its_own_pages(): void
+    {
+        $this->actingAs($this->userWith('admin'));
+        $expect = [   // role => [pages that open, pages that are refused]
+            'admin' => [['/admin/nahau/subscribers', '/admin/panel/users', '/admin/news'], []],
+            'editor' => [['/admin/nahau/heroes', '/admin/news'], ['/admin/panel/users']],
+            'section-editor' => [['/admin/nahau/authors', '/admin/news'], ['/admin/nahau/heroes', '/admin/panel/users']],
+            'translator' => [['/admin/nahau/stories', '/admin/news'], ['/admin/nahau/authors', '/admin/panel/users']],
+            'contributor' => [['/admin/news'], ['/admin/nahau/stories', '/admin/panel/users']],
+        ];
+        foreach ($expect as $slug => [$ok, $no]) {
+            $this->postJson(route('admin.panel.users.store'), ['first_name' => 'R'.$slug, 'email' => $slug.'@role.test', 'role' => $slug])->assertOk();
+            $u = User::where('email', $slug.'@role.test')->firstOrFail();
+            $this->assertSame($slug === 'admin' ? 'A' : null, $slug === 'admin' ? \App\Nahau\Panel::letter($u) : null);
+            $this->actingAs($u);
+            $this->get(route('admin.dashboard'))->assertOk()->assertSee('Collapsed View', false);
+            foreach ($ok as $url) {
+                $this->get($url)->assertOk();
+            }
+            foreach ($no as $url) {
+                $this->assertContains($this->get($url)->status(), [403, 404], "$slug must not open $url");
+            }
+            $this->actingAs($this->userWith('admin'));
+        }
+    }
+
+    public function test_disabled_account_cannot_sign_in(): void
+    {
+        $u = $this->userWith('editor');
+        $u->forceFill(['is_active' => 0])->save();
+        $this->post('/login', ['email' => $u->email, 'password' => 'Secret12345'])->assertRedirect();
+        $this->assertGuest();
+    }
 }

@@ -26,7 +26,7 @@ class AuthController extends Controller
      */
     public function maanLogin(Request $request)
     {
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password, 'is_active' => 1])){
             $this->setSuccess('User login Successfully !');
             return redirect()->route('admin.dashboard');
         }else{

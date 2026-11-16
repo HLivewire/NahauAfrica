@@ -78,7 +78,7 @@ class Panel
             ['home', 'Dashboard', route('admin.dashboard'), 'AECST', 'dashboard'],
             ['s' => 'Content'],
             ['file', 'Stories', [
-                ['Hadithi zote', route('admin.news'), 'AEST', 'news'],
+                ['Hadithi zote', route('admin.news'), 'AESTC', 'news'],
                 ['Maelezo ya hadithi', $n('stories'), 'AEST', 'stories'],
                 ['Series', $n('series'), 'AES', 'series'],
             ]],

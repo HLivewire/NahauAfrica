@@ -219,7 +219,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function (){
         Route::delete('/subscriber/destroy/{id}',[\App\Http\Controllers\Admin\SubscriberController::class,'destroy'])->name('subscriber.destroy');
 
     });
-    Route::group(['middleware'=>['role:super-admin,admin,editor,reporter']],function(){
+    Route::group(['middleware'=>['role:super-admin,admin,editor,reporter,section-editor,translator,contributor']],function(){
 
         //Route news category
         Route::get('/news/category',[NewscategoryController::class,'maanNewsCategoryIndex'])->name('news.category');

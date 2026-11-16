@@ -57,7 +57,7 @@ class PanelController extends Controller
             'pending' => \App\Models\NahauSubmission::where('status', 'new')->latest()->take(5)->get(),
         ];
 
-        return view('nahau-admin.dashboard', $d + ['canInbox' => Panel::canRes('submissions')]);
+        return view('nahau-admin.dashboard', $d + ['canInbox' => Panel::canRes('submissions'), 'full' => in_array(Panel::letter(), ['A', 'E'], true)]);
     }
 
     public function classic()

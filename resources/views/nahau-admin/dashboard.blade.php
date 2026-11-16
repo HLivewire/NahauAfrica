@@ -7,7 +7,7 @@
   @if(App\Nahau\Panel::canRes('opportunities'))<button class="btn sec" data-modal="{{ route('admin.nahau.create','opportunities') }}">{!! Icons::svg('briefcase') !!}Fursa mpya</button>@endif</div>
 
 <div class="chips rise" style="margin:0">
-  @foreach([['file','pri-soft','pri',$published,'Hadithi zilizochapishwa'],['clock','org-bg','org',$drafts,'Draft'],['inbox','cy-bg','cy',$newSubs + $newMsgs + $newOpp,'Mpya kwenye Inbox'],['briefcase','grn-bg','grn',$opps,'Fursa zilizo wazi']] as [$ic,$bg,$fg,$n,$l])
+  @foreach(array_filter([['file','pri-soft','pri',$published,'Hadithi zilizochapishwa'],['clock','org-bg','org',$drafts,'Draft'],$canInbox?['inbox','cy-bg','cy',$newSubs + $newMsgs + $newOpp,'Mpya kwenye Inbox']:null,$full?['briefcase','grn-bg','grn',$opps,'Fursa zilizo wazi']:null]) as [$ic,$bg,$fg,$n,$l])
   <div class="chip2"><div class="bl" style="background:var(--{{ $bg }});color:var(--{{ $fg }})">{!! Icons::svg($ic) !!}</div><div><b>{{ number_format($n) }}</b><span>{{ $l }}</span></div></div>
   @endforeach
 </div>
@@ -17,9 +17,9 @@
     <div class="cwrap" id="cLine" style="margin-top:14px"></div></div>
   <div class="cards4">
     <div class="card stat"><div class="hd"><b>Wasomaji (views)</b></div><div class="l2">Jumla ya hadithi zote</div><div class="big">{{ number_format($views) }}</div><span class="tag g">kutoka kwenye hesabu ya site</span></div>
-    <div class="card stat"><div class="hd"><b>Subscribers</b></div><div class="l2">Waliothibitisha barua pepe</div><div class="big">{{ number_format($subs) }}</div></div>
+    @if($full)<div class="card stat"><div class="hd"><b>Subscribers</b></div><div class="l2">Waliothibitisha barua pepe</div><div class="big">{{ number_format($subs) }}</div></div>@endif
     <div class="card stat"><div class="hd"><b>Authors</b></div><div class="l2">Waandishi waliosajiliwa</div><div class="big">{{ number_format($authors) }}</div></div>
-    <div class="card stat"><div class="hd"><b>Fursa zinazosubiri uhakiki</b></div><div class="l2">Hazijathibitishwa bado</div><div class="big">{{ number_format($oppsUnverified) }}</div>@if($oppsUnverified)<span class="tag o">zinahitaji kazi</span>@endif</div>
+    @if($full)<div class="card stat"><div class="hd"><b>Fursa zinazosubiri uhakiki</b></div><div class="l2">Hazijathibitishwa bado</div><div class="big">{{ number_format($oppsUnverified) }}</div>@if($oppsUnverified)<span class="tag o">zinahitaji kazi</span>@endif</div>@endif
   </div>
 </div>
 
