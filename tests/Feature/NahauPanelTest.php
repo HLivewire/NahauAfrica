@@ -47,6 +47,18 @@ class NahauPanelTest extends TestCase
         $this->assertDatabaseHas('nahau_authors', ['name' => 'Panel Test Author', 'home_order' => 0]);
     }
 
+    public function test_hero_visibility_switch_lives_in_the_table(): void
+    {
+        $this->actingAs($this->userWith('admin'));
+        $nid = \DB::table('news')->value('id');
+        $h = \App\Models\NahauHero::create(['news_id' => $nid, 'name' => 'Switch Hero', 'show_in_spotlight' => 1, 'spotlight_order' => 0]);
+        $this->get('/admin/nahau/heroes')->assertOk()->assertSee('data-toggle', false);
+        $this->get('/admin/nahau/heroes/'.$h->id.'/edit', ['X-Requested-With' => 'XMLHttpRequest'])->assertDontSee('Visibility on Home spotlight');
+        $this->patchJson('/admin/nahau/heroes/'.$h->id.'/toggle/show_in_spotlight', ['value' => 0])->assertOk()->assertJson(['value' => 0]);
+        $this->assertEquals(0, $h->fresh()->show_in_spotlight);
+        $this->patchJson('/admin/nahau/heroes/'.$h->id.'/toggle/name', ['value' => 1])->assertNotFound();
+    }
+
     public function test_administrator_invites_a_user_and_last_admin_is_protected(): void
     {
         $admin = $this->userWith('admin');

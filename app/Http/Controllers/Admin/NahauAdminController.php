@@ -38,7 +38,7 @@ class NahauAdminController extends Controller
                 ['news_id', 'Story (African Heroes news item)', 'select', 'required|integer', fn () => $newsIn(['african-heroes'])], ['name', 'Name', 'text', 'required|max:160'],
                 ['spotlight_summary', 'Summary (shown under the name, max 320)', 'textarea', 'nullable|max:320', null, 'Shown under the name on the hero page and on the Home spotlight.'],
                 ['born', 'Born', 'text', 'nullable|max:40'], ['died', 'Died', 'text', 'nullable|max:40'], ['country', 'Country', 'text', 'nullable|max:80'],
-                ['show_in_spotlight', 'Visibility on Home spotlight', 'radio', 'nullable', fn () => ['1' => 'Visible', '0' => 'Hidden']], ['spotlight_order', 'Spotlight order', 'number', 'nullable|integer'],
+                ['spotlight_order', 'Spotlight order', 'number', 'nullable|integer'],
                 ['portrait', 'Portrait', 'image', 'nullable|image|max:4096'], ['portrait_credit', 'Portrait credit and licence', 'text', 'nullable|max:200'], ['sources', 'Sources (one per line: title | URL)', 'textarea', 'nullable']]],
             'opportunities' => ['title' => 'Opportunities', 'model' => \App\Models\NahauOpportunity::class, 'cols' => ['title', 'type', 'employer', 'closing_date', 'status'],
                 'tabs' => ['Msingi' => ['title', 'type', 'work_mode', 'employer', 'location', 'terms', 'description', 'closing_date'], 'Maelezo ya kazi' => ['about', 'responsibilities', 'qualifications', 'benefits'],
@@ -217,6 +217,19 @@ class NahauAdminController extends Controller
         }
 
         return redirect()->route('admin.nahau.index', $res)->with('success', 'Saved.');
+    }
+
+    /** One-click Visible/Hidden switch from the list table. */
+    public function toggle(Request $r, string $res, int $id, string $field)
+    {
+        $d = $this->def($res);
+        abort_unless(in_array($field, ['show_in_spotlight', 'show_on_home', 'featured'], true) && ($d['edit'] ?? true) !== false, 404);
+        abort_unless(in_array($field, $d['cols'], true), 404);
+        $row = $d['model']::findOrFail($id);
+        $row->{$field} = $r->boolean('value') ? 1 : 0;
+        $row->save();
+
+        return response()->json(['message' => $row->{$field} ? 'Inaonekana' : 'Imefichwa', 'value' => (int) $row->{$field}]);
     }
 
     public function destroy(Request $r, string $res, int $id)

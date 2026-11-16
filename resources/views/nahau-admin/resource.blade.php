@@ -11,12 +11,12 @@
 @if($rows->isEmpty())
   <div class="empty"><b>Bado hakuna kitu hapa.</b><br>@if($d['create'])Bofya <b>Ongeza</b> kuanza.@else Vitu vitaonekana hapa vikifika kutoka kwenye site.@endif</div>
 @else
-<div class="tw"><table id="tt"><thead><tr>@if($res==='stories')<th>Hadithi</th>@endif @foreach($d['cols'] as $c)<th>{{ ucfirst(str_replace('_',' ',$c)) }}</th>@endforeach<th></th></tr></thead><tbody>
+<div class="tw"><table id="tt"><thead><tr>@if($res==='stories')<th>Hadithi</th>@endif @foreach($d['cols'] as $c)<th>{{ $c==='show_in_spotlight' ? 'Home spotlight' : ucfirst(str_replace('_',' ',$c)) }}</th>@endforeach<th></th></tr></thead><tbody>
 @foreach($rows as $r)
   <tr>@if($res==='stories')<td><div class="t">{{ Str::limit($r->news_title, 50) }}</div></td>@endif
   @foreach($d['cols'] as $c)
     @php $v = $r->$c; @endphp
-    <td>@if(in_array($c,$boolCols,true))@if($v)<span class="bdg ok">Ndiyo</span>@else<span class="n" style="color:var(--mut2)">—</span>@endif
+    <td>@if(in_array($c,$boolCols,true))@if($d['edit'] !== false)<label class="swt tg" title="Inaonekana / Imefichwa"><input type="checkbox" data-toggle="{{ route('admin.nahau.toggle', [$res, $r->id, $c]) }}" @checked($v)><span></span></label> <small class="tgl">{{ $v ? 'Visible' : 'Hidden' }}</small>@elseif($v)<span class="bdg ok">Ndiyo</span>@else<span class="n" style="color:var(--mut2)">—</span>@endif
       @elseif($c==='language')<span class="bdg {{ $v==='sw'?'sw':'en' }}">{{ $v==='sw'?'Kiswahili':'English' }}</span>
       @elseif($c==='status')<span class="bdg {{ $tone[$v] ?? '' }}">{{ str_replace('_',' ',$v) }}</span>
       @elseif($v instanceof \Carbon\CarbonInterface){{ $v->format('d M Y') }}
@@ -33,5 +33,7 @@
 </div>
 @endsection
 @push('scripts')
-<script>(function(){var f=document.getElementById('tf'),t=document.getElementById('tt');if(!f||!t)return;f.addEventListener('input',function(){var q=f.value.toLowerCase();t.querySelectorAll('tbody tr').forEach(function(r){r.style.display=r.textContent.toLowerCase().indexOf(q)>-1?'':'none'})})})();</script>
+<script>(function(){document.querySelectorAll('[data-toggle]').forEach(function(i){i.addEventListener('change',function(){var on=i.checked,fd=new FormData(),l=i.closest('td').querySelector('.tgl');fd.append('_method','PATCH');fd.append('_token',NH.csrf);fd.append('value',on?1:0);i.disabled=true;
+fetch(i.dataset.toggle,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json','X-CSRF-TOKEN':NH.csrf},credentials:'same-origin'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){if(l)l.textContent=j.value?'Visible':'Hidden';if(NH.toast)NH.toast(j.message)}).catch(function(){i.checked=!on;if(window.Swal)Swal.fire({icon:'error',title:'Imeshindikana'})}).finally(function(){i.disabled=false})})});})();
+(function(){var f=document.getElementById('tf'),t=document.getElementById('tt');if(!f||!t)return;f.addEventListener('input',function(){var q=f.value.toLowerCase();t.querySelectorAll('tbody tr').forEach(function(r){r.style.display=r.textContent.toLowerCase().indexOf(q)>-1?'':'none'})})})();</script>
 @endpush
