@@ -23,7 +23,7 @@
     foreach ($new as [$res, $rows, $fmt]) { if (!Panel::canRes($res)) continue; foreach ($rows as $r) { [$a, $b] = $fmt($r); $notes[] = [$a, $b, $r->created_at?->diffForHumans(), route('admin.nahau.index', $res)]; } }
 @endphp
 <!doctype html>
-<html lang="sw" data-theme="light">
+<html lang="{{ \App\Nahau\AdminLang::current() }}" data-theme="light">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -52,6 +52,8 @@
   </div>
   <div class="tb-r">
     <button class="ib theme" id="themeBtn" aria-label="Badilisha mwonekano (giza au mwanga)"><svg class="ic s" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg><svg class="ic m" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
+    @php $lg = \App\Nahau\AdminLang::current(); @endphp
+    <a class="ib lang" href="{{ route('admin.lang', $lg === 'en' ? 'sw' : 'en') }}" aria-label="Badilisha lugha" title="{{ $lg === 'en' ? 'Kiswahili' : 'English' }}">{!! Icons::svg('globe') !!}<b>{{ strtoupper($lg) }}</b></a>
     <div class="dwrap"><button class="ib" data-dd="ddN" aria-label="Arifa" aria-haspopup="true">{!! Icons::svg('bell') !!}@if(count($notes))<span class="dot"></span>@endif</button>
       <div class="dd dd-n" id="ddN" role="menu">
         <div class="dd-h"><b>Arifa</b></div>
@@ -104,7 +106,7 @@
 </div></main>
 <div class="ov" id="ov" role="dialog" aria-modal="true"><div class="modal" id="modal"></div></div>
 
-<script>window.NH={csrf:document.querySelector('meta[name=csrf-token]').content,go:@json(collect($flat)->map(fn($f)=>[$f[0],$f[1]])->values()),flash:@json(session('success')),forcePw:@json((bool)$u->must_change_password),pwUrl:@json(route('admin.panel.password')),icons:@json(\App\Nahau\Icons::P)};</script>
+<script>window.NH={dict:(function(){try{return JSON.parse(decodeURIComponent(escape(atob('{{ \App\Nahau\AdminLang::current() === 'en' ? base64_encode(json_encode(\App\Nahau\AdminLang::DICT, JSON_UNESCAPED_UNICODE)) : base64_encode('{}') }}'))))}catch(e){return {}}})(),csrf:document.querySelector('meta[name=csrf-token]').content,go:@json(collect($flat)->map(fn($f)=>[$f[0],$f[1]])->values()),flash:@json(session('success')),forcePw:@json((bool)$u->must_change_password),pwUrl:@json(route('admin.panel.password')),icons:@json(\App\Nahau\Icons::P)};</script>
 <script src="{{ asset('adminassets/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 <script src="{{ asset('adminassets/js/nahau-admin.js') }}?v={{ @filemtime(public_path('adminassets/js/nahau-admin.js')) }}"></script>
 @stack('scripts')

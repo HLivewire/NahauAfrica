@@ -22,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
             'nlocale' => \App\Http\Middleware\SetNahauLocale::class,
+            'adminlang' => \App\Http\Middleware\AdminLanguage::class,
         ]);
 
         // Guests are sent to the admin login page (same behaviour as before).

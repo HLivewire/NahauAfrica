@@ -97,7 +97,10 @@ Route::post('/login',[AuthController::class,'maanLogin'])->middleware('throttle:
 Route::get('/logout',[AuthController::class,'maanLogout'])->name('logout');
 
 // Route admin all
-Route::prefix('admin')->middleware('auth')->name('admin.')->group(function (){
+Route::prefix('admin')->middleware(['auth', 'adminlang'])->name('admin.')->group(function (){
+    Route::get('/lang/{lang}', function (\Illuminate\Http\Request $r, string $lang) {
+        return redirect()->back(fallback: route('admin.dashboard'))->withCookie(cookie('nh_lang', $lang === 'en' ? 'en' : 'sw', 60 * 24 * 365));
+    })->whereIn('lang', ['sw', 'en'])->name('lang');
     Route::get('/',[\App\Http\Controllers\Admin\PanelController::class,'dashboard'])->name('dashboard');
     Route::get('/classic',[\App\Http\Controllers\Admin\PanelController::class,'classic'])->name('classic')->middleware('role:super-admin,admin');
 

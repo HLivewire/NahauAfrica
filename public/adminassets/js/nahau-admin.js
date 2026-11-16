@@ -4,7 +4,8 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var store = function (k, v) { try { if (v === undefined) return localStorage.getItem(k); v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} };
-  var sw = function (o) { return window.Swal ? Swal.fire(o) : Promise.resolve({ isConfirmed: confirm(o.title || '') }); };
+  var T = function (s) { var d = (window.NH && NH.dict) || {}; return s && d[s] ? d[s] : s; };
+  var sw = function (o) { ['title', 'text', 'confirmButtonText', 'cancelButtonText'].forEach(function (k) { if (o[k]) o[k] = (NH.dict && o[k].replace) ? o[k].replace(/^(Futa ")?([^"]*)(")?/, function (m, a, b, c) { return a ? T('Futa "') + b + c : T(m); }) : o[k]; }); return window.Swal ? Swal.fire(o) : Promise.resolve({ isConfirmed: confirm(o.title || '') }); };
   var NH = window.NH = window.NH || {};
 
   /* ---------- theme ---------- */
@@ -28,7 +29,7 @@
     var q = gs.value.trim().toLowerCase(), r = $('#sres');
     if (!q) { r.classList.remove('open'); return; }
     var hits = (NH.go || []).filter(function (g) { return g[0].toLowerCase().indexOf(q) > -1; }).slice(0, 6);
-    r.innerHTML = hits.length ? hits.map(function (g) { return '<a class="srl" data-go href="' + esc(g[1]) + '">' + esc(g[0]) + '<small>Nenda</small></a>'; }).join('') : '<div class="note" style="padding:10px">Hakuna kilichopatikana</div>';
+    r.innerHTML = hits.length ? hits.map(function (g) { return '<a class="srl" data-go href="' + esc(g[1]) + '">' + esc(g[0]) + '<small>' + T('Nenda') + '</small></a>'; }).join('') : '<div class="note" style="padding:10px">' + T('Hakuna kilichopatikana') + '</div>';
     r.classList.add('open');
   });
   gs.addEventListener('keydown', function (e) { if (e.key === 'Enter') { var a = $('#sres [data-go]'); if (a) location.href = a.href; } if (e.key === 'Escape') { gs.blur(); closeDD(); } });
@@ -66,7 +67,7 @@
   }
   function openModal(url) {
     closeDD(); closeSide();
-    modal.innerHTML = '<div class="mload">Inapakia…</div>'; modal.style.maxWidth = '420px'; ov.classList.add('on');
+    modal.innerHTML = '<div class="mload">' + T('Inapakia…') + '</div>'; modal.style.maxWidth = '420px'; ov.classList.add('on');
     fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'text/html' }, credentials: 'same-origin' })
       .then(function (r) { if (!r.ok) throw r.status; return r.text(); }).then(openHtml)
       .catch(function (s) { closeM(); sw({ icon: 'error', title: 'Imeshindwa kufungua', text: s === 403 ? 'Huna ruhusa ya kufanya hivi.' : 'Jaribu tena.' }); });
@@ -164,6 +165,6 @@
     var cols = ['var(--pri)', '#7B3FE4', 'var(--grn)', 'var(--org)', 'var(--cy)'], tot = rows.reduce(function (a, r) { return a + r[1]; }, 0), R = 52, C = 2 * Math.PI * R, off = 0, s = '';
     rows.forEach(function (r, i) { var len = tot ? r[1] / tot * C : 0; s += '<circle cx="70" cy="70" r="' + R + '" fill="none" stroke="' + cols[i % 5] + '" stroke-width="16" stroke-dasharray="' + len + ' ' + (C - len) + '" stroke-dashoffset="' + (-off) + '" transform="rotate(-90 70 70)"/>'; off += len; });
     if (!tot) s = '<circle cx="70" cy="70" r="' + R + '" fill="none" stroke="var(--hov)" stroke-width="16"/>';
-    el.innerHTML = '<div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap"><svg viewBox="0 0 140 140" style="width:140px;height:140px;flex:none">' + s + '<text x="70" y="68" text-anchor="middle" style="font:800 20px var(--font);fill:var(--tx)">' + tot + '</text><text x="70" y="84" text-anchor="middle">jumla</text></svg><div style="flex:1;min-width:120px">' + rows.map(function (r, i) { return '<div class="lg-row"><i style="background:' + cols[i % 5] + '"></i>' + esc(r[0]) + '<span>' + r[1] + '</span></div>'; }).join('') + '</div></div>';
+    el.innerHTML = '<div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap"><svg viewBox="0 0 140 140" style="width:140px;height:140px;flex:none">' + s + '<text x="70" y="68" text-anchor="middle" style="font:800 20px var(--font);fill:var(--tx)">' + tot + '</text><text x="70" y="84" text-anchor="middle">' + T('jumla') + '</text></svg><div style="flex:1;min-width:120px">' + rows.map(function (r, i) { return '<div class="lg-row"><i style="background:' + cols[i % 5] + '"></i>' + esc(r[0]) + '<span>' + r[1] + '</span></div>'; }).join('') + '</div></div>';
   };
 })();

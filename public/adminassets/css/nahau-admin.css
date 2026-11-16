@@ -302,3 +302,6 @@ a.srl small{color:var(--mut2);margin-left:auto}
 .fg .full{grid-column:1/-1}
 @media(max-width:640px){.fg{grid-template-columns:minmax(0,1fr)}}
 .tools input[type=search]{min-width:200px}
+a.ib.lang{width:auto;border-radius:999px;padding:0 10px;gap:5px;display:flex;align-items:center;text-decoration:none}
+a.ib.lang b{font-size:11px;font-weight:800;letter-spacing:.04em}
+@media(max-width:640px){a.ib.lang b{display:none}a.ib.lang{padding:0;width:36px;justify-content:center}}

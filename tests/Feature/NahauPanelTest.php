@@ -118,4 +118,14 @@ class NahauPanelTest extends TestCase
         $this->post('/login', ['email' => $u->email, 'password' => 'Secret12345'])->assertRedirect();
         $this->assertGuest();
     }
+
+    public function test_admin_language_switch_to_english_and_back(): void
+    {
+        $this->actingAs($this->userWith('admin'));
+        $this->get(route('admin.dashboard'))->assertSee('Hadithi mpya')->assertDontSee('New story');
+        $this->get(route('admin.lang', 'en'))->assertRedirect()->assertCookie('nh_lang', 'en');
+        $this->withCookie('nh_lang', 'en')->get(route('admin.dashboard'))->assertOk()->assertSee('New story')->assertSee('Most read stories')->assertDontSee('Hadithi mpya');
+        $this->withCookie('nh_lang', 'en')->withHeaders(['Accept' => 'application/json'])->post(route('admin.panel.password.save'), ['current_password' => 'x', 'password' => 'NewPassword123', 'password_confirmation' => 'NewPassword123'])
+            ->assertStatus(422)->assertSee('The current password is wrong.');
+    }
 }
