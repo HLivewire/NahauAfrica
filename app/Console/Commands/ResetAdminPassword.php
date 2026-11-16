@@ -36,7 +36,7 @@ class ResetAdminPassword extends Command
 
         foreach ($users as $user) {
             // Hash::make here, written straight to the column, so it is never stored in plain text or hashed twice.
-            $user->forceFill(['password' => Hash::make($password), 'is_active' => 1])->save();
+            $user->forceFill(['password' => Hash::make($password), 'must_change_password' => false, 'is_active' => 1])->save();
             $this->line("Reset: {$user->email} (user_type {$user->user_type})");
         }
         $this->info('Done. Log in at /login with the new password.');

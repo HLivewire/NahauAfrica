@@ -98,7 +98,34 @@ Route::get('/logout',[AuthController::class,'maanLogout'])->name('logout');
 
 // Route admin all
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function (){
-    Route::get('/',[AdminController::class,'maanDashboard'])->name('dashboard');
+    Route::get('/',[\App\Http\Controllers\Admin\PanelController::class,'dashboard'])->name('dashboard');
+    Route::get('/classic',[\App\Http\Controllers\Admin\PanelController::class,'classic'])->name('classic')->middleware('role:super-admin,admin');
+
+    // NahauAfrica panel: my profile and password (everybody), users and roles (Administrator only)
+    Route::prefix('panel')->name('panel.')->controller(\App\Http\Controllers\Admin\PanelController::class)->group(function () {
+        Route::get('profile', 'profile')->name('profile');
+        Route::post('profile', 'profileSave')->name('profile.save');
+        Route::get('password', 'password')->name('password');
+        Route::post('password', 'passwordSave')->name('password.save')->middleware('throttle:10,1');
+        Route::middleware('role:super-admin,admin')->group(function () {
+            Route::get('users', 'users')->name('users');
+            Route::get('users/create', 'userCreate')->name('users.create');
+            Route::post('users', 'userStore')->name('users.store');
+            Route::get('users/{user}/edit', 'userEdit')->name('users.edit');
+            Route::put('users/{user}', 'userUpdate')->name('users.update');
+            Route::delete('users/{user}', 'userDestroy')->name('users.destroy');
+        });
+    });
+
+    Route::prefix('nahau')->name('nahau.')->middleware('role:super-admin,admin,editor,section-editor,translator')->controller(\App\Http\Controllers\Admin\NahauAdminController::class)->group(function () {
+        Route::get('/','dashboard')->name('dashboard');
+        Route::get('{res}','index')->name('index');
+        Route::get('{res}/create','create')->name('create');
+        Route::post('{res}','store')->name('store');
+        Route::get('{res}/{id}/edit','edit')->whereNumber('id')->name('edit');
+        Route::put('{res}/{id}','update')->whereNumber('id')->name('update');
+        Route::delete('{res}/{id}','destroy')->whereNumber('id')->name('destroy');
+    });
     Route::group(['middleware'=>['role:super-admin']],function (){
 
         //Route role
@@ -129,16 +156,6 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function (){
         Route::delete('/user/destroy/{user}',[UserController::class,'maanUserDestroy'])->name('user.destroy');
 
         //Route settings
-        Route::prefix('nahau')->name('nahau.')->controller(\App\Http\Controllers\Admin\NahauAdminController::class)->group(function () {
-            Route::get('/','dashboard')->name('dashboard');
-            Route::get('{res}','index')->name('index');
-            Route::get('{res}/create','create')->name('create');
-            Route::post('{res}','store')->name('store');
-            Route::get('{res}/{id}/edit','edit')->whereNumber('id')->name('edit');
-            Route::put('{res}/{id}','update')->whereNumber('id')->name('update');
-            Route::delete('{res}/{id}','destroy')->whereNumber('id')->name('destroy');
-        });
-
         Route::get('/settings',[SettingsController::class,'maanSettingsIndex'])->name('settings.index');
         Route::post('/settings',[SettingsController::class,'maanSettingsStore'])->name('settings.store');
         Route::match(['put', 'patch'],'/settings/update/{settings}',[SettingsController::class,'maanSettingsUpdate'])->name('settings.update');

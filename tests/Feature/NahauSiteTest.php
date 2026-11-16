@@ -78,7 +78,7 @@ class NahauSiteTest extends TestCase
     public function test_admin_screens_and_publish_rule(): void
     {
         $this->actingAs(\App\Models\User::whereHas('roles', fn ($q) => $q->where('slug', 'super-admin'))->firstOrFail());
-        $this->get('/admin/nahau')->assertOk();
+        $this->get('/admin/nahau')->assertRedirect(route('admin.dashboard'));
         foreach (['stories', 'authors', 'series', 'heroes', 'opportunities', 'submissions', 'messages', 'opportunity-submissions', 'subscribers', 'pages', 'team'] as $res) {
             $this->get('/admin/nahau/'.$res)->assertOk();
         }

@@ -20,6 +20,9 @@
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
 
+                @if(\App\Nahau\Panel::letter())
+                <li class="nav-item"><a href="{{ route('admin.dashboard') }}" class="nav-link" style="background:#3874FF;color:#fff"><i class="nav-icon fas fa-arrow-left"></i><p>NahauAfrica Admin (mpya)</p></a></li>
+                @endif
                 <li class="nav-item {{ Request::routeIs('admin.dashboard') ? 'menu-open' : '' }}">
                     <a href="{{ route('admin.dashboard') }}" class="nav-link {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>

@@ -62,8 +62,7 @@ class NahauAdminController extends Controller
             'stories' => ['title' => 'Story details', 'model' => NahauStoryMeta::class, 'create' => false, 'cols' => ['slug', 'format', 'label', 'language', 'featured'], 'fields' => [
                 ['format', 'Format', 'text', 'nullable|max:60'], ['label', 'Content label', 'select', 'required', fn () => $labels], ['language', 'Language', 'select', 'required', fn () => ['en' => 'English', 'sw' => 'Kiswahili']],
                 ['dek', 'Dek / standfirst (max 220)', 'textarea', 'nullable|max:220'], ['slug', 'Slug', 'text', 'required|alpha_dash|max:120'], ['author_id', 'Author', 'select', 'nullable', $authors],
-                ['reading_minutes', 'Reading time (minutes, auto if empty)', 'number', 'nullable|integer'], ['featured', 'Featured on Home (only one)', 'checkbox', 'nullable'], ['price', 'Book price (TZS, empty = not for sale)', 'number', 'nullable|integer|min:0'],
-                ['series_id', 'Series', 'select', 'nullable', fn () => \App\Models\NahauSeries::orderBy('title')->pluck('title', 'id')->all()], ['chapter_no', 'Chapter number', 'number', 'nullable|integer'],
+                ['reading_minutes', 'Reading time (minutes, auto if empty)', 'number', 'nullable|integer'], ['featured', 'Featured on Home (only one)', 'checkbox', 'nullable'], ['series_id', 'Series', 'select', 'nullable', fn () => \App\Models\NahauSeries::orderBy('title')->pluck('title', 'id')->all()], ['chapter_no', 'Chapter number', 'number', 'nullable|integer'],
                 ['translation_of', 'Translation of (story)', 'select', 'nullable', fn () => $newsIn(array_keys(config('nahau.sections')))],
                 ['image_alt', 'Lead image alt text', 'text', 'nullable|max:250'], ['image_caption', 'Lead image caption', 'text', 'nullable|max:250'], ['image_credit', 'Lead image credit', 'text', 'nullable|max:250'],
                 ['sponsored_by', 'Sponsored by (partner name)', 'text', 'nullable|max:160'], ['consent_on_file', 'Consent on file (private)', 'checkbox', 'nullable'],
@@ -76,24 +75,14 @@ class NahauAdminController extends Controller
     {
         $d = $this->defs()[$res] ?? null;
         abort_unless($d, 404);
+        abort_unless(\App\Nahau\Panel::canRes($res), 403);
 
         return $d + ['create' => true, 'edit' => true, 'show' => []];
     }
 
     public function dashboard()
     {
-        $c = [
-            'New story submissions' => [\App\Models\NahauSubmission::where('status', 'new')->count(), 'submissions'],
-            'Opportunities awaiting verification' => [\App\Models\NahauOpportunity::whereNull('verified_by')->count(), 'opportunities'],
-            'New opportunity submissions' => [\App\Models\NahauOpportunitySubmission::where('status', 'new')->count(), 'opportunity-submissions'],
-            'Reported adverts' => [\App\Models\NahauOpportunityReport::distinct('opportunity_id')->count('opportunity_id'), 'opportunities'],
-            'Correction requests / new messages' => [\App\Models\NahauMessage::where('status', 'new')->count(), 'messages'],
-            'Listings closing in 7 days' => [\App\Models\NahauOpportunity::open()->whereDate('closing_date', '<=', now()->addDays(7))->count(), 'opportunities'],
-            'Stories without translation' => [Stories::query()->whereNull('m.translation_of')->whereNotIn('news.id', NahauStoryMeta::whereNotNull('translation_of')->pluck('translation_of'))->count(), 'stories'],
-            'Confirmed subscribers' => [\App\Models\NahauSubscriber::whereNotNull('confirmed_at')->whereNull('unsubscribed_at')->count(), 'subscribers'],
-        ];
-
-        return view('admin.pages.nahau.dashboard', compact('c'));
+        return redirect()->route('admin.dashboard');
     }
 
     public function index(string $res)
@@ -104,7 +93,7 @@ class NahauAdminController extends Controller
             ? $q->join('news', 'news.id', '=', 'nahau_story_meta.news_id')->select('nahau_story_meta.*', 'news.title as news_title')->orderByDesc('news.id')
             : $q->orderByDesc('id'))->paginate(25);
 
-        return view('admin.pages.nahau.index', compact('d', 'res', 'rows'));
+        return view('nahau-admin.resource', compact('d', 'res', 'rows'));
     }
 
     public function create(Request $r, string $res)
@@ -119,16 +108,25 @@ class NahauAdminController extends Controller
             }
         }
 
-        return view('admin.pages.nahau.form', compact('d', 'res', 'row'));
+        return $this->form($r, $d, $res, $row);
     }
 
-    public function edit(string $res, int $id)
+    protected function form(Request $r, array $d, string $res, $row)
+    {
+        $data = compact('d', 'res', 'row');
+
+        return $r->ajax()
+            ? view('nahau-admin.resource-form', $data)
+            : view('nahau-admin.page', ['partial' => 'nahau-admin.resource-form', 'data' => $data, 'title' => $d['title']]);
+    }
+
+    public function edit(Request $r, string $res, int $id)
     {
         $d = $this->def($res);
         abort_unless($d['edit'], 404);
         $row = $d['model']::findOrFail($id);
 
-        return view('admin.pages.nahau.form', compact('d', 'res', 'row'));
+        return $this->form($r, $d, $res, $row);
     }
 
     public function store(Request $r, string $res)
@@ -169,9 +167,20 @@ class NahauAdminController extends Controller
             }
         }
 
+        foreach (['home_order', 'spotlight_order', 'sort'] as $k) {   // ordering columns are NOT NULL
+            if (array_key_exists($k, $data) && $data[$k] === null) {
+                $data[$k] = 0;
+            }
+        }
+
         if ($res === 'opportunities') {
             if (($data['status'] ?? '') === 'published' && (empty($data['verified_by']) || empty($data['verified_on']))) {
-                return back()->withInput()->withErrors(['verified_by' => 'An opportunity cannot be published until "Verified by" and "Verified on" are filled in.']);
+                $msg = 'Fursa haiwezi kuchapishwa hadi "Verified by" na "Verified on" zijazwe.';
+                if ($r->expectsJson()) {
+                    return response()->json(['message' => $msg, 'errors' => ['verified_by' => [$msg]]], 422);
+                }
+
+                return back()->withInput()->withErrors(['verified_by' => $msg]);
             }
             $data['slug'] = $row->slug ?: Str::slug($data['title']).'-'.Str::lower(Str::random(4));
         }
@@ -187,14 +196,22 @@ class NahauAdminController extends Controller
 
         $row->fill($data)->save();
 
+        if ($r->expectsJson()) {
+            return response()->json(['message' => 'Imehifadhiwa']);
+        }
+
         return redirect()->route('admin.nahau.index', $res)->with('success', 'Saved.');
     }
 
-    public function destroy(string $res, int $id)
+    public function destroy(Request $r, string $res, int $id)
     {
         $d = $this->def($res);
         abort_if($res === 'stories', 404);
         $d['model']::findOrFail($id)->delete();
+
+        if ($r->expectsJson()) {
+            return response()->json(['message' => 'Imefutwa']);
+        }
 
         return redirect()->route('admin.nahau.index', $res)->with('success', 'Deleted.');
     }
