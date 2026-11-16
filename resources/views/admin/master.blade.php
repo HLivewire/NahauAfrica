@@ -7,7 +7,7 @@
     <meta charset="{{ config('app.charset') }}">
     <meta name="viewport" content="{{ __('width=device-width, initial-scale=1') }}">
     <!-- favicon -->
-    <link rel="icon" href="{{ media_url($settings->favicon) }}">
+    <link rel="icon" href="{{ asset('adminassets/img/nahau/favicon-180.png') }}">
     <meta name="csrf-token">
     <title>NahauAfrica Admin</title>
     <!-- Google Font: Source Sans Pro -->

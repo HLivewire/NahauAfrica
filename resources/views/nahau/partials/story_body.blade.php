@@ -14,7 +14,7 @@
     <p class="nx-eyebrow">{{ $label }}</p>
     <p class="nx-meta" style="margin-top:6px"><strong style="color:var(--nx-ink)">{{ __($contentLabel) }}</strong></p>
     <h1 class="nx-title">{{ $story->title }}</h1>
-    <p class="nx-dek">{{ $story->dek ?: ($story->summary ?: '') }}</p>
+    <p class="nx-dek">{{ (!empty($hero) && $hero->spotlight_summary) ? $hero->spotlight_summary : ($story->dek ?: ($story->summary ?: '')) }}</p>
     <div class="nx-byline">
         <div>
             <div style="font-weight:600">{{ __('By') }} @if($author)<a href="{{ nroute('author',['slug'=>$author->slug]) }}" style="text-decoration:underline">{{ $author->name }}</a>@else{{ Stories::authorName($story) }}@endif</div>
@@ -43,7 +43,7 @@
         <dt>{{ __('Name') }}</dt><dd>{{ $hero->name }}</dd>
         <dt>{{ $hero->died ? __('Born / died') : __('Born') }}</dt><dd>{{ $hero->born }}{{ $hero->died ? ' – '.$hero->died : '' }}</dd>
         @if($hero->country)<dt>{{ __('Country') }}</dt><dd>{{ $hero->country }}</dd>@endif
-        @if($hero->known_for)<dt>{{ __('Known for') }}</dt><dd>{{ $hero->known_for }}</dd>@endif
+        @if($hero->known_for && !$hero->spotlight_summary)<dt>{{ __('Known for') }}</dt><dd>{{ $hero->known_for }}</dd>@endif
     </dl>
     @if($hero->portrait)<figure style="margin:16px 0 0"><img src="{{ media_url($hero->portrait) }}" alt="{{ __('Portrait of') }} {{ $hero->name }}" style="max-width:220px;border-radius:10px">@if($hero->portrait_credit)<figcaption class="nx-meta" style="margin-top:6px">{{ $hero->portrait_credit }}</figcaption>@endif</figure>@endif
     </div>

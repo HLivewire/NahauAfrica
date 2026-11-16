@@ -305,3 +305,10 @@ a.srl small{color:var(--mut2);margin-left:auto}
 a.ib.lang{width:auto;border-radius:999px;padding:0 10px;gap:5px;display:flex;align-items:center;text-decoration:none}
 a.ib.lang b{font-size:11px;font-weight:800;letter-spacing:.04em}
 @media(max-width:640px){a.ib.lang b{display:none}a.ib.lang{padding:0;width:36px;justify-content:center}}
+
+.seg2{display:flex;gap:10px;flex-wrap:wrap}
+.seg2 .rd{display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--bd);border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:border-color .15s,background .15s}
+.seg2 .rd:has(input:checked){border-color:var(--pri);background:var(--pri-soft);color:var(--pri)}
+.seg2 .rd input{accent-color:var(--pri)}
+.f .prev{display:block;margin-top:8px;max-height:140px;max-width:100%;object-fit:cover}
+.cnt{align-self:flex-end}

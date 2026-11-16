@@ -585,3 +585,43 @@ body[class] .maan-manu-bar.maan-manu-bar{background:#D9D9D9 !important;border-bo
  .nx .nx-xs-btn{height:50px}
 }
 @media (prefers-reduced-motion:reduce){.nx .nx-xs-copy{transition:none}}
+
+/* ---- opportunities: premium cards and job page ---- */
+.nx .nx-opp{grid-template-columns:56px minmax(0,1fr) auto;gap:20px 22px;align-items:start;padding:24px 26px;border-radius:14px;box-shadow:0 1px 2px rgba(15,15,15,.04),0 8px 24px rgba(15,15,15,.06);position:relative;overflow:hidden;margin-bottom:18px}
+.nx .nx-opp::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#D8D8D8}
+.nx .nx-opp.is-new::before{background:var(--nx-red-fill)}
+.nx .nx-opp:hover{box-shadow:0 2px 4px rgba(15,15,15,.05),0 14px 34px rgba(15,15,15,.1) !important}
+.nx-opp-logo{width:56px;height:56px;border-radius:14px;background:var(--nx-grey);display:grid;place-items:center;overflow:hidden;flex:none}
+.nx-opp-logo span{font:700 24px 'Source Serif 4',Georgia,serif;color:var(--nx-ink)}
+.nx-opp-logo img{width:100%;height:100%;object-fit:contain;background:#fff}
+.nx-opp-logo--lg{width:76px;height:76px;border-radius:18px}
+.nx-opp-chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.nx-new{display:inline-flex;align-items:center;gap:5px;padding:3px 11px 3px 8px;border-radius:20px;background:var(--nx-red-fill);color:#fff;font:700 12px 'Jost',sans-serif;letter-spacing:.06em;text-transform:uppercase;animation:nxpulse 2.4s ease-in-out infinite}
+.nx-new .nx-i{width:14px;height:14px;stroke:#fff;fill:rgba(255,255,255,.25)}
+@keyframes nxpulse{0%,100%{box-shadow:0 0 0 0 rgba(230,0,0,.35)}50%{box-shadow:0 0 0 7px rgba(230,0,0,0)}}
+.nx-soon{display:inline-flex;align-items:center;gap:5px;padding:3px 11px 3px 8px;border-radius:20px;background:#FFF1D6;color:#8A4B00;font:600 12px 'Jost',sans-serif}
+.nx-soon .nx-i{width:13px;height:13px}
+.nx-badge--line{background:#fff;border:1px solid var(--nx-line)}
+.nx .nx-opp h3{font-size:22px;line-height:1.25;margin:10px 0 2px}
+.nx-opp-emp{font:600 16px 'Jost',sans-serif;color:var(--nx-body)}
+.nx-opp-meta{list-style:none;margin:10px 0 8px;padding:0;display:flex;flex-wrap:wrap;gap:6px 18px;font:500 14px 'Jost',sans-serif;color:var(--nx-muted)}
+.nx-opp-meta li{display:inline-flex;align-items:center;gap:6px}
+.nx-i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nx-opp-sum{color:var(--nx-body);font-size:16px}
+.nx-deadline{display:inline-flex;align-items:center;gap:6px;font:500 14px 'Jost',sans-serif;color:var(--nx-body)}
+.nx .nx-opp .nx-side{min-width:200px;align-items:stretch;text-align:center}
+.nx .nx-opp .nx-side .nx-deadline{justify-content:center}
+.nx-jobhead{display:flex;gap:20px;align-items:center;margin:22px 0 14px}
+.nx-jobmeta{padding:14px 0 18px;margin:0 0 6px;border-bottom:1px solid var(--nx-line)}
+.nx-jobsec{margin-top:30px}
+.nx-jobsec h2{font:700 22px 'Source Serif 4',Georgia,serif;margin:0 0 10px}
+.nx-jobtxt{font-size:17px;color:var(--nx-body)}
+.nx-jobtxt p{margin:0 0 10px}
+.nx-jobtxt ul{margin:0;padding-left:0;list-style:none;display:grid;gap:8px}
+.nx-jobtxt li{position:relative;padding-left:26px}
+.nx-jobtxt li::before{content:"";position:absolute;left:4px;top:.62em;width:8px;height:8px;border-radius:50%;background:var(--nx-red-fill)}
+.nx-howto{margin-top:38px;border-radius:14px;padding:26px 28px;background:#F6F6F6}
+.nx-howto h2{font:700 22px 'Source Serif 4',Georgia,serif;margin:0 0 8px}
+.nx-aboutco{display:flex;gap:16px;align-items:center;margin-top:20px;padding:18px 22px;border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(15,15,15,.04),0 8px 24px rgba(15,15,15,.05)}
+@media (max-width:767px){.nx .nx-opp{grid-template-columns:48px minmax(0,1fr);padding:20px 18px}.nx .nx-opp .nx-side{grid-column:1/-1;align-items:stretch}.nx-opp-logo{width:48px;height:48px}.nx-jobhead{align-items:flex-start}.nx-opp-logo--lg{width:56px;height:56px}}
+@media (prefers-reduced-motion:reduce){.nx-new{animation:none}}

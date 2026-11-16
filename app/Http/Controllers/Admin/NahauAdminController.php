@@ -35,14 +35,27 @@ class NahauAdminController extends Controller
                 ['description', 'Description', 'textarea', 'nullable'], ['cover', 'Cover image', 'image', 'nullable|image|max:4096'], ['author_id', 'Author', 'select', 'nullable', $authors],
                 ['rhythm', 'Publishing rhythm', 'text', 'nullable|max:160'], ['featured', 'Featured on Home', 'checkbox', 'nullable'], ['next_chapter_date', 'Next chapter date', 'date', 'nullable|date']]],
             'heroes' => ['title' => 'Hero profiles', 'model' => \App\Models\NahauHero::class, 'cols' => ['name', 'country', 'show_in_spotlight', 'spotlight_order'], 'fields' => [
-                ['news_id', 'Story (African Heroes news item)', 'select', 'required|integer', fn () => $newsIn(['african-heroes'])], ['name', 'Name', 'text', 'required|max:160'], ['born', 'Born', 'text', 'nullable|max:40'], ['died', 'Died', 'text', 'nullable|max:40'],
-                ['country', 'Country', 'text', 'nullable|max:80'], ['known_for', 'Known for (one line)', 'text', 'nullable|max:200'], ['spotlight_summary', 'Home spotlight summary (max 220)', 'textarea', 'nullable|max:220'],
-                ['show_in_spotlight', 'Show in Home spotlight', 'checkbox', 'nullable'], ['spotlight_order', 'Spotlight order', 'number', 'nullable|integer'],
+                ['news_id', 'Story (African Heroes news item)', 'select', 'required|integer', fn () => $newsIn(['african-heroes'])], ['name', 'Name', 'text', 'required|max:160'],
+                ['spotlight_summary', 'Summary (shown under the name, max 320)', 'textarea', 'nullable|max:320', null, 'Shown under the name on the hero page and on the Home spotlight.'],
+                ['born', 'Born', 'text', 'nullable|max:40'], ['died', 'Died', 'text', 'nullable|max:40'], ['country', 'Country', 'text', 'nullable|max:80'],
+                ['show_in_spotlight', 'Visibility on Home spotlight', 'radio', 'nullable', fn () => ['1' => 'Visible', '0' => 'Hidden']], ['spotlight_order', 'Spotlight order', 'number', 'nullable|integer'],
                 ['portrait', 'Portrait', 'image', 'nullable|image|max:4096'], ['portrait_credit', 'Portrait credit and licence', 'text', 'nullable|max:200'], ['sources', 'Sources (one per line: title | URL)', 'textarea', 'nullable']]],
-            'opportunities' => ['title' => 'Opportunities', 'model' => \App\Models\NahauOpportunity::class, 'cols' => ['title', 'type', 'employer', 'closing_date', 'status'], 'fields' => [
-                ['title', 'Title', 'text', 'required|max:160'], ['type', 'Type', 'select', 'required', fn () => config('nahau.opportunity_types')], ['employer', 'Employer or organisation', 'text', 'required|max:160'],
-                ['location', 'Location', 'text', 'required|max:120'], ['terms', 'Terms', 'text', 'required|max:120'], ['description', 'Description (max 300)', 'textarea', 'required|max:300'],
-                ['apply_link', 'Apply link or email (employer\'s own channel)', 'text', 'required|max:300'], ['closing_date', 'Closing date', 'date', 'required|date'],
+            'opportunities' => ['title' => 'Opportunities', 'model' => \App\Models\NahauOpportunity::class, 'cols' => ['title', 'type', 'employer', 'closing_date', 'status'],
+                'tabs' => ['Msingi' => ['title', 'type', 'work_mode', 'employer', 'location', 'terms', 'description', 'closing_date'], 'Maelezo ya kazi' => ['about', 'responsibilities', 'qualifications', 'benefits'],
+                    'Kuomba' => ['apply_link', 'apply_notes', 'employer_logo', 'employer_about'], 'Uchapishaji' => ['verified_by', 'verified_on', 'status', 'featured']],
+                'fields' => [
+                ['title', 'Title', 'text', 'required|max:160'], ['type', 'Type (job, internship, training, grant)', 'select', 'required', fn () => config('nahau.opportunity_types')],
+                ['work_mode', 'Work mode', 'select', 'nullable|in:full-time,part-time,remote,hybrid', fn () => \App\Models\NahauOpportunity::WORK_MODES],
+                ['employer', 'Employer or organisation', 'text', 'required|max:160'], ['location', 'Location', 'text', 'required|max:120'],
+                ['terms', 'Pay or duration (e.g. TZS 200,000 a month, 3 months)', 'text', 'required|max:120'],
+                ['description', 'Short summary shown on the card (max 300)', 'textarea', 'required|max:300'], ['closing_date', 'Closing date', 'date', 'required|date'],
+                ['about', 'About the position', 'textarea', 'nullable|max:5000', null, 'Write it freely. A new line starts a new paragraph.'],
+                ['responsibilities', 'Key responsibilities', 'textarea', 'nullable|max:5000', null, 'One responsibility per line. Each line becomes a bullet.'],
+                ['qualifications', 'Qualifications and requirements', 'textarea', 'nullable|max:5000', null, 'One requirement per line. Each line becomes a bullet.'],
+                ['benefits', 'Remuneration and benefits', 'textarea', 'nullable|max:3000', null, 'One item per line.'],
+                ['apply_link', 'Apply URL (the employer\'s page, or an email address)', 'text', 'required|max:500', null, 'The "Apply" button sends the reader to this link. Use the employer\'s own site.'],
+                ['apply_notes', 'Application requirements', 'textarea', 'nullable|max:3000', null, 'For example: CV, cover letter, two references.'],
+                ['employer_logo', 'Employer logo', 'image', 'nullable|image|max:2048'], ['employer_about', 'About the employer', 'textarea', 'nullable|max:2000'],
                 ['verified_by', 'Verified by', 'text', 'nullable|max:120'], ['verified_on', 'Verified on', 'date', 'nullable|date'],
                 ['status', 'Status', 'select', 'required', fn () => ['draft' => 'Draft', 'published' => 'Published', 'hidden' => 'Hidden']], ['featured', 'Featured', 'checkbox', 'nullable']]],
             'submissions' => ['title' => 'Story submissions', 'model' => \App\Models\NahauSubmission::class, 'create' => false, 'cols' => ['reference', 'name', 'title', 'section', 'status', 'created_at'], 'fields' => [
@@ -155,7 +168,7 @@ class NahauAdminController extends Controller
 
         foreach ($d['fields'] as $f) {
             [$name, , $type] = $f;
-            if ($type === 'checkbox') {
+            if ($type === 'checkbox' || $type === 'radio') {
                 $data[$name] = $r->boolean($name);
             } elseif ($type === 'image') {
                 unset($data[$name]);
@@ -183,6 +196,9 @@ class NahauAdminController extends Controller
                 return back()->withInput()->withErrors(['verified_by' => $msg]);
             }
             $data['slug'] = $row->slug ?: Str::slug($data['title']).'-'.Str::lower(Str::random(4));
+            if (($data['status'] ?? '') === 'published' && ! $row->published_at) {
+                $data['published_at'] = now();   // the "Posted … ago" and "New" badge count from here
+            }
         }
         if (in_array($res, ['authors', 'series'], true)) {
             $data['slug'] = ($data['slug'] ?? null) ?: Str::slug($data['title'] ?? $data['name']);

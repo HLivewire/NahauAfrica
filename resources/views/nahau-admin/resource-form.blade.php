@@ -1,5 +1,5 @@
-@php use App\Nahau\Icons; $edit = $row->exists; $wide = ['textarea','image','checkbox']; @endphp
-<div class="mh" data-w="{{ count($d['fields']) > 6 ? '760px' : '600px' }}"><h3>{{ $d['title'] }} · {{ $edit ? ($d['create'] ? 'Hariri' : 'Fungua') : 'Mpya' }}</h3><button type="button" class="x" data-close aria-label="Funga">{!! Icons::svg('x','sm') !!}</button></div>
+@php use App\Nahau\Icons; $edit = $row->exists; $wide = ['textarea','image','checkbox','radio']; @endphp
+<div class="mh" data-w="{{ count($d['fields']) > 6 ? '800px' : '600px' }}"><h3>{{ $d['title'] }} · {{ $edit ? ($d['create'] ? 'Hariri' : 'Fungua') : 'Mpya' }}</h3><button type="button" class="x" data-close aria-label="Funga">{!! Icons::svg('x','sm') !!}</button></div>
 <form data-ajax style="display:contents" method="POST" enctype="multipart/form-data" action="{{ $edit ? route('admin.nahau.update', [$res, $row->id]) : route('admin.nahau.store', $res) }}">
 @csrf @if($edit) @method('PUT') @endif
 <div class="mb">
@@ -10,24 +10,39 @@
   @endif
   @if($res==='opportunities')<div class="alert-soft">Fursa haichapishwi hadi <b>Verified by</b> na <b>Verified on</b> zijazwe. @if($edit)Ripoti za tangazo hili: {{ $row->reports()->count() }}.@endif</div>@endif
   @if($res==='stories')<p class="note">Hadithi: <b>{{ \App\Models\News::find($row->news_id)?->title }}</b></p>@endif
+  @php
+    $tabs = $d['tabs'] ?? null; $byName = collect($d['fields'])->keyBy(0);
+    $groups = $tabs ?: ['_' => $byName->keys()->all()];
+    $tall = ['body_en','body_sw','corrections','sources','about','responsibilities','qualifications','benefits','apply_notes','employer_about'];
+  @endphp
+  @if($tabs)<div class="tabs">@foreach(array_keys($tabs) as $i => $tn)<button type="button" data-tab="t{{ $i }}" aria-selected="{{ $i === 0 ? 'true' : 'false' }}">{{ $tn }}</button>@endforeach</div>@endif
+  @foreach($groups as $gi => $names)
+  <div class="pane" @if($tabs) data-pane="t{{ $loop->index }}" @if(!$loop->first) style="display:none" @endif @endif>
   <div class="fg">
-  @foreach($d['fields'] as $f)
-    @php [$name,$label,$type] = $f; $val = old($name, $row->$name); @endphp
+  @foreach($names as $nm)
+    @php $f = $byName[$nm]; [$name,$label,$type] = $f; $val = old($name, $row->$name); $hint = $f[5] ?? null; @endphp
     <div class="f {{ in_array($type,$wide,true) ? 'full' : '' }}">
       @if($type==='checkbox')
         <label class="ck"><input type="checkbox" name="{{ $name }}" value="1" @checked($val)> {{ $label }}</label>
+      @elseif($type==='radio')
+        <label>{{ $label }}</label>
+        <div class="seg2">@foreach(($f[4])() as $k=>$v)<label class="rd"><input type="radio" name="{{ $name }}" value="{{ $k }}" @checked((string)(int)$val === (string)$k)> {{ $v }}</label>@endforeach</div>
       @else
         <label for="f-{{ $name }}">{{ $label }}</label>
-        @if($type==='textarea')<textarea id="f-{{ $name }}" name="{{ $name }}" rows="{{ in_array($name,['body_en','body_sw','corrections','sources']) ? 10 : 4 }}">{{ $val }}</textarea>
+        @if($type==='textarea')<textarea id="f-{{ $name }}" name="{{ $name }}" rows="{{ in_array($name,$tall) ? 7 : 4 }}">{{ $val }}</textarea>
         @elseif($type==='select')<select id="f-{{ $name }}" name="{{ $name }}"><option value="">—</option>@foreach(($f[4])() as $k=>$v)<option value="{{ $k }}" @selected((string)$val === (string)$k)>{{ $v }}</option>@endforeach</select>
-        @elseif($type==='image')@if($val)<img class="prev" src="{{ media_url($val) }}" alt="">@endif<input type="file" id="f-{{ $name }}" name="{{ $name }}" accept="image/*">
+        @elseif($type==='image')<input type="file" id="f-{{ $name }}" name="{{ $name }}" accept="image/*" data-preview="pv-{{ $name }}"><img class="prev" id="pv-{{ $name }}" src="{{ $val ? media_url($val) : '' }}" alt="" style="{{ $val ? '' : 'display:none' }}">
         @else<input id="f-{{ $name }}" name="{{ $name }}" type="{{ $type==='number'?'number':($type==='date'?'date':'text') }}" value="{{ $type==='date' && $val ? \Illuminate\Support\Carbon::parse($val)->toDateString() : $val }}">
         @endif
       @endif
+      @if($hint)<small>{{ $hint }}</small>@endif
+      @if($name==='spotlight_summary')<small class="cnt" data-count-for="f-{{ $name }}" data-max="320"></small>@endif
       <span class="err" data-err="{{ $name }}"></span>
     </div>
   @endforeach
   </div>
+  </div>
+  @endforeach
 </div>
 <div class="mf">
   @if($res==='opportunity-submissions' && $edit)<button type="button" class="btn sec" data-modal="{{ route('admin.nahau.create','opportunities') }}?from={{ $row->id }}">Tengeneza fursa kutoka kwa hii</button>@endif

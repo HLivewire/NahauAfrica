@@ -48,7 +48,7 @@ class SectionController extends Controller
     {
         $type = array_key_exists($request->query('type'), config('nahau.opportunity_types')) ? $request->query('type') : null;
         $list = NahauOpportunity::open()->when($type, fn ($q) => $q->where('type', $type))
-            ->orderBy('closing_date')->orderBy('id')->get();
+            ->orderByRaw('COALESCE(published_at, created_at) DESC')->orderByDesc('id')->get();   // newest first
 
         $view = $request->ajax() ? 'nahau.partials.opportunity_list' : 'nahau.opportunities';
 

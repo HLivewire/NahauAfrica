@@ -185,3 +185,29 @@ if (! function_exists('nmoney')) {
         return config('nahau.currency', 'TZS').' '.number_format((float) $amount, 0, '.', ',');
     }
 }
+
+if (! function_exists('nlines')) {
+    /** Admin text box -> safe HTML: one line = a bullet (as "list") or a paragraph (as "para"). */
+    function nlines(?string $text, string $as = 'list'): string
+    {
+        $lines = array_values(array_filter(array_map(fn ($l) => trim(ltrim(trim($l), "-•*– ")), preg_split('/\R/', (string) $text))));
+        if (! $lines) {
+            return '';
+        }
+        if ($as === 'para' || count($lines) === 1) {
+            return implode('', array_map(fn ($l) => '<p>'.e($l).'</p>', $lines));
+        }
+
+        return '<ul>'.implode('', array_map(fn ($l) => '<li>'.e($l).'</li>', $lines)).'</ul>';
+    }
+}
+
+if (! function_exists('nposted')) {
+    /** "Posted 2 days ago" in the reader's language. */
+    function nposted($when): string
+    {
+        $c = \Illuminate\Support\Carbon::parse($when)->locale(nlocale() === 'sw' ? 'sw' : 'en');
+
+        return $c->diffForHumans();
+    }
+}

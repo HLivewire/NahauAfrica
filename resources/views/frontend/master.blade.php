@@ -25,9 +25,9 @@
     <title>@yield('title', $settings->title)</title>
 
     <!-- Apple Favicon -->
-    <link rel="apple-touch-icon" href="{{ media_url($settings->favicon) }}">
+    <link rel="apple-touch-icon" href="{{ asset('adminassets/img/nahau/favicon-180.png') }}">
     <!-- All Device Favicon -->
-    <link rel="icon" href="{{ media_url($settings->favicon) }}">
+    <link rel="icon" href="{{ asset('adminassets/img/nahau/favicon-180.png') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('frontend/fontawesome/all.css') }}">
     <!-- Fonts -->

@@ -110,7 +110,7 @@
               var el = $('[data-err="' + k + '"]', f), inp = f.elements[k]; if (el) el.textContent = errs[k][0];
               if (inp && inp.classList) { inp.classList.add('bad'); first = first || inp; }
             });
-            first && first.focus && first.focus();
+            if (first) { var pn = first.closest && first.closest('[data-pane]'); if (pn) { var tb = $('[data-tab="' + pn.getAttribute('data-pane') + '"]', modal); tb && tb.click(); } first.focus && first.focus(); }
             sw({ icon: 'error', title: 'Kuna kosa kwenye fomu', text: res.json.message || 'Angalia sehemu zilizoonyeshwa.', timer: 2600, showConfirmButton: false });
           } else if (res.ok) {
             var j = res.json || {};
@@ -126,6 +126,16 @@
     });
     var bt = $('#b2', modal), rt = $('#rt', modal);
     if (bt && rt) { var upd = function () { var n = bt.value.replace(/<[^>]*>/g, ' ').trim().split(/\s+/).filter(Boolean).length; rt.textContent = Math.max(n ? 1 : 0, Math.round(n / 200)) + ' ' + T('dakika'); }; bt.addEventListener('input', upd); upd(); }
+    $$('input[type=file][data-preview]', modal).forEach(function (inp) {
+      inp.addEventListener('change', function () {
+        var im = document.getElementById(inp.getAttribute('data-preview')), f = inp.files && inp.files[0];
+        if (!im || !f) return; im.src = URL.createObjectURL(f); im.style.display = '';
+      });
+    });
+    $$('[data-count-for]', modal).forEach(function (c) {
+      var t = document.getElementById(c.getAttribute('data-count-for')), mx = +c.getAttribute('data-max');
+      var u = function () { c.textContent = t.value.length + ' / ' + mx; c.style.color = t.value.length > mx ? 'var(--red)' : ''; }; t.addEventListener('input', u); u();
+    });
     $$('[data-tab]', modal).forEach(function (b) {
       b.onclick = function () {
         $$('[data-tab]', modal).forEach(function (x) { x.setAttribute('aria-selected', x === b); });
