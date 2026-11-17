@@ -14,10 +14,6 @@ class SignupController extends Controller
      * Display of the SignUp information .
      *
      */
-    public function maanSignupIndex()
-    {
-        return view('frontend.pages.signup');
-    }
     /**
      * Store of the requested data.
      *

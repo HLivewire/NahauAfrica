@@ -17,8 +17,12 @@ class FrontendTest extends TestCase
 
     public function test_public_pages_load(): void
     {
-        foreach (['/', '/home-one', '/home-two', '/photogallery', '/contactus', '/signup', '/signin', '/search?search=news'] as $url) {
+        foreach (['/', '/search?search=news'] as $url) {
             $this->get($url)->assertOk();
+        }
+        // old template pages no longer exist: they all land on the new site
+        foreach (['/home-one', '/home-two', '/photogallery', '/contactus', '/about-us', '/signup', '/signin'] as $url) {
+            $this->get($url)->assertRedirect();
         }
     }
 

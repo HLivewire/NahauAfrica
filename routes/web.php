@@ -58,29 +58,29 @@ use Illuminate\Support\Facades\Artisan;
 // NahauAfrica public site (registered first so it wins for / , /search and the four sections)
 require __DIR__.'/nahau.php';
 
-Route::get('/home-one',[HomeController::class,'maanIndex'])->name('home-one');
-Route::get('/home-two',[HomeController::class,'maanIndex'])->name('home-two');
+Route::get('/home-one',fn()=>redirect('/',301))->name('home-one');
+Route::get('/home-two',fn()=>redirect('/',301))->name('home-two');
 Route::get('/subscribe/ajax',[HomeController::class,'subscribeAjax'])->name('subscribe');
 //route search
 
 // News category routes ("business", "business.details" ...) are registered at runtime by
 // App\Providers\CategoryRouteServiceProvider so that routes can be cached.
 
-Route::get('/photogallery',[\App\Http\Controllers\Frontend\PhotogalleryController::class,'maanPhotogalleryIndex'])->name('photogallery');
-Route::get('/photogallery/details/{id}/{slug?}',[\App\Http\Controllers\Frontend\PhotogalleryController::class,'maanPhotogalleryDetails'])->name('photogallery.details');
+Route::get('/photogallery',fn()=>redirect('/',301))->name('photogallery');
+Route::get('/photogallery/details/{id}/{slug?}',fn()=>redirect('/',301))->name('photogallery.details');
 
 // route news comments
 Route::post('news/comment/{id?}',[\App\Http\Controllers\Frontend\NewsController::class,'maanNewsComment'])->name('news.comment');
 // route contact us
-Route::get('/about-us',[\App\Http\Controllers\Frontend\AboutusController::class,'maanNewsAboutus'])->name('aboutus');
-Route::get('/contactus',[\App\Http\Controllers\Frontend\ContactusController::class,'maanNewsContactus'])->name('contactus');
+Route::get('/about-us',fn()=>redirect(nroute('about'),301))->name('aboutus');
+Route::get('/contactus',fn()=>redirect(nroute('contact'),301))->name('contactus');
 Route::post('/contactus',[\App\Http\Controllers\Frontend\ContactusController::class,'maanNewsContactusStore'])->name('contactus.store');
 
 //route signup
 Route::get('/auth/google',[\App\Http\Controllers\Frontend\GoogleLoginController::class,'redirect'])->name('auth.google');
 Route::get('/auth/google/callback',[\App\Http\Controllers\Frontend\GoogleLoginController::class,'callback'])->name('auth.google.callback');
-Route::get('/signup',[SignupController::class,'maanSignupIndex'])->name('signup');
-Route::post('/signup',[SignupController::class,'maanSignupStore']);
+Route::get('/signup',fn()=>redirect('/')->with('nahau_panel','register'))->name('signup.page');
+Route::post('/signup',[SignupController::class,'maanSignupStore'])->name('signup');
 
 //route forgot / reset password (frontend users)
 Route::post('/forgot-password',[\App\Http\Controllers\Frontend\PasswordResetController::class,'sendLink'])->middleware('throttle:5,1')->name('password.email');
@@ -88,8 +88,8 @@ Route::get('/reset-password/{token}',[\App\Http\Controllers\Frontend\PasswordRes
 Route::post('/reset-password',[\App\Http\Controllers\Frontend\PasswordResetController::class,'reset'])->middleware('throttle:10,1')->name('password.update');
 
 //route signin
-Route::get('/signin',[SigninController::class,'maanSigninIndex'])->name('signin');
-Route::post('/signin',[SigninController::class,'maanSigninLogin'])->middleware('throttle:10,1');
+Route::get('/signin',fn()=>redirect('/')->with('nahau_panel','login'))->name('signin.page');
+Route::post('/signin',[SigninController::class,'maanSigninLogin'])->middleware('throttle:10,1')->name('signin');
 Route::get('/signout',[SigninController::class, 'maanSignout'])->name('signout');
 // Route login
 Route::get('/login',[AuthController::class,'maanIndex'])->name('login');

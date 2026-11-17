@@ -9,10 +9,6 @@ use Illuminate\Support\Facades\Session;
 
 class SigninController extends Controller
 {
-    public function maanSigninIndex()
-    {
-        return view('frontend.pages.signin');
-    }
     public function maanSigninLogin(Request $request)
     {
 

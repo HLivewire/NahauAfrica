@@ -14,11 +14,11 @@ class HomeNahauTest extends TestCase
         }
     }
 
-    public function test_classic_homes_still_available(): void
+    public function test_classic_homes_redirect_to_new_site(): void
     {
-        $this->get('/home-one')->assertOk();
-        $this->get('/home-two')->assertOk();
-        $this->get('/about-us')->assertOk();
+        $this->get('/home-one')->assertRedirect('/');
+        $this->get('/home-two')->assertRedirect('/');
+        $this->get('/about-us')->assertRedirect();
     }
 
     public function test_subscribe_rejects_invalid_email(): void
