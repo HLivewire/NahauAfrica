@@ -28,8 +28,9 @@ class FrontendTest extends TestCase
         $this->assertNotEmpty($categories);
 
         foreach ($categories as $category) {
-            $this->get(route($category->slug, strtolower($category->name)))->assertOk();
-            $this->get('/'.$category->slug)->assertOk(); // optional parameter
+            $go = $category->slug === 'jobs-careers' ? '?view=stories' : ''; // Jobs opens on Opportunities by default
+            $this->get(route($category->slug, strtolower($category->name)).$go)->assertOk();
+            $this->get('/'.$category->slug.$go)->assertOk(); // optional parameter
 
             $news = News::join('newssubcategories', 'news.subcategory_id', '=', 'newssubcategories.id')
                 ->where('newssubcategories.category_id', $category->id)

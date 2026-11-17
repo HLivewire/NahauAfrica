@@ -14,6 +14,11 @@ class SectionController extends Controller
         $cfg = config("nahau.sections.$section");
         abort_unless($cfg, 404);
 
+        // Jobs: Opportunities is the default tab; stories open with ?view=stories
+        if ($section === 'jobs-careers' && ! $request->ajax() && ! $request->hasAny(['view', 'q', 'format', 'page'])) {
+            return redirect(nroute('opportunities'));
+        }
+
         $format = in_array($request->query('format'), $cfg['formats'], true)
             ? $request->query('format')
             : (collect($cfg['formats'])->first(fn ($f) => \Illuminate\Support\Str::slug($f) === $request->query('format')));

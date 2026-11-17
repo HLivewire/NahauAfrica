@@ -20,7 +20,7 @@ class NahauSiteTest extends TestCase
 
     public function test_public_pages_render_in_both_languages(): void
     {
-        foreach (['/', '/sw/', '/fiction', '/sw/hadithi', '/relationships', '/sw/mahusiano', '/jobs-careers', '/jobs-careers/opportunities',
+        foreach (['/', '/sw/', '/fiction', '/sw/hadithi', '/relationships', '/sw/mahusiano', '/jobs-careers?view=stories', '/jobs-careers/opportunities',
                   '/sw/kazi/fursa', '/african-heroes', '/sw/mashujaa', '/write-for-us', '/sw/andika-nasi', '/about', '/sw/kuhusu',
                   '/contact', '/privacy', '/terms', '/copyright', '/editorial-standards', '/search?q=bus', '/sw/tafuta?q=bus',
                   '/fiction/the-last-bus-to-morogoro', '/african-heroes/wangari-maathai', '/series/mto-wa-kesho',

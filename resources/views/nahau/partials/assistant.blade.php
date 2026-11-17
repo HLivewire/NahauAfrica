@@ -5,13 +5,19 @@
         <div class="nx-ai-chips"><button type="button">{{ __('How do I apply for a job?') }}</button><button type="button">{{ __('How do I submit my story?') }}</button><button type="button">{{ __('Contact the team') }}</button></div>
         <form class="nx-ai-form"><input type="text" maxlength="500" placeholder="{{ __('Type your question…') }}" aria-label="{{ __('Your question') }}" required><button type="submit" aria-label="{{ __('Send') }}">&#10148;</button></form>
     </div>
-    <button type="button" class="nx-ai-fab" aria-label="{{ __('Open help assistant') }}" aria-expanded="false"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/><path d="M9 11h.01M12 11h.01M15 11h.01"/></svg><span>{{ __('Help') }}</span></button>
+    <div class="nx-ai-dock"><span class="nx-ai-pill" role="button" tabindex="-1">{{ __('Ask about Nahau Africa') }}</span><button type="button" class="nx-ai-fab" aria-label="{{ __('Open help assistant') }}" aria-expanded="false"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg></button></div>
 </div>
 <style>
 .nx-ai{position:fixed;right:22px;bottom:22px;z-index:1500;font-family:'Jost',sans-serif}
-.nx-ai-fab{display:flex;align-items:center;gap:8px;border:0;border-radius:999px;background:#E60000;color:#fff;padding:14px 20px;font:600 16px 'Jost',sans-serif;box-shadow:0 10px 28px rgba(230,0,0,.35);cursor:pointer}
+.nx-ai-dock{display:flex;align-items:center;gap:14px}
+.nx-ai-pill{background:#fff;color:#161d2f;font:700 17px 'Jost',sans-serif;padding:15px 24px;border-radius:999px;border:1px solid #e3e3e3;box-shadow:0 10px 30px rgba(0,0,0,.14);cursor:pointer;white-space:nowrap}
+.nx-ai-fab{position:relative;width:58px;height:58px;border:0;border-radius:50%;background:#E0262B;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 22px rgba(224,38,43,.4)}
+.nx-ai-fab::after{content:"";position:absolute;inset:0;border-radius:50%;background:rgba(224,38,43,.35);animation:nxaip 2.2s ease-out infinite;z-index:-1}
+@keyframes nxaip{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.7);opacity:0}}
+.nx-ai-fab svg{width:28px !important;height:28px !important;display:block;fill:none !important;stroke:#fff !important}
 .nx-ai-fab:hover{background:#c40000}
-.nx-ai-panel{height:auto;position:absolute;right:0;bottom:66px;width:350px;max-width:calc(100vw - 32px);background:#fff;border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.25);overflow:hidden;display:flex;flex-direction:column}
+@media (prefers-reduced-motion:reduce){.nx-ai-fab::after{animation:none}}
+.nx-ai-panel{height:auto;position:absolute;right:0;bottom:76px;width:350px;max-width:calc(100vw - 32px);background:#fff;border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.25);overflow:hidden;display:flex;flex-direction:column}
 .nx-ai-panel[hidden]{display:none}
 .nx-ai-head{position:relative;background:#232427;color:#fff;padding:14px 44px 14px 16px}
 .nx-ai-head b{display:block;font-size:17px}.nx-ai-head span{font-size:13px;opacity:.8}
@@ -25,12 +31,12 @@
 .nx-ai-form{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #eee}
 .nx-ai-form input{letter-spacing:0;height:auto;flex:1;border:1px solid #ddd;border-radius:10px;padding:10px 12px;font:500 15px 'Jost',sans-serif;min-width:0}
 .nx-ai-form button{border:0;border-radius:10px;background:#E60000;color:#fff;width:42px;cursor:pointer;font-size:16px}
-@media (max-width:480px){.nx-ai{right:12px;bottom:12px}.nx-ai-fab span{display:none}.nx-ai-fab{padding:14px}}
+@media (max-width:480px){.nx-ai{right:12px;bottom:12px}.nx-ai-pill{display:none}}
 </style>
 <script>
-(function(){var w=document.querySelector('[data-nx-ai]');if(!w)return;var fab=w.querySelector('.nx-ai-fab'),pn=w.querySelector('.nx-ai-panel'),log=w.querySelector('.nx-ai-log'),f=w.querySelector('form'),inp=f.querySelector('input');
-function open(o){pn.hidden=!o;fab.setAttribute('aria-expanded',o);if(o)inp.focus()}
-fab.addEventListener('click',function(){open(pn.hidden)});w.querySelector('.nx-ai-x').addEventListener('click',function(){open(false)});
+(function(){var w=document.querySelector('[data-nx-ai]');if(!w)return;var fab=w.querySelector('.nx-ai-fab'),pn=w.querySelector('.nx-ai-panel'),pill=w.querySelector('.nx-ai-pill'),log=w.querySelector('.nx-ai-log'),f=w.querySelector('form'),inp=f.querySelector('input');
+function open(o){pn.hidden=!o;pill.style.display=o?'none':'';fab.setAttribute('aria-expanded',o);if(o)inp.focus()}
+fab.addEventListener('click',function(){open(pn.hidden)});pill.addEventListener('click',function(){open(true)});w.querySelector('.nx-ai-x').addEventListener('click',function(){open(false)});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')open(false)});
 function add(t,c,links){var p=document.createElement('p');p.className='nx-ai-m '+c;p.textContent=t;(links||[]).forEach(function(l){var a=document.createElement('a');a.href=l.url;a.textContent=l.title;p.appendChild(a)});log.appendChild(p);log.scrollTop=log.scrollHeight;return p}
 function ask(q){add(q,'me');var wait=add('…','bot');var fd=new FormData();fd.append('message',q);fd.append('lang',w.dataset.lang);

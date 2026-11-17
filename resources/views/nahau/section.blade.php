@@ -8,7 +8,7 @@
 @if($section === 'jobs-careers')
 <div class="nx-wrap"><div class="nx-tabs" role="group" aria-label="{{ __('View') }}">
     <a class="nx-chip" href="{{ nroute('opportunities') }}" aria-pressed="false">{{ __('Opportunities') }}</a>
-    <a class="nx-chip is-on" href="{{ nroute('jobs-careers') }}" aria-current="page" aria-pressed="true">{{ __('Stories') }}</a>
+    <a class="nx-chip is-on" href="{{ nroute('jobs-careers') }}?view=stories" aria-current="page" aria-pressed="true">{{ __('Stories') }}</a>
 </div></div>
 @endif
 <div class="nx-wrap" data-nx-listing data-url="{{ nsection_url($section) }}">

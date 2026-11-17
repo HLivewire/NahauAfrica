@@ -18,7 +18,7 @@
     $n = 0;
 @endphp
 <div class="nx-read nx-job" style="padding-top:36px;padding-bottom:72px;max-width:860px">
-    <nav class="nx-crumbs" aria-label="Breadcrumb"><a href="{{ nroute('home') }}">{{ __('Home') }}</a> / <a href="{{ nroute('jobs-careers') }}">{{ nsection('jobs-careers','name') }}</a> / <a href="{{ nroute('opportunities') }}">{{ __('Opportunities') }}</a></nav>
+    <nav class="nx-crumbs" aria-label="Breadcrumb"><a href="{{ nroute('home') }}">{{ __('Home') }}</a> / <a href="{{ nroute('opportunities') }}">{{ nsection('jobs-careers','name') }}</a> / <a href="{{ nroute('opportunities') }}">{{ __('Opportunities') }}</a></nav>
 
     <div class="nx-jobhead">
         <div class="nx-opp-logo nx-opp-logo--lg">@if($o->employer_logo)<img src="{{ media_url($o->employer_logo) }}" alt="">@else<span>{{ mb_strtoupper(mb_substr($o->employer, 0, 1)) }}</span>@endif</div>
