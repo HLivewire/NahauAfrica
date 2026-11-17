@@ -314,3 +314,10 @@ a.ib.lang b{font-size:11px;font-weight:800;letter-spacing:.04em}
 .cnt{align-self:flex-end}
 
 .swt.tg{display:inline-block;vertical-align:middle}.tgl{color:var(--mut2);margin-left:6px;font-size:12px}
+
+/* loading spinner inside buttons */
+.is-loading{position:relative;pointer-events:none;cursor:progress;color:transparent !important}
+.is-loading>*:not(.nx-spin){opacity:0}
+.nx-spin{position:absolute;left:50%;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border:2.5px solid rgba(127,127,127,.35);border-top-color:currentColor;border-radius:50%;animation:nxSpin .7s linear infinite;opacity:1 !important}
+@keyframes nxSpin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.nx-spin{animation-duration:1.6s}}

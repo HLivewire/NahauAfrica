@@ -303,3 +303,38 @@
   document.addEventListener('visibilitychange', start);
   start();
 })();
+
+/* ---- loading spinners on buttons (links that navigate, form submits, ajax saves) ---- */
+(function () {
+  var cur = null, sel = 'a.nx-btn, a.nx-xs-btn, a.nx-btn--sm';
+  function on(b) {
+    if (!b || b.classList.contains('is-loading')) return;
+    var sp = document.createElement('span'); sp.className = 'nx-spin'; sp.setAttribute('aria-hidden', 'true');
+    sp.style.color = getComputedStyle(b).color; b.appendChild(sp);
+    b.classList.add('is-loading'); b.setAttribute('aria-busy', 'true');
+  }
+  function off(b) {
+    if (!b) return; b.classList.remove('is-loading'); b.removeAttribute('aria-busy');
+    var s = b.querySelector(':scope > .nx-spin'); if (s) s.remove();
+  }
+  function offAll() { document.querySelectorAll('.is-loading').forEach(off); cur = null; }
+  var of = window.fetch;
+  if (of) window.fetch = function () {
+    var st = cur, p = of.apply(this, arguments);
+    if (st && !st.f) { st.f = true; var done = function () { off(st.b); if (cur === st) cur = null; }; p.then(done, done); }
+    return p;
+  };
+  document.addEventListener('submit', function (e) {
+    var f = e.target, b = e.submitter || f.querySelector('[type=submit]');
+    if (!b || b.hasAttribute('data-no-spin')) return;
+    on(b); var st = cur = { b: b, f: false };
+    setTimeout(function () { if (e.defaultPrevented && !st.f) { off(b); if (cur === st) cur = null; } }, 0);
+  }, true);
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest(sel);
+    if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+    var h = a.getAttribute('href'); if (!h || h.charAt(0) === '#' || a.target === '_blank' || /^(mailto|tel):/.test(h) || a.hasAttribute('data-no-spin')) return;
+    setTimeout(function () { if (!e.defaultPrevented) on(a); }, 0);
+  });
+  window.addEventListener('pageshow', offAll);
+})();
