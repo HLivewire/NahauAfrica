@@ -20,7 +20,7 @@
 <div class="nx-read nx-job" style="padding-top:36px;padding-bottom:72px;max-width:860px">
     <nav class="nx-crumbs" aria-label="Breadcrumb"><a href="{{ nroute('home') }}">{{ __('Home') }}</a> / <a href="{{ nroute('jobs-careers') }}">{{ nsection('jobs-careers','name') }}</a> / <a href="{{ nroute('opportunities') }}">{{ __('Opportunities') }}</a></nav>
 
-    <header class="nx-jobhead">
+    <div class="nx-jobhead">
         <div class="nx-opp-logo nx-opp-logo--lg">@if($o->employer_logo)<img src="{{ media_url($o->employer_logo) }}" alt="">@else<span>{{ mb_strtoupper(mb_substr($o->employer, 0, 1)) }}</span>@endif</div>
         <div>
             <h1 class="nx-title" style="font-size:clamp(26px,3.6vw,38px);line-height:1.15">{{ $o->title }}</h1>
@@ -32,7 +32,7 @@
                 @if($left >= 0 && $left <= 7)<span class="nx-soon">{!! nxi('bolt') !!}{{ $left === 0 ? __('Closes today') : trans_choice('{1} Closes in 1 day|[2,*] Closes in :n days', $left, ['n' => $left]) }}</span>@endif
             </div>
         </div>
-    </header>
+    </div>
     <ul class="nx-opp-meta nx-jobmeta">
         <li>{!! nxi('pin') !!}{{ $o->location }}</li>
         @if($mode)<li>{!! nxi('brief') !!}{{ __($mode) }}</li>@endif
