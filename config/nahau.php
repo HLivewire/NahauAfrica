@@ -53,6 +53,7 @@ return [
     ],
 
     'labels' => ['Fiction', 'Personal experience', 'Opinion', 'Researched biography', 'Interview', 'Sponsored'],
+    'assistant' => ['key' => env('ANTHROPIC_API_KEY'), 'model' => env('NAHAU_AI_MODEL', 'claude-haiku-5-5')],
     'opportunity_types' => ['job' => 'Job', 'internship' => 'Internship', 'training' => 'Training', 'grant' => 'Grant'],
     'report_reasons' => ['Asks for payment', 'Fake employer', 'Job no longer available', 'Other'],
     'contact_reasons' => ['General enquiry', 'Correction request', 'Partnership proposal', 'Reader feedback', 'Buying books', 'Report a suspicious advert'],

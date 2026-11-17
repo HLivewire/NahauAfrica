@@ -16,7 +16,7 @@
         @php
             $hs = $heroStories[$h->news_id];
             $himg = ($h->portrait ? nimage($h->portrait) : null) ?: nimage($hs);
-            $hsum = \Illuminate\Support\Str::limit(strip_tags($h->spotlight_summary ?: ($hs->summary ?? '')), 130);
+            $hsum = \Illuminate\Support\Str::limit(strip_tags($h->spotlight_summary ?: ($hs->summary ?? '')), 320);
         @endphp
         <article class="nx-xs{{ $loop->first ? ' is-active' : '' }}" style="{{ ['--pc:#232427;--fg:#fff;--fg2:rgba(255,255,255,.88);--bb:#fff;--bf:#232427;--sh:rgba(0,0,0,.35)', '--pc:#F7F3EB;--fg:#232427;--fg2:#4a4a4a;--bb:#232427;--bf:#fff;--sh:transparent', '--pc:#EDEDED;--fg:#232427;--fg2:#4a4a4a;--bb:#232427;--bf:#fff;--sh:transparent'][($loop->iteration - 1) % 3] }}" role="group" aria-roledescription="slide" aria-label="{{ $loop->iteration }} / {{ $heroes->count() }}" @if(! $loop->first) aria-hidden="true" @endif>
             <div class="nx-xs-panel"></div>

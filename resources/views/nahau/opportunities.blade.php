@@ -12,8 +12,8 @@
 @include('nahau.partials.banner')
 <div class="nx-wrap">
     <div class="nx-tabs" role="group" aria-label="{{ __('View') }}">
-        <a class="nx-chip" href="{{ nroute('jobs-careers') }}" aria-pressed="false">{{ __('Stories') }}</a>
         <a class="nx-chip is-on" href="{{ nroute('opportunities') }}" aria-current="page" aria-pressed="true">{{ __('Opportunities') }}</a>
+        <a class="nx-chip" href="{{ nroute('jobs-careers') }}" aria-pressed="false">{{ __('Stories') }}</a>
     </div>
     <div class="nx-sec nx-sec--sm" style="padding-top:28px" data-nx-opps data-url="{{ nroute('opportunities') }}">
         <div class="nx-warn" role="note">{{ __('Nahau Africa never charges to apply. Every listing is checked with the employer before it is published. If anyone asks you for money to secure a job,') }} <a href="{{ nroute('contact') }}?reason={{ urlencode('Report a suspicious advert') }}">{{ __('report it to us') }}</a>.</div>

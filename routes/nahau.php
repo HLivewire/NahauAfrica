@@ -64,6 +64,7 @@ Route::prefix('nahau')->name('nahau.')->group(function () {
     Route::post('contact', [FormController::class, 'contact'])->middleware('throttle:6,1')->name('contact.store');
     Route::post('opportunity', [FormController::class, 'submitOpportunity'])->middleware('throttle:6,1')->name('opportunity.store');
     Route::post('opportunity/{id}/report', [FormController::class, 'report'])->middleware('throttle:10,1')->name('report');
+    Route::post('assistant', [\App\Http\Controllers\Nahau\AssistantController::class, 'ask'])->middleware('throttle:20,1')->name('assistant');
     Route::post('newsletter', [FormController::class, 'subscribe'])->middleware('throttle:6,1')->name('newsletter');
     Route::get('newsletter/confirm/{token}', [FormController::class, 'confirm'])->name('newsletter.confirm');
     Route::get('newsletter/unsubscribe/{token}', [FormController::class, 'unsubscribe'])->name('newsletter.unsubscribe');

@@ -170,6 +170,7 @@
 
     <script src="{{ asset('frontend/js/nahau-drawer.js') . '?v=' . @filemtime(public_path('frontend/js/nahau-drawer.js')) }}"></script>
     <script src="{{ asset('frontend/js/nahau-site.js') . '?v=' . @filemtime(public_path('frontend/js/nahau-site.js')) }}" defer></script>
+    @include('nahau.partials.assistant')
 </body>
 
 </html>

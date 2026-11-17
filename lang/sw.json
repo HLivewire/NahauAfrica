@@ -353,5 +353,16 @@
  "Application deadline": "Mwisho wa maombi",
  "About the employer": "Kuhusu mwajiri",
  "Check the requirements above, then apply on the employer's official site using the button below. Have your documents ready and submit before the closing date.": "Soma mahitaji hapo juu, kisha omba kwenye tovuti rasmi ya mwajiri kwa kutumia kitufe hapa chini. Andaa nyaraka zako na utume kabla ya tarehe ya mwisho.",
- "{1} Closes in 1 day|[2,*] Closes in :n days": "{1} Inafungwa baada ya siku 1|[2,*] Inafungwa baada ya siku :n"
+ "{1} Closes in 1 day|[2,*] Closes in :n days": "{1} Inafungwa baada ya siku 1|[2,*] Inafungwa baada ya siku :n",
+ "Nahau helper": "Msaidizi wa Nahau",
+ "Ask about stories, jobs or how to apply": "Uliza kuhusu hadithi, kazi au jinsi ya kuomba",
+ "Hi! I can help you find stories, apply for opportunities, or send us your own story. What do you need?": "Karibu! Naweza kukusaidia kupata hadithi, kuomba fursa, au kututumia hadithi yako. Unahitaji nini?",
+ "How do I apply for a job?": "Naombaje kazi?",
+ "How do I submit my story?": "Natumaje hadithi yangu?",
+ "Contact the team": "Wasiliana na timu",
+ "Type your question…": "Andika swali lako…",
+ "Your question": "Swali lako",
+ "Send": "Tuma",
+ "Open help assistant": "Fungua msaidizi",
+ "Help": "Msaada"
 }
