@@ -157,7 +157,7 @@
 .nx-body p{margin:0 0 1.3em}
 .nx-body h2,.nx-body h3{margin:1.6em 0 .6em;line-height:1.25}
 .nx-body h2{font-size:1.5em}.nx-body h3{font-size:1.25em}
-.nx-body blockquote{margin:1.6em 0;padding:4px 0 4px 22px;border-left:4px solid var(--nx-red);font-size:1.12em;font-style:italic}
+.nx-body blockquote{margin:1.6em 0;padding:18px 22px;border:0;background:#F6F6F6;border-radius:12px;font-size:1.12em;font-style:italic}
 .nx-body img{border-radius:10px;margin:1.4em auto}
 .nx-body a{color:var(--nx-red-text);text-decoration:underline}
 .nx-break{text-align:center;color:var(--nx-red);letter-spacing:.6em;margin:34px 0}
@@ -631,3 +631,7 @@ body[class] .maan-manu-bar.maan-manu-bar{background:#D9D9D9 !important;border-bo
 @media (min-width:992px){.maan-manu-bar .maan-logo{margin-right:34px}.maan-manu-bar .maan-main-manu{padding-left:34px}}
 /* home spotlight: show the full summary (up to ~6 lines) */
 .nx .nx-xs-sum{max-width:600px;font-size:clamp(16px,1.2vw,19px);line-height:1.6;margin:18px 0 28px;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+
+/* no coloured left edge on any card, anywhere */
+.nx [class*="card"],.nx article,.nx-opp,.nx-warn,.politics-news .maan-news-list{border-left:0 !important;box-shadow-inset:none}
+.nx [class*="card"]::before,.nx article::before,.nx-opp::before{border-left:0 !important}
