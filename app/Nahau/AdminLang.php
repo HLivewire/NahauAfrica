@@ -15,6 +15,7 @@ class AdminLang
         'Ameingia' => 'Logged in', 'Ametoka' => 'Logged out', 'Kuingia kumeshindwa' => 'Login failed', 'Ameongeza' => 'Created', 'Amebadilisha' => 'Updated', 'Amefuta' => 'Deleted', 'Amebadilisha nenosiri' => 'Changed password', 'Amebadilisha role' => 'Changed role',
         'Ameingia kwenye mfumo' => 'Logged in', 'Ametoka kwenye mfumo' => 'Logged out', 'Kuingia kumeshindwa:' => 'Login failed:', 'Role ya' => 'Role of',
         // reader area (/account)
+        'Rudi kwenye site' => 'Back to site',
         'Nyumbani' => 'Home',
         'Maktaba yangu' => 'My library',
         'Soma baadaye' => 'Read later',

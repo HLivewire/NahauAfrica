@@ -33,7 +33,7 @@ class ReaderAccountTest extends TestCase
     {
         $u = $this->reader();
         $this->actingAs($u, 'maanuser');
-        $this->get(route('account.dashboard'))->assertOk()->assertSee('logo-light.png', false)->assertSee('Shughuli yangu ya kusoma')->assertSee('Toka')->assertSee('Arifa');
+        $this->get(route('account.dashboard'))->assertOk()->assertSee('logo-light.png', false)->assertSee('Shughuli yangu ya kusoma')->assertSee('Toka')->assertSee('Arifa')->assertSee('Rudi kwenye site');
         foreach (['favourites', 'later', 'history', 'follows', 'mine', 'notifications', 'profile'] as $r) {
             $this->get(route('account.'.$r))->assertOk();
         }
