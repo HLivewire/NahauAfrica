@@ -100,11 +100,15 @@ class CarouselTest extends TestCase
         NahauSlide::query()->delete();
         $s = NahauSlide::create(['slot' => 1, 'kind' => 'hero', 'hero_id' => $this->hero(0)->id, 'headline' => 'Off Slide', 'days' => 10, 'color' => 'gray', 'starts_at' => now(), 'ends_at' => now()->addDays(10)]);
         $this->get('/')->assertSee('Off Slide')->assertSee('--pc:#EDEDED', false);
-        $this->putJson('/admin/nahau/carousel/'.$s->id, ['active' => 0, 'slot' => 1, 'kind' => 'hero', 'hero_id' => $this->hero(0)->id, 'headline' => 'Off Slide', 'color' => 'cream', 'days' => 10], $this->h)->assertOk();
+        $this->get('/admin/nahau/carousel/'.$s->id.'/edit', $this->h)->assertDontSee('name="active"', false);   // the switch lives in the table
+        $this->get('/admin/nahau/carousel')->assertSee('data-toggle', false);
+        $this->patchJson('/admin/nahau/carousel/'.$s->id.'/toggle/active', ['value' => 0])->assertOk()->assertJson(['value' => 0]);
         $this->assertEquals(0, $s->fresh()->active);
+        $this->putJson('/admin/nahau/carousel/'.$s->id, ['slot' => 1, 'kind' => 'hero', 'hero_id' => $this->hero(0)->id, 'headline' => 'Off Slide', 'color' => 'cream', 'days' => 10], $this->h)->assertOk();
+        $this->assertEquals(0, $s->fresh()->active);   // saving the form does not switch it back on
         $this->get('/')->assertDontSee('Off Slide');
         $this->get('/admin/nahau/carousel')->assertSee('Inactive');
-        $this->putJson('/admin/nahau/carousel/'.$s->id, ['active' => 1, 'slot' => 1, 'kind' => 'hero', 'hero_id' => $this->hero(0)->id, 'color' => 'pink', 'days' => 10], $this->h)->assertStatus(422)->assertJsonValidationErrors('color');
+        $this->putJson('/admin/nahau/carousel/'.$s->id, ['slot' => 1, 'kind' => 'hero', 'hero_id' => $this->hero(0)->id, 'color' => 'pink', 'days' => 10], $this->h)->assertStatus(422)->assertJsonValidationErrors('color');
         $this->get('/admin/nahau/carousel/'.$s->id.'/edit', $this->h)->assertSee('sw-dark', false)->assertSee('sw-cream', false)->assertSee('sw-gray', false);
         $s->update(['active' => 0, 'ends_at' => now()->addHour()]);
         $this->get('/admin')->assertDontSee('Off Slide');   // no expiry alert for a slide that is switched off

@@ -35,7 +35,6 @@ class NahauAdminController extends Controller
                 ['description', 'Description', 'textarea', 'nullable'], ['cover', 'Cover image', 'image', 'nullable|image|max:4096'], ['author_id', 'Author', 'select', 'nullable', $authors],
                 ['rhythm', 'Publishing rhythm', 'text', 'nullable|max:160'], ['featured', 'Featured on Home', 'checkbox', 'nullable'], ['next_chapter_date', 'Next chapter date', 'date', 'nullable|date']]],
             'carousel' => ['title' => 'Home carousel', 'model' => \App\Models\NahauSlide::class, 'orderBy' => 'slot', 'cols' => ['slot', 'kind', 'title', 'days_left', 'active'], 'fields' => [
-                ['active', 'Status', 'radio', 'nullable', fn () => [1 => 'Active (shown on Home)', 0 => 'Inactive (hidden)']],
                 ['slot', 'Slot (order on Home)', 'select', 'required|integer|between:1,4', fn () => [1 => 'Slot 1', 2 => 'Slot 2', 3 => 'Slot 3', 4 => 'Slot 4']],
                 ['kind', 'What is this slide?', 'select', 'required|in:hero,book', fn () => ['hero' => 'Hero', 'book' => 'Book'], 'Up to 2 heroes and 2 books in the carousel.'],
                 ['hero_id', 'Hero', 'select', 'nullable|exists:nahau_heroes,id', fn () => \App\Models\NahauHero::orderBy('name')->pluck('name', 'id')->all(), 'Add the hero first under Carousel > Hero profiles.', 'kind=hero'],
@@ -243,9 +242,7 @@ class NahauAdminController extends Controller
         if ($res === 'carousel') {
             $data[$data['kind'] === 'hero' ? 'news_id' : 'hero_id'] = null;
             $data['color'] = $data['color'] ?? 'dark';
-            if (! $r->has('active')) {
-                $data['active'] = $row->exists ? $row->active : 1;
-            }
+            $data['active'] = $row->exists ? $row->active : 1;   // switched on/off from the table, not the form
             $start = $row->starts_at ?: now();
             $data['starts_at'] = $start;
             $data['ends_at'] = $start->copy()->addDays((int) $data['days']);
