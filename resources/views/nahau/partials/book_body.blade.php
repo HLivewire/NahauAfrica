@@ -8,8 +8,7 @@
     $previewN = (int) config('nahau.preview_pages', 3);
     $preview = array_slice($pages, 0, $previewN);
     $label = strtoupper(nsection($key,'name').($story->format ? ' · '.__($story->format) : '').' · '.Stories::minutes($story).' '.__('MIN READ'));
-    $price = (int) ($story->price ?? 0);
-    $inCart = in_array($story->id, array_map('intval', (array) session('nahau_cart', [])), true);
+    $later = auth('maanuser')->check() && \App\Models\NahauReadingList::where('maanuser_id', auth('maanuser')->id())->where('news_id', $story->id)->exists();
 @endphp
 <article class="nx-s-{{ $key }} nx-book" data-nx-story data-section="{{ $key }}" data-lang="{{ $story->language }}">
 <div class="nx-wrap nx-book-head">
@@ -88,9 +87,7 @@
 
         <div class="nx-book-actions">
             <a class="nx-btn" data-nx-track="read_book_click" href="{{ nroute('read', ['slug' => $story->slug]) }}">{{ __('Read this book') }}</a>
-            @if($price > 0)
-            <button type="button" class="nx-btn nx-btn--dark" data-nx-cart data-url="{{ route('nahau.cart.add', $story->id) }}" data-cart="{{ route('nahau.cart') }}" data-added="{{ __('Added to cart') }}" data-view="{{ __('View cart') }}">{{ $inCart ? __('In your cart') : __('Add to cart') }} · {{ nmoney($price) }}</button>
-            @endif
+            <button type="button" class="nx-btn nx-btn--dark" data-nx-later data-url="{{ route('nahau.later', $story->id) }}" data-on="{{ __('Saved to read later') }}" data-off="{{ __('Read later') }}" aria-pressed="{{ $later ? 'true' : 'false' }}">{{ $later ? __('Saved to read later') : __('Read later') }}</button>
         </div>
 </div>
 </article>

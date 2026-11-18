@@ -352,11 +352,28 @@ Route::prefix('admin')->middleware(['auth', 'adminlang'])->name('admin.')->group
     Route::get('/publish/theme-color/ajax',[AjaxController::class,'maanPublishThemeColor'])->name('publish.theme-color.ajax');
 });
 //route maan user
+// Old template reader pages now lead to the new reader area
 Route::prefix('maanuser')->name('maanuser.')->group(function (){
-
-    Route::get('/',[MaanuserController::class,'index'])->name('index')->middleware('auth:maanuser');
-    Route::get('/reporter',[MaanuserController::class,'maanUserReporter'])->name('reporter')->middleware('auth:maanuser');
-    Route::get('/post',[MaanuserController::class,'maanUserPost'])->name('post')->middleware('auth:maanuser');
+    Route::get('/',fn()=>redirect()->route('account.dashboard'))->name('index');
+    Route::get('/reporter',fn()=>redirect()->route('account.mine'))->name('reporter');
+    Route::get('/post',fn()=>redirect()->route('account.mine'))->name('post');
+});
+// Reader area (signed-in readers only): same look as the admin panel
+Route::prefix('account')->name('account.')->middleware('auth:maanuser')->controller(\App\Http\Controllers\Nahau\AccountController::class)->group(function (){
+    Route::get('/','dashboard')->name('dashboard');
+    Route::get('favourites','favourites')->name('favourites');
+    Route::delete('favourites/{news}','favToggle')->whereNumber('news')->name('favourites.remove');
+    Route::get('read-later','later')->name('later');
+    Route::post('read-later/{news}','laterToggle')->whereNumber('news')->name('later.toggle');
+    Route::get('history','history')->name('history');
+    Route::get('following','follows')->name('follows');
+    Route::post('following/{author}','followToggle')->whereNumber('author')->name('follows.toggle');
+    Route::get('my-stories','mine')->name('mine');
+    Route::get('notifications','notifications')->name('notifications');
+    Route::post('notifications/read','notificationsRead')->name('notifications.read');
+    Route::get('profile','profile')->name('profile');
+    Route::post('profile','profileSave')->name('profile.save');
+    Route::post('password','password')->name('password');
 });
 Route::get('/sitemap',function (){
     $latestnews = News::join('newssubcategories','news.subcategory_id','=','newssubcategories.id')

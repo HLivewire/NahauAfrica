@@ -17,7 +17,7 @@
                         </li>
                     @if(auth()->check() || auth('maanuser')->check())
                     <li class="nx-acct">
-                        <a class="nahau-getstarted nahau-getstarted--sm" href="{{ auth()->check() ? route('admin.dashboard') : route('maanuser.index') }}">{{ auth()->check() ? __('Dashboard') : __('My account') }}</a>
+                        <a class="nahau-getstarted nahau-getstarted--sm" href="{{ auth()->check() ? route('admin.dashboard') : route('account.dashboard') }}">{{ auth()->check() ? __('Dashboard') : __('My account') }}</a>
                         <a class="nx-signout" href="{{ auth()->check() ? route('logout') : route('signout') }}" data-nx-logout data-busy="{{ __('Signing out…') }}">{{ __('Sign out') }}</a>
                     </li>
                     @else

@@ -21,7 +21,7 @@
             </div>
             <div class="col-lg-2 d-none d-lg-flex justify-content-end">
                 @if(auth()->check() || auth('maanuser')->check())
-                <a class="nahau-getstarted" href="{{ auth()->check() ? route('admin.dashboard') : route('maanuser.index') }}">{{ auth()->check() ? __('Dashboard') : __('My account') }}</a>
+                <a class="nahau-getstarted" href="{{ auth()->check() ? route('admin.dashboard') : route('account.dashboard') }}">{{ auth()->check() ? __('Dashboard') : __('My account') }}</a>
                 <a class="nx-signout" href="{{ auth()->check() ? route('logout') : route('signout') }}" data-nx-logout data-busy="{{ __('Signing out…') }}">{{ __('Sign out') }}</a>
                 @else
                 <button type="button" class="nahau-getstarted" data-nahau-open="drawer">{{ __('Get Started') }}</button>

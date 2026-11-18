@@ -74,7 +74,5 @@ Route::prefix('nahau')->name('nahau.')->group(function () {
 Route::post('/favorites/{news}', [\App\Http\Controllers\Nahau\FavoriteController::class, 'toggle'])->whereNumber('news')->middleware('throttle:60,1')->name('nahau.favorite');
 Route::get('/favourites', [\App\Http\Controllers\Nahau\FavoriteController::class, 'index'])->name('nahau.favorites');
 
-// Cart (session based; online payment is not connected yet)
-Route::get('/cart', [\App\Http\Controllers\Nahau\CartController::class, 'index'])->name('nahau.cart');
-Route::post('/cart/add/{news}', [\App\Http\Controllers\Nahau\CartController::class, 'add'])->whereNumber('news')->middleware('throttle:60,1')->name('nahau.cart.add');
-Route::post('/cart/remove/{news}', [\App\Http\Controllers\Nahau\CartController::class, 'remove'])->whereNumber('news')->name('nahau.cart.remove');
+// Reading list (read later) for signed-in readers
+Route::post('/read-later/{news}', [\App\Http\Controllers\Nahau\AccountController::class, 'laterToggle'])->whereNumber('news')->middleware('throttle:60,1')->name('nahau.later');

@@ -40,8 +40,11 @@ class AuthController extends Controller
     public function maanLogout()
     {
         //If logout redirect to login page
-        auth()->logout() ;
-        $this->setSuccess('User logout Successfully !');
-        return redirect()->route('login');
+        // Sign out of BOTH guards (staff and readers) and drop the whole session, so nobody stays half signed in.
+        \Illuminate\Support\Facades\Auth::guard('web')->logout();
+        \Illuminate\Support\Facades\Auth::guard('maanuser')->logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect('/')->with('message', 'Umetoka kwa usalama. Karibu tena!')->with('type', 'success');
     }
 }

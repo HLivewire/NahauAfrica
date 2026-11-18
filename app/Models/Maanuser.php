@@ -15,8 +15,9 @@ class Maanuser extends Authenticatable
     use HasFactory,Notifiable, HasApiTokens ;
     protected $hidden = ['password'];
     protected $fillable = [
-        'first_name','last_name','phone', 'email', 'password','verification_code','verification_expire_at',
+        'first_name','last_name','phone', 'email', 'password','verification_code','verification_expire_at','reading_goal','lang',
     ];
+    protected $casts = ['notif_seen_at' => 'datetime'];
 
     public function providers()
     {

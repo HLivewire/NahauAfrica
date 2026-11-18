@@ -24,7 +24,7 @@ class Reads
             $seen = DB::table('nahau_reads')->where('visitor', $visitor)->where('day', '<', now()->toDateString())->exists();
             DB::table('nahau_reads')->insert([
                 'news_id' => $newsId, 'language' => $lang === 'en' ? 'en' : ($lang ? 'sw' : null), 'country' => $country,
-                'visitor' => $visitor, 'returning' => $seen, 'day' => now()->toDateString(), 'created_at' => now(),
+                'visitor' => $visitor, 'returning' => $seen, 'maanuser_id' => auth('maanuser')->id(), 'day' => now()->toDateString(), 'created_at' => now(),
             ]);
         } catch (\Throwable $e) {
             // analytics must never break a story page
