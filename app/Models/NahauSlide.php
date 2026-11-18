@@ -20,13 +20,13 @@ class NahauSlide extends Model
 
     public function scopeLive($q)
     {
-        return $q->where(fn ($w) => $w->whereNull('ends_at')->orWhere('ends_at', '>', now()));
+        return $q->where('active', 1)->where(fn ($w) => $w->whereNull('ends_at')->orWhere('ends_at', '>', now()));
     }
 
     /** Slides that are over, or end within the warning window. */
     public function scopeExpiring($q)
     {
-        return $q->whereNotNull('ends_at')->where('ends_at', '<=', now()->addDays(self::WARN_DAYS));
+        return $q->where('active', 1)->whereNotNull('ends_at')->where('ends_at', '<=', now()->addDays(self::WARN_DAYS));
     }
 
     public function daysLeft(): int
@@ -39,6 +39,8 @@ class NahauSlide extends Model
         return $this->ends_at && $this->ends_at->isPast();
     }
 
+    public const COLORS = ['dark' => 'Dark', 'cream' => 'Cream', 'gray' => 'Gray'];
+
     public function getTitleAttribute(): string
     {
         return $this->headline ?: $this->resolvedTitle();
@@ -46,6 +48,10 @@ class NahauSlide extends Model
 
     public function getDaysLeftAttribute(): string
     {
+        if (! $this->active) {
+            return 'Inactive';
+        }
+
         return $this->expired() ? 'Expired' : $this->daysLeft().' '.($this->daysLeft() === 1 ? 'day' : 'days').' left';
     }
 

@@ -386,3 +386,13 @@ a.nrow2{text-decoration:none}a.nrow2:hover b{color:var(--pri)}
   .tb .ib{width:32px;height:32px}.tb .backsite{width:32px;height:32px}
   a.ib.lang{width:32px}
 }
+
+/* carousel colour choice */
+.swatches{display:flex;gap:10px;flex-wrap:wrap}
+.swatches .sw{display:flex;align-items:center;gap:9px;border:1.5px solid var(--bd);border-radius:10px;padding:8px 14px 8px 8px;cursor:pointer;font-weight:700;font-size:13px;background:var(--card)}
+.swatches .sw input{position:absolute;opacity:0;pointer-events:none}
+.swatches .sw i{width:34px;height:34px;border-radius:8px;border:1px solid rgba(0,0,0,.18);display:block}
+.swatches .sw-dark i{background:#232427}.swatches .sw-cream i{background:#F7F3EB}.swatches .sw-gray i{background:#EDEDED}
+.swatches .sw:has(input:checked){border-color:var(--pri);box-shadow:0 0 0 3px var(--pri-soft)}
+.swatches .sw:has(input:focus-visible){outline:2px solid var(--pri)}
+.seg2 .rd{white-space:nowrap}

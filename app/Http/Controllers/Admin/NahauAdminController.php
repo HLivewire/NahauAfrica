@@ -34,14 +34,16 @@ class NahauAdminController extends Controller
                 ['title', 'Title (English)', 'text', 'required|max:160'], ['title_sw', 'Title (Kiswahili)', 'text', 'nullable|max:160'], ['slug', 'Slug (auto if empty)', 'text', 'nullable|alpha_dash'],
                 ['description', 'Description', 'textarea', 'nullable'], ['cover', 'Cover image', 'image', 'nullable|image|max:4096'], ['author_id', 'Author', 'select', 'nullable', $authors],
                 ['rhythm', 'Publishing rhythm', 'text', 'nullable|max:160'], ['featured', 'Featured on Home', 'checkbox', 'nullable'], ['next_chapter_date', 'Next chapter date', 'date', 'nullable|date']]],
-            'carousel' => ['title' => 'Home carousel', 'model' => \App\Models\NahauSlide::class, 'orderBy' => 'slot', 'cols' => ['slot', 'kind', 'title', 'days_left'], 'fields' => [
-                ['slot', 'Slot (order on Home; slot 4 uses the cream Bibi Titi colour)', 'select', 'required|integer|between:1,4', fn () => [1 => 'Slot 1', 2 => 'Slot 2', 3 => 'Slot 3', 4 => 'Slot 4']],
+            'carousel' => ['title' => 'Home carousel', 'model' => \App\Models\NahauSlide::class, 'orderBy' => 'slot', 'cols' => ['slot', 'kind', 'title', 'days_left', 'active'], 'fields' => [
+                ['active', 'Status', 'radio', 'nullable', fn () => [1 => 'Active (shown on Home)', 0 => 'Inactive (hidden)']],
+                ['slot', 'Slot (order on Home)', 'select', 'required|integer|between:1,4', fn () => [1 => 'Slot 1', 2 => 'Slot 2', 3 => 'Slot 3', 4 => 'Slot 4']],
                 ['kind', 'What is this slide?', 'select', 'required|in:hero,book', fn () => ['hero' => 'Hero', 'book' => 'Book'], 'Up to 2 heroes and 2 books in the carousel.'],
                 ['hero_id', 'Hero', 'select', 'nullable|exists:nahau_heroes,id', fn () => \App\Models\NahauHero::orderBy('name')->pluck('name', 'id')->all(), 'Add the hero first under Carousel > Hero profiles.', 'kind=hero'],
                 ['news_id', 'Book (fiction story)', 'select', 'nullable|integer', fn () => $newsIn(['fiction']), null, 'kind=book'],
                 ['kicker', 'Small label above the title (e.g. New book)', 'text', 'nullable|max:60', null, null, 'kind=book'],
                 ['headline', 'Title (leave empty to use the name or book title)', 'text', 'nullable|max:160'],
                 ['summary', 'Summary (max 320)', 'textarea', 'nullable|max:320'],
+                ['color', 'Background colour', 'swatch', 'nullable|in:dark,cream,gray', fn () => \App\Models\NahauSlide::COLORS],
                 ['image', 'Image (hero portrait or book cover; optional)', 'image', 'nullable|image|max:4096'],
                 ['days', 'Days to show on Home (minimum 4)', 'number', 'required|integer|min:4|max:365', null, 'You get an alert 2 days before it ends, to add days or replace it.']]],
             'heroes' => ['title' => 'Hero profiles', 'model' => \App\Models\NahauHero::class, 'cols' => ['name', 'country', 'show_in_spotlight', 'spotlight_order'], 'fields' => [
@@ -124,6 +126,11 @@ class NahauAdminController extends Controller
         $d = $this->def($res);
         abort_unless($d['create'], 404);
         $row = new $d['model'];
+        if ($res === 'carousel') {
+            $row->active = 1;
+            $row->color = 'dark';
+            $row->days = 7;
+        }
         if ($res === 'opportunities' && $r->query('from')) {
             $s = \App\Models\NahauOpportunitySubmission::find($r->query('from'));
             if ($s) {
@@ -235,6 +242,10 @@ class NahauAdminController extends Controller
 
         if ($res === 'carousel') {
             $data[$data['kind'] === 'hero' ? 'news_id' : 'hero_id'] = null;
+            $data['color'] = $data['color'] ?? 'dark';
+            if (! $r->has('active')) {
+                $data['active'] = $row->exists ? $row->active : 1;
+            }
             $start = $row->starts_at ?: now();
             $data['starts_at'] = $start;
             $data['ends_at'] = $start->copy()->addDays((int) $data['days']);
@@ -267,7 +278,7 @@ class NahauAdminController extends Controller
     public function toggle(Request $r, string $res, int $id, string $field)
     {
         $d = $this->def($res);
-        abort_unless(in_array($field, ['show_in_spotlight', 'show_on_home', 'featured'], true) && ($d['edit'] ?? true) !== false, 404);
+        abort_unless(in_array($field, ['show_in_spotlight', 'show_on_home', 'featured', 'active'], true) && ($d['edit'] ?? true) !== false, 404);
         abort_unless(in_array($field, $d['cols'], true), 404);
         $row = $d['model']::findOrFail($id);
         $row->{$field} = $r->boolean('value') ? 1 : 0;

@@ -93,4 +93,39 @@ class CarouselTest extends TestCase
         $this->assertDatabaseHas('nahau_opportunities', ['title' => 'No Pay Job', 'terms' => null]);
         $this->get('/admin/nahau/opportunities/create', $this->h)->assertSee('Pay or duration (optional');
     }
+
+    public function test_inactive_slide_is_hidden_and_colour_is_one_of_three(): void
+    {
+        $this->admin();
+        NahauSlide::query()->delete();
+        $s = NahauSlide::create(['slot' => 1, 'kind' => 'hero', 'hero_id' => $this->hero(0)->id, 'headline' => 'Off Slide', 'days' => 10, 'color' => 'gray', 'starts_at' => now(), 'ends_at' => now()->addDays(10)]);
+        $this->get('/')->assertSee('Off Slide')->assertSee('--pc:#EDEDED', false);
+        $this->putJson('/admin/nahau/carousel/'.$s->id, ['active' => 0, 'slot' => 1, 'kind' => 'hero', 'hero_id' => $this->hero(0)->id, 'headline' => 'Off Slide', 'color' => 'cream', 'days' => 10], $this->h)->assertOk();
+        $this->assertEquals(0, $s->fresh()->active);
+        $this->get('/')->assertDontSee('Off Slide');
+        $this->get('/admin/nahau/carousel')->assertSee('Inactive');
+        $this->putJson('/admin/nahau/carousel/'.$s->id, ['active' => 1, 'slot' => 1, 'kind' => 'hero', 'hero_id' => $this->hero(0)->id, 'color' => 'pink', 'days' => 10], $this->h)->assertStatus(422)->assertJsonValidationErrors('color');
+        $this->get('/admin/nahau/carousel/'.$s->id.'/edit', $this->h)->assertSee('sw-dark', false)->assertSee('sw-cream', false)->assertSee('sw-gray', false);
+        $s->update(['active' => 0, 'ends_at' => now()->addHour()]);
+        $this->get('/admin')->assertDontSee('Off Slide');   // no expiry alert for a slide that is switched off
+    }
+
+    public function test_english_mode_leaves_no_swahili_on_the_new_screens(): void
+    {
+        $this->admin();
+        NahauSlide::query()->delete();
+        NahauSlide::create(['slot' => 1, 'kind' => 'hero', 'hero_id' => $this->hero(0)->id, 'days' => 10, 'color' => 'dark', 'starts_at' => now()->subDays(9), 'ends_at' => now()->addDay()]);
+        $leaks = [];
+        $bad = ['Ongeza', 'Ondoa', 'Chagua', 'Hifadhi', 'Funga', 'Hariri', 'zimebaki', 'Siku ', 'kuisha', 'Tembelea', 'Hakuna', 'Muda ', 'Mpya', 'Kipindi', 'Habari,', 'Badilisha'];
+        foreach (['/admin', '/admin/nahau/carousel', '/admin/nahau/carousel/create', '/admin/nahau/heroes', '/admin/nahau/opportunities', '/admin/nahau/opportunities/create', '/admin/nahau/authors', '/admin/nahau/series', '/admin/nahau/submissions', '/admin/nahau/messages', '/admin/nahau/opportunity-submissions', '/admin/nahau/subscribers', '/admin/nahau/pages', '/admin/nahau/team', '/admin/nahau/authors/create', '/admin/nahau/heroes/create', '/admin/panel/users', '/admin/panel/users/create', '/admin/audit'] as $u) {
+            $html = $this->withCookie('nh_lang', 'en')->get($u, $u === '/admin/nahau/carousel/create' || str_ends_with($u, '/create') ? $this->h : [])->assertOk()->getContent();
+            $text = strip_tags(preg_replace('/<(script|style)\b.*?<\/\1>/si', '', $html));
+            foreach ($bad as $w) {
+                if (str_contains($text, $w)) {
+                    $leaks[] = $u.' => '.$w.' :: '.trim(preg_replace('/\s+/', ' ', mb_substr($text, max(0, mb_strpos($text, $w) - 40), 110)));
+                }
+            }
+        }
+        $this->assertSame([], $leaks, 'Swahili left in English mode');
+    }
 }

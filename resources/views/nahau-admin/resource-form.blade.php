@@ -1,4 +1,4 @@
-@php use App\Nahau\Icons; $edit = $row->exists; $wide = ['textarea','image','checkbox','radio']; @endphp
+@php use App\Nahau\Icons; $edit = $row->exists; $wide = ['textarea','image','checkbox','radio','swatch']; @endphp
 <div class="mh" data-w="{{ count($d['fields']) > 6 ? '800px' : '600px' }}"><h3>{{ $d['title'] }} · {{ $edit ? ($d['create'] ? 'Hariri' : 'Fungua') : 'Mpya' }}</h3><button type="button" class="x" data-close aria-label="Funga">{!! Icons::svg('x','sm') !!}</button></div>
 <form data-ajax style="display:contents" method="POST" enctype="multipart/form-data" action="{{ $edit ? route('admin.nahau.update', [$res, $row->id]) : route('admin.nahau.store', $res) }}">
 @csrf @if($edit) @method('PUT') @endif
@@ -9,7 +9,7 @@
     <hr style="border:0;border-top:1px solid var(--bd);width:100%">
   @endif
   @if($res==='opportunities')<div class="alert-soft">Fursa haichapishwi hadi <b>Verified by</b> na <b>Verified on</b> zijazwe. @if($edit)Ripoti za tangazo hili: {{ $row->reports()->count() }}.@endif</div>@endif
-  @if($res==='carousel')<div class="alert-soft">Chagua <b>Hero</b> au <b>Book</b>; sehemu zinazohusika zitatokea. Muda ni siku 4 au zaidi; siku 2 kabla ya kuisha utapata arifa.</div>@endif
+  @if($res==='carousel')<div class="alert-soft">Chagua Hero au Book; sehemu zinazohusika zitatokea. Muda ni siku 4 au zaidi; siku 2 kabla ya kuisha utapata arifa.</div>@endif
   @if($res==='stories')<p class="note">Hadithi: <b>{{ \App\Models\News::find($row->news_id)?->title }}</b></p>@endif
   @php
     $tabs = $d['tabs'] ?? null; $byName = collect($d['fields'])->keyBy(0);
@@ -25,6 +25,9 @@
     <div class="f {{ in_array($type,$wide,true) ? 'full' : '' }}" @if($dep) data-dep="{{ $dep }}" @endif>
       @if($type==='checkbox')
         <label class="ck"><input type="checkbox" name="{{ $name }}" value="1" @checked($val)> {{ $label }}</label>
+      @elseif($type==='swatch')
+        <label>{{ $label }}</label>
+        <div class="swatches">@foreach(($f[4])() as $k=>$v)<label class="sw sw-{{ $k }}"><input type="radio" name="{{ $name }}" value="{{ $k }}" @checked(($val ?: 'dark') === $k)><i></i><span>{{ $v }}</span></label>@endforeach</div>
       @elseif($type==='radio')
         <label>{{ $label }}</label>
         <div class="seg2">@foreach(($f[4])() as $k=>$v)<label class="rd"><input type="radio" name="{{ $name }}" value="{{ $k }}" @checked((string)(int)$val === (string)$k)> {{ $v }}</label>@endforeach</div>

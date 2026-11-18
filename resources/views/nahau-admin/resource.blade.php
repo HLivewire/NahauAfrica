@@ -2,7 +2,7 @@
 @section('title', $d['title'])
 @section('content')
 @php use App\Nahau\Icons; use Illuminate\Support\Str;
- $boolCols = ['featured','show_on_home','show_in_spotlight'];
+ $boolCols = ['featured','show_on_home','show_in_spotlight','active'];
  $tone = ['published'=>'ok','listed'=>'ok','accepted'=>'ok','answered'=>'ok','new'=>'in','under_review'=>'wr','verifying'=>'wr','revisions'=>'wr','draft'=>'','hidden'=>'','closed'=>'','declined'=>'er'];
 @endphp
 <div class="ph rise"><div><h2>{{ $d['title'] }}</h2><p>{{ $rows->total() }} {{ $rows->total() === 1 ? 'kipengee' : 'vipengee' }}</p></div><div class="sp"></div>
@@ -11,14 +11,14 @@
 @if($rows->isEmpty())
   <div class="empty"><b>Bado hakuna kitu hapa.</b><br>@if($d['create'])Bofya <b>Ongeza</b> kuanza.@else Vitu vitaonekana hapa vikifika kutoka kwenye site.@endif</div>
 @else
-<div class="tw"><table id="tt"><thead><tr>@if($res==='stories')<th>Hadithi</th>@endif @foreach($d['cols'] as $c)<th>{{ $c==='show_in_spotlight' ? 'Home spotlight' : ($c==='days_left' ? 'Time left' : ucfirst(str_replace('_',' ',$c))) }}</th>@endforeach<th></th></tr></thead><tbody>
+<div class="tw"><table id="tt"><thead><tr>@if($res==='stories')<th>Hadithi</th>@endif @foreach($d['cols'] as $c)<th>{{ $c==='show_in_spotlight' ? 'Home spotlight' : ($c==='days_left' ? 'Time left' : ($c==='active' ? 'Status' : ucfirst(str_replace('_',' ',$c)))) }}</th>@endforeach<th></th></tr></thead><tbody>
 @foreach($rows as $r)
   <tr>@if($res==='stories')<td><div class="t">{{ Str::limit($r->news_title, 50) }}</div></td>@endif
   @foreach($d['cols'] as $c)
     @php $v = $r->$c; @endphp
     <td>@if(in_array($c,$boolCols,true))@if($d['edit'] !== false)<label class="swt tg" title="Inaonekana / Imefichwa"><input type="checkbox" data-toggle="{{ route('admin.nahau.toggle', [$res, $r->id, $c]) }}" @checked($v)><span></span></label> <small class="tgl">{{ $v ? 'Visible' : 'Hidden' }}</small>@elseif($v)<span class="bdg ok">Ndiyo</span>@else<span class="n" style="color:var(--mut2)">—</span>@endif
       @elseif($c==='language')<span class="bdg {{ $v==='sw'?'sw':'en' }}">{{ $v==='sw'?'Kiswahili':'English' }}</span>
-      @elseif($c==='days_left')<span class="bdg {{ $r->expired() ? 'er' : ($r->daysLeft() <= 2 ? 'wr' : 'ok') }}">{{ $v }}</span>
+      @elseif($c==='days_left')<span class="bdg {{ (! $r->active) ? '' : ($r->expired() ? 'er' : ($r->daysLeft() <= 2 ? 'wr' : 'ok')) }}">{{ $v }}</span>
       @elseif($c==='kind')<span class="bdg {{ $v==='hero' ? 'in' : 'wr' }}">{{ ucfirst($v) }}</span>
       @elseif($c==='status')<span class="bdg {{ $tone[$v] ?? '' }}">{{ str_replace('_',' ',$v) }}</span>
       @elseif($v instanceof \Carbon\CarbonInterface){{ $v->format('d M Y') }}

@@ -51,7 +51,7 @@ class PageController extends Controller
                 $sum = $sl->summary ?: ($st->dek ?: ($st->summary ?? ''));
             }
 
-            return ['slot' => $sl->slot, 'kind' => $sl->kind, 'kicker' => $kicker, 'title' => $title, 'img' => $img,
+            return ['slot' => $sl->slot, 'color' => $sl->color, 'kind' => $sl->kind, 'kicker' => $kicker, 'title' => $title, 'img' => $img,
                 'sum' => \Illuminate\Support\Str::limit(strip_tags((string) $sum), 320), 'url' => Stories::url($st),
                 'cta' => $sl->kind === 'book' ? __('Read the book') : __('Read more')];
         })->filter()->values();

@@ -13,8 +13,8 @@
 <section class="nx-xs-band-in" data-nx-herocar data-interval="6500" role="region" aria-roledescription="carousel" aria-label="{{ __('Featured') }}">
     <div class="nx-xs-stage">
         @foreach($slides as $sl)
-        @php $pal = ['--pc:#232427;--fg:#fff;--fg2:rgba(255,255,255,.88);--bb:#fff;--bf:#232427;--sh:rgba(0,0,0,.35)', '--pc:#F7F3EB;--fg:#232427;--fg2:#4a4a4a;--bb:#232427;--bf:#fff;--sh:transparent', '--pc:#EDEDED;--fg:#232427;--fg2:#4a4a4a;--bb:#232427;--bf:#fff;--sh:transparent', '--pc:#F7F3EB;--fg:#232427;--fg2:#4a4a4a;--bb:#232427;--bf:#fff;--sh:transparent']; @endphp
-        <article class="nx-xs{{ $loop->first ? ' is-active' : '' }}" data-kind="{{ $sl['kind'] }}" style="{{ $pal[($sl['slot'] - 1) % 4] }}" role="group" aria-roledescription="slide" aria-label="{{ $loop->iteration }} / {{ $slides->count() }}" @if(! $loop->first) aria-hidden="true" @endif>
+        @php $pal = ['dark' => '--pc:#232427;--fg:#fff;--fg2:rgba(255,255,255,.88);--bb:#fff;--bf:#232427;--sh:rgba(0,0,0,.35)', 'cream' => '--pc:#F7F3EB;--fg:#232427;--fg2:#4a4a4a;--bb:#232427;--bf:#fff;--sh:transparent', 'gray' => '--pc:#EDEDED;--fg:#232427;--fg2:#4a4a4a;--bb:#232427;--bf:#fff;--sh:transparent']; @endphp
+        <article class="nx-xs{{ $loop->first ? ' is-active' : '' }}" data-kind="{{ $sl['kind'] }}" style="{{ $pal[$sl['color']] ?? $pal['dark'] }}" role="group" aria-roledescription="slide" aria-label="{{ $loop->iteration }} / {{ $slides->count() }}" @if(! $loop->first) aria-hidden="true" @endif>
             <div class="nx-xs-panel"></div>
             <div class="nx-xs-photo">@if($sl['img'])<img loading="{{ $loop->first ? 'eager' : 'lazy' }}" decoding="async" src="{{ $sl['img'] }}" alt="{{ $sl['title'] }}">@endif</div>
             <div class="nx-xs-copy">
