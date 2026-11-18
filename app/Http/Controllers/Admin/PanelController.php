@@ -57,7 +57,92 @@ class PanelController extends Controller
             'pending' => \App\Models\NahauSubmission::where('status', 'new')->latest()->take(5)->get(),
         ];
 
+        $d += $this->analytics($r);
+
         return view('nahau-admin.dashboard', $d + ['canInbox' => Panel::canRes('submissions'), 'full' => in_array(Panel::letter(), ['A', 'E'], true)]);
+    }
+
+    /** Date-range analytics: reads per day, countries, most-read, returning readers, monthly stories. */
+    private function analytics(Request $r): array
+    {
+        $range = in_array((int) $r->query('range'), [7, 30, 90, 365], true) ? (int) $r->query('range') : 30;
+        $to = now()->endOfDay();
+        $from = now()->subDays($range - 1)->startOfDay();
+        $prevFrom = $from->copy()->subDays($range);
+        $has = \Illuminate\Support\Facades\Schema::hasTable('nahau_reads');
+        $reads = fn () => DB::table('nahau_reads');
+
+        // reads + unique readers per bucket (day, or month for the 1-year view)
+        $labels = $a = $b = [];
+        if ($range <= 90) {
+            $byDay = $has ? $reads()->whereBetween('day', [$from->toDateString(), $to->toDateString()])
+                ->select('day', DB::raw('count(*) as c'), DB::raw('count(distinct visitor) as u'))->groupBy('day')->get()->keyBy('day') : collect();
+            for ($t = $from->copy(); $t <= $to; $t->addDay()) {
+                $row = $byDay[$t->toDateString()] ?? null;
+                $labels[] = $t->format('d M'); $a[] = (int) ($row->c ?? 0); $b[] = (int) ($row->u ?? 0);
+            }
+        } else {
+            for ($i = 11; $i >= 0; $i--) {
+                $m = now()->subMonths($i);
+                $q = $has ? $reads()->whereYear('day', $m->year)->whereMonth('day', $m->month) : null;
+                $labels[] = $m->translatedFormat('M'); $a[] = $q ? (int) $q->count() : 0; $b[] = $q ? (int) $q->distinct()->count('visitor') : 0;
+            }
+        }
+        $uniq = fn ($f, $t) => $has ? (int) $reads()->whereBetween('day', [$f->toDateString(), $t->toDateString()])->distinct()->count('visitor') : 0;
+        $uNow = $uniq($from, $to); $uPrev = $uniq($prevFrom, $from->copy()->subDay());
+        $pubNow = News::where('status', 1)->whereBetween('date', [$from->toDateString(), $to->toDateString()])->count();
+        $pubPrev = News::where('status', 1)->whereBetween('date', [$prevFrom->toDateString(), $from->copy()->subDay()->toDateString()])->count();
+
+        $perDay = fn ($model, $col, $status = null) => collect(range(6, 0))->map(fn ($i) => $model::whereDate($col, now()->subDays($i))->when($status !== null, fn ($q) => $q->where('status', $status))->count())->all();
+
+        $countries = $has ? $reads()->whereBetween('day', [$from->toDateString(), $to->toDateString()])->whereNotNull('country')
+            ->select('country', DB::raw('count(distinct visitor) as c'))->groupBy('country')->orderByDesc('c')->get() : collect();
+        $names = ['TZ' => 'Tanzania', 'KE' => 'Kenya', 'UG' => 'Uganda', 'NG' => 'Nigeria', 'RW' => 'Rwanda', 'ZA' => 'South Africa', 'GH' => 'Ghana', 'ET' => 'Ethiopia', 'US' => 'United States', 'GB' => 'United Kingdom'];
+        $cList = $countries->take(4)->map(fn ($c) => [$names[$c->country] ?? $c->country, (int) $c->c])->all();
+        if ($countries->count() > 4) {
+            $cList[] = ['Nyingine', (int) $countries->slice(4)->sum('c')];
+        }
+
+        $mostRead = $has ? $reads()->join('news', 'news.id', '=', 'nahau_reads.news_id')->whereBetween('day', [$from->toDateString(), $to->toDateString()])
+            ->select('news.title', 'nahau_reads.language', DB::raw('count(*) as c'))->groupBy('news.id', 'news.title', 'nahau_reads.language')->orderByDesc('c')->take(5)->get()
+            ->map(fn ($x) => [Str::limit($x->title, 48), strtoupper($x->language === 'en' ? 'en' : 'sw'), (int) $x->c])->all() : [];
+
+        $mLabels = $mSw = $mEn = [];
+        for ($i = 9; $i >= 0; $i--) {
+            $m = now()->subMonths($i);
+            $q = fn ($lang) => DB::table('news')->join('nahau_story_meta as m', 'm.news_id', '=', 'news.id')->where('news.status', 1)
+                ->whereYear('news.date', $m->year)->whereMonth('news.date', $m->month)->where('m.language', $lang)->count();
+            $mLabels[] = $m->translatedFormat('M'); $mSw[] = $q('sw'); $mEn[] = $q('en');
+        }
+
+        // share of each month's readers who had already visited before (returning)
+        $rLabels = $rRet = $rNew = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $m = now()->subMonths($i);
+            $tot = $has ? (int) $reads()->whereYear('day', $m->year)->whereMonth('day', $m->month)->distinct()->count('visitor') : 0;
+            $ret = $has ? (int) $reads()->whereYear('day', $m->year)->whereMonth('day', $m->month)->where('returning', 1)->distinct()->count('visitor') : 0;
+            $rLabels[] = $m->translatedFormat('M'); $rRet[] = $tot ? round($ret / $tot * 100) : 0; $rNew[] = $tot ? 100 - round($ret / $tot * 100) : 0;
+        }
+
+        $subsNow = \App\Models\NahauSubscriber::whereNotNull('confirmed_at')->whereBetween('confirmed_at', [$from, $to])->count();
+        $subsPrev = \App\Models\NahauSubscriber::whereNotNull('confirmed_at')->whereBetween('confirmed_at', [$prevFrom, $from->copy()->subSecond()])->count();
+        $pct = fn ($n, $p) => $p > 0 ? round(($n - $p) / $p * 100, 1) : null;
+        $closed = \App\Models\NahauOpportunity::count() - \App\Models\NahauOpportunity::open()->count();
+
+        $stories = DB::table('news')->leftJoin('nahau_story_meta as m', 'm.news_id', '=', 'news.id')->leftJoin('nahau_authors as a', 'a.id', '=', 'm.author_id')
+            ->select('news.id', 'news.title', 'news.status', 'news.date', 'm.language', 'm.label', 'a.name as author')
+            ->orderByDesc('news.date')->orderByDesc('news.id')->paginate(5, ['*'], 'sp')->withQueryString();
+
+        return [
+            'range' => $range, 'rFrom' => $from, 'rTo' => $to, 'hasReads' => $has,
+            'readsTotal' => array_sum($a), 'rLabels2' => $labels, 'rReads' => $a, 'rUniq' => $b,
+            'uNow' => $uNow, 'uDelta' => $pct($uNow, $uPrev), 'pubNow' => $pubNow, 'pubDelta' => $pubNow - $pubPrev,
+            'subsNow' => $subsNow, 'subsDelta' => $pct($subsNow, $subsPrev), 'pubSpark' => $perDay(News::class, 'date', 1),
+            'subSpark' => $perDay(\App\Models\NahauSubscriber::class, 'confirmed_at'),
+            'cList' => $cList, 'cTotal' => (int) $countries->sum('c'), 'mostRead' => $mostRead,
+            'mLabels' => $mLabels, 'mSw' => $mSw, 'mEn' => $mEn, 'ret' => [$rLabels, $rRet, $rNew],
+            'oppOpen' => (int) \App\Models\NahauOpportunity::open()->count(), 'oppClosed' => (int) $closed, 'stories' => $stories,
+        ];
     }
 
     public function classic()

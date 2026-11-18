@@ -92,7 +92,7 @@
       <a class="ni{{ $best === 'k:'.$it['key'] ? ' on' : '' }}" href="{{ $it['url'] }}" title="{{ $it['label'] }}">{!! Icons::svg($it['icon']) !!}<span class="lb">{{ $it['label'] }}</span></a>
     @else
       @php $act = collect($it['kids'])->contains(fn ($c) => $best === 'k:'.$c[3]); @endphp
-      <button class="ni{{ $act ? ' open' : '' }}" data-g="{{ $it['label'] }}" title="{{ $it['label'] }}" aria-expanded="{{ $act ? 'true' : 'false' }}">{!! Icons::svg('chev', 'car') !!}{!! Icons::svg($it['icon']) !!}<span class="lb">{{ $it['label'] }}</span>@if(($it['badge'] ?? 0) > 0)<span class="bd">{{ $it['badge'] }}</span>@endif</button>
+      <button class="ni{{ $act ? ' open' : '' }}" data-g="{{ $it['label'] }}" title="{{ $it['label'] }}" aria-expanded="{{ $act ? 'true' : 'false' }}">{!! Icons::svg('chev', 'car') !!}{!! Icons::svg($it['icon']) !!}<span class="lb">{{ $it['label'] }}</span>@if(isset($it['badge']))<span class="bd{{ (int) $it['badge'] === 0 ? ' z' : '' }}">{{ (int) $it['badge'] }}</span>@endif</button>
       <div class="gr{{ $act ? ' open' : '' }}"><div>@foreach($it['kids'] as $c)<a class="sub{{ $best === 'k:'.$c[3] ? ' on' : '' }}" href="{{ $c[1] }}">{{ $c[0] }}</a>@endforeach</div></div>
     @endif
   @endforeach

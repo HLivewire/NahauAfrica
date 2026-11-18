@@ -30,6 +30,17 @@ class NahauPanelTest extends TestCase
         $this->get(route('admin.panel.users'))->assertNotFound();
     }
 
+    public function test_inbox_badge_always_shows_even_at_zero_and_dashboard_has_analytics(): void
+    {
+        $this->actingAs($this->userWith('admin'));
+        \App\Models\NahauSubmission::where('status', 'new')->update(['status' => 'read']);
+        \App\Models\NahauMessage::where('status', 'new')->update(['status' => 'read']);
+        \App\Models\NahauOpportunitySubmission::where('status', 'new')->update(['status' => 'read']);
+        $this->get(route('admin.dashboard'))->assertOk()->assertSee('<span class="bd z">0</span>', false)
+            ->assertSee('Wasomaji kwa nchi')->assertSee('Wasomaji wanaorudi')->assertSee('Hadithi zinazosomwa zaidi')->assertSee('id="cMonth"', false);
+        $this->get(route('admin.dashboard', ['range' => 7]))->assertOk();
+    }
+
     public function test_section_editor_can_manage_authors_but_not_heroes(): void
     {
         $this->actingAs($this->userWith('section-editor'));

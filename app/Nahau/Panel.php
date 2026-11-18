@@ -115,7 +115,7 @@ class Panel
                 if (! $kids) {
                     continue;
                 }
-                $item = ['icon' => $t[0], 'label' => $t[1], 'kids' => $kids, 'badge' => $t[3] ?? 0];
+                $item = ['icon' => $t[0], 'label' => $t[1], 'kids' => $kids, 'badge' => $t[3] ?? null];
             } else {
                 if (! str_contains($t[3], (string) $l)) {
                     continue;

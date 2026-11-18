@@ -37,6 +37,7 @@ class StoryController extends Controller
         }
 
         News::where('id', $story->id)->increment('viewers');
+        \App\Nahau\Reads::record($story->id, $story->language ?? null);
         return $this->render($story, $key);
     }
 

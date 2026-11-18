@@ -179,6 +179,44 @@
     if (!tot) s = '<circle cx="70" cy="70" r="' + R + '" fill="none" stroke="var(--hov)" stroke-width="16"/>';
     el.innerHTML = '<div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap"><svg viewBox="0 0 140 140" style="width:140px;height:140px;flex:none">' + s + '<text x="70" y="68" text-anchor="middle" style="font:800 20px var(--font);fill:var(--tx)">' + tot + '</text><text x="70" y="84" text-anchor="middle">' + T('jumla') + '</text></svg><div style="flex:1;min-width:120px">' + rows.map(function (r, i) { return '<div class="lg-row"><i style="background:' + cols[i % 5] + '"></i>' + esc(r[0]) + '<span>' + r[1] + '</span></div>'; }).join('') + '</div></div>';
   };
+  /* multi-series smooth lines (opts.pct => 0-100% axis), grouped bars, gauge, sparkline */
+  var CL = ['var(--pri)', '#9DB6FF', 'var(--cy)'];
+  NH.multi = function (el, labels, series, opts) {
+    opts = opts || {}; var W = 620, H = opts.h || 240, L = 38, B = 26, T = 10, R = 10, n = labels.length, all = [];
+    series.forEach(function (s) { all = all.concat(s.vals); });
+    var mx = opts.pct ? 100 : Math.max.apply(null, all.concat([4])), step = opts.pct ? 25 : Math.ceil(mx / 4); mx = step * 4;
+    var X = function (i) { return L + (W - L - R) * (n === 1 ? .5 : i / (n - 1)); }, Y = function (v) { return T + (H - T - B) * (1 - v / mx); }, g = '';
+    for (var k = 0; k <= 4; k++) { var yv = step * k; g += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(yv) + '" y2="' + Y(yv) + '" stroke="var(--grid)"/><text x="' + (L - 6) + '" y="' + (Y(yv) + 3) + '" text-anchor="end">' + yv + (opts.pct ? '%' : '') + '</text>'; }
+    var every = Math.max(1, Math.ceil(n / 6)), xl = labels.map(function (t, i) { return i % every ? '' : '<text x="' + X(i) + '" y="' + (H - 6) + '" text-anchor="middle">' + esc(t) + '</text>'; }).join(''), paths = '';
+    series.forEach(function (s, si) {
+      var c = s.color || CL[si % 3], p = s.vals.map(function (v, i) { return [X(i), Y(v)]; }), d = 'M' + p[0][0] + ',' + p[0][1];
+      for (var i = 1; i < n; i++) { var a = p[i - 1], b = p[i], m = (a[0] + b[0]) / 2; d += ' C' + m + ',' + a[1] + ' ' + m + ',' + b[1] + ' ' + b[0] + ',' + b[1]; }
+      paths += '<path class="line-a" d="' + d + '" stroke="' + c + '" pathLength="1" style="stroke-width:' + (si ? 2 : 2.6) + '"/>';
+      if (opts.dots) p.forEach(function (q) { paths += '<circle cx="' + q[0] + '" cy="' + q[1] + '" r="3.3" fill="var(--card)" stroke="' + c + '" stroke-width="2"/>'; });
+    });
+    var lg = series.length > 1 || opts.legend ? '<div class="lgd">' + series.map(function (s, i) { return '<span><i style="background:' + (s.color || CL[i % 3]) + '"></i>' + esc(s.name) + '</span>'; }).join('') + '</div>' : '';
+    el.innerHTML = lg + svgNS(W, H, g + paths + xl);
+  };
+  NH.gbars = function (el, labels, series) {
+    var W = 620, H = 250, L = 34, B = 26, T = 10, R = 8, all = []; series.forEach(function (s) { all = all.concat(s.vals); });
+    var mx = Math.max.apply(null, all.concat([4])), step = Math.ceil(mx / 4); mx = step * 4;
+    var Y = function (v) { return T + (H - T - B) * (1 - v / mx); }, g = '', n = labels.length, cw = (W - L - R) / n, bw = Math.min(14, cw / (series.length + 1.2));
+    for (var k = 0; k <= 4; k++) { var yv = step * k; g += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(yv) + '" y2="' + Y(yv) + '" stroke="var(--grid)"/><text x="' + (L - 6) + '" y="' + (Y(yv) + 3) + '" text-anchor="end">' + yv + '</text>'; }
+    labels.forEach(function (lb, i) {
+      var x0 = L + cw * i + cw / 2 - bw * series.length / 2 - (series.length - 1) * 1.5;
+      series.forEach(function (s, si) { var v = s.vals[i], x = x0 + si * (bw + 3); g += '<rect x="' + x + '" y="' + Y(v) + '" width="' + bw + '" height="' + (H - B - Y(v)) + '" rx="3" fill="' + (s.color || CL[si % 3]) + '"><title>' + esc(s.name) + ' ' + esc(lb) + ': ' + v + '</title></rect>'; });
+      g += '<text x="' + (L + cw * i + cw / 2) + '" y="' + (H - 6) + '" text-anchor="middle">' + esc(lb) + '</text>';
+    });
+    el.innerHTML = '<div class="lgd">' + series.map(function (s, i) { return '<span><i style="background:' + (s.color || CL[i % 3]) + '"></i>' + esc(s.name) + '</span>'; }).join('') + '</div>' + svgNS(W, H, g);
+  };
+  NH.gauge = function (el, pct) {
+    var R = 50, C = Math.PI * R, len = C * Math.max(0, Math.min(100, pct)) / 100;
+    el.innerHTML = '<svg viewBox="0 0 130 78" style="width:150px;display:block;margin:6px auto"><path d="M15,68 A50,50 0 0 1 115,68" fill="none" stroke="var(--hov)" stroke-width="14" stroke-linecap="round"/><path d="M15,68 A50,50 0 0 1 115,68" fill="none" stroke="var(--pri)" stroke-width="14" stroke-linecap="round" stroke-dasharray="' + len + ' ' + C + '"/><text x="65" y="66" text-anchor="middle" style="font:800 18px var(--font);fill:var(--tx)">' + pct + '%</text></svg>';
+  };
+  NH.spark = function (el, vals) {
+    var mx = Math.max.apply(null, vals.concat([1])), w = 100 / vals.length;
+    el.innerHTML = '<svg viewBox="0 0 100 40" preserveAspectRatio="none" style="width:100%;height:56px;display:block">' + vals.map(function (v, i) { var h = Math.max(2, v / mx * 38); return '<rect x="' + (i * w + w * .2) + '" y="' + (40 - h) + '" width="' + w * .6 + '" height="' + h + '" rx="1.2" fill="' + (i % 2 ? '#9DB6FF' : 'var(--pri)') + '"/>'; }).join('') + '</svg>';
+  };
 })();
 
 /* ---- loading spinners on buttons (links that navigate, form submits, ajax saves) ---- */
