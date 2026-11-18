@@ -30,7 +30,7 @@
 </div></div>
 <div class="nx-wrap" style="padding-top:72px;padding-bottom:24px"><h2 class="nx-h2">{{ __('Our team') }}</h2>
     <div class="nx-grid nx-grid--3">
-    @forelse($team as $m)<div class="nx-person"><div class="nx-avatar">@if($m->photo)<img src="{{ media_url($m->photo) }}" alt="">@else{{ mb_strtoupper(mb_substr($m->name,0,1)) }}@endif</div><div><div style="font-weight:600;font-size:18px">{{ $m->name }}</div><div class="nx-meta" style="font-size:15px">{{ $m->role }}</div></div></div>
+    @forelse($team as $m)<div class="nx-person"><div class="nx-avatar">@if($m->photo)<img loading="lazy" decoding="async" src="{{ media_url($m->photo) }}" alt="">@else{{ mb_strtoupper(mb_substr($m->name,0,1)) }}@endif</div><div><div style="font-weight:600;font-size:18px">{{ $m->name }}</div><div class="nx-meta" style="font-size:15px">{{ $m->role }}</div></div></div>
     @empty @foreach(['Founder & Editor-in-Chief','Fiction Editor','Features & Research Editor'] as $r)<div class="nx-person"><div class="nx-avatar"></div><div><div style="font-weight:600;font-size:18px">[{{ __('Name') }}]</div><div class="nx-meta" style="font-size:15px">{{ __($r) }}</div></div></div>@endforeach @endforelse
     </div></div>
 <div class="nx-wrap nx-split" id="contact" style="padding-top:56px;padding-bottom:88px">

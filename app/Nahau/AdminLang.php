@@ -6,6 +6,14 @@ namespace App\Nahau;
 class AdminLang
 {
     public const DICT = [
+        // audit activity
+        'Kila kinachofanyika kwenye mfumo: nani, nini, lini, na kutoka wapi. Rekodi hizi haziwezi kubadilishwa wala kufutwa.' => 'Everything that happens in the system: who, what, when and from where. These records cannot be edited or deleted.',
+        'Pakua CSV' => 'Download CSV', 'Matukio leo' => 'Events today', 'Walioingia (saa 24)' => 'Logins (24h)', 'Kuingia kulikoshindwa (saa 24)' => 'Failed logins (24h)', 'Watumiaji hai (saa 24)' => 'Active users (24h)',
+        'Tafuta maelezo, mtumiaji au IP…' => 'Search description, user or IP…', 'Vitendo vyote' => 'All actions', 'Aina zote' => 'All types', 'Watumiaji wote' => 'All users', 'Futa vichujio' => 'Clear filters',
+        'Hakuna matukio.' => 'No events.', 'Shughuli zitaonekana hapa kadri watumiaji wanavyotumia mfumo.' => 'Activity will appear here as people use the system.',
+        'Wakati' => 'When', 'Mtumiaji' => 'User', 'Kitendo' => 'Action', 'Maelezo' => 'Details', 'Angalia' => 'View', 'Kilichoguswa' => 'Affected item', 'Ombi' => 'Request', 'Kifaa' => 'Device', 'Mabadiliko' => 'Changes', 'Sehemu' => 'Field', 'Kabla' => 'Before', 'Baada' => 'After', 'Mgeni' => 'Guest', 'Msomaji' => 'Reader',
+        'Ameingia' => 'Logged in', 'Ametoka' => 'Logged out', 'Kuingia kumeshindwa' => 'Login failed', 'Ameongeza' => 'Created', 'Amebadilisha' => 'Updated', 'Amefuta' => 'Deleted', 'Amebadilisha nenosiri' => 'Changed password', 'Amebadilisha role' => 'Changed role',
+        'Ameingia kwenye mfumo' => 'Logged in', 'Ametoka kwenye mfumo' => 'Logged out', 'Kuingia kumeshindwa:' => 'Login failed:', 'Role ya' => 'Role of',
         // shell
         'Fungua menyu' => 'Open menu', 'Menyu kuu' => 'Main menu', 'Punguza sidebar' => 'Collapse sidebar',
         'Tafuta ukurasa au kazi…' => 'Search a page or task…', 'Tafuta' => 'Search', 'Badilisha mwonekano (giza au mwanga)' => 'Switch light or dark mode',
@@ -31,7 +39,7 @@ class AdminLang
         // lists / forms
         'kipengee' => 'item', 'vipengee' => 'items', 'Chuja orodha…' => 'Filter list…', 'Chuja' => 'Filter', 'Ongeza' => 'Add', 'Bado hakuna kitu hapa.' => 'Nothing here yet.',
         'Bofya' => 'Click', 'kuanza.' => 'to start.', 'Vitu vitaonekana hapa vikifika kutoka kwenye site.' => 'Items will appear here when they arrive from the site.',
-        'Hariri' => 'Edit', 'Fungua' => 'Open', 'Futa' => 'Delete', 'Ndiyo' => 'Yes', 'Hapana' => 'No', 'Funga' => 'Close', 'Hifadhi' => 'Save', 'Mpya' => 'New',
+        'Inatoka…' => 'Signing out…', 'Hariri' => 'Edit', 'Fungua' => 'Open', 'Futa' => 'Delete', 'Ndiyo' => 'Yes', 'Hapana' => 'No', 'Funga' => 'Close', 'Hifadhi' => 'Save', 'Mpya' => 'New',
         'Hadithi:' => 'Story:', 'Tengeneza fursa kutoka kwa hii' => 'Create listing from this', 'Ripoti za tangazo hili:' => 'Reports on this advert:',
         'Fursa haichapishwi hadi' => 'An opportunity is not published until', 'zijazwe.' => 'are filled in.', 'limehifadhiwa privately' => 'stored privately',
         // users

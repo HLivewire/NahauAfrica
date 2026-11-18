@@ -306,7 +306,7 @@
 
 /* ---- loading spinners on buttons (links that navigate, form submits, ajax saves) ---- */
 (function () {
-  var cur = null, sel = 'a.nx-btn, a.nx-xs-btn, a.nx-btn--sm';
+  var cur = null, sel = 'a.nx-btn, a.nx-xs-btn, a.nx-btn--sm, a[href$="/logout"], a[href$="/signout"], .nahau-logout, [data-nx-logout]';
   function on(b) {
     if (!b || b.classList.contains('is-loading')) return;
     var sp = document.createElement('span'); sp.className = 'nx-spin'; sp.setAttribute('aria-hidden', 'true');
@@ -336,5 +336,12 @@
     var h = a.getAttribute('href'); if (!h || h.charAt(0) === '#' || a.target === '_blank' || /^(mailto|tel):/.test(h) || a.hasAttribute('data-no-spin')) return;
     setTimeout(function () { if (!e.defaultPrevented) on(a); }, 0);
   });
-  window.addEventListener('pageshow', offAll);
+  /* signing out: dim the page and say what is happening until the server answers */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href$="/logout"], a[href$="/signout"], [data-nx-logout]');
+    if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+    var o = document.querySelector('.nx-busy') || document.body.appendChild(Object.assign(document.createElement('div'), { className: 'nx-busy', innerHTML: '<i></i><span></span>' }));
+    o.setAttribute('role', 'status'); o.querySelector('span').textContent = a.getAttribute('data-busy') || 'Signing out…'; o.classList.add('on');
+  });
+  window.addEventListener('pageshow', function () { offAll(); var o = document.querySelector('.nx-busy'); if (o) o.classList.remove('on'); });
 })();

@@ -28,6 +28,7 @@ class SigninController extends Controller
             return redirect()->intended(route('admin.dashboard'));
         }
 
+        \App\Nahau\Audit::log('login_failed', null, 'Kuingia kumeshindwa: '.$request->email, null, 'web');
         $this->setError('Invalid Email or Password !');
         return redirect()->back()->withInput($request->only('email'))->with('nahau_panel', 'login');
     }

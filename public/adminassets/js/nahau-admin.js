@@ -183,7 +183,7 @@
 
 /* ---- loading spinners on buttons (links that navigate, form submits, ajax saves) ---- */
 (function () {
-  var cur = null, sel = 'a.btn:not([data-modal]):not([data-del])';
+  var cur = null, sel = 'a.btn:not([data-modal]):not([data-del]), a.so, a[href$="/logout"], a[href$="/signout"]';
   function on(b) {
     if (!b || b.classList.contains('is-loading')) return;
     var sp = document.createElement('span'); sp.className = 'nx-spin'; sp.setAttribute('aria-hidden', 'true');
@@ -213,5 +213,11 @@
     var h = a.getAttribute('href'); if (!h || h.charAt(0) === '#' || a.target === '_blank' || /^(mailto|tel):/.test(h) || a.hasAttribute('data-no-spin')) return;
     setTimeout(function () { if (!e.defaultPrevented) on(a); }, 0);
   });
-  window.addEventListener('pageshow', offAll);
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a.so, a[href$="/logout"], a[href$="/signout"]');
+    if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+    var o = document.querySelector('.nx-busy') || document.body.appendChild(Object.assign(document.createElement('div'), { className: 'nx-busy', innerHTML: '<i></i><span></span>' }));
+    o.setAttribute('role', 'status'); o.querySelector('span').textContent = ((window.NH && NH.dict && NH.dict['Inatoka…']) || 'Inatoka…'); o.classList.add('on');
+  });
+  window.addEventListener('pageshow', function () { offAll(); var o = document.querySelector('.nx-busy'); if (o) o.classList.remove('on'); });
 })();

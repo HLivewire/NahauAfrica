@@ -99,6 +99,7 @@ class Panel
             ]],
             ['s' => 'Admin'],
             ['users', 'Users na Roles', route('admin.panel.users'), 'A', 'users'],
+            ['shield', 'Audit Activity', route('admin.audit'), 'A', 'audit'],
         ];
 
         $out = [];

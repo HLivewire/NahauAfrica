@@ -12,6 +12,10 @@ class NahauBookTest extends TestCase
 
     private function book()
     {
+        if (! Stories::inSection('fiction')->whereNotNull('m.price')->exists() && ($f = Stories::inSection('fiction')->first())) {
+            \DB::table('nahau_story_meta')->where('news_id', $f->id)->update(['price' => 5000]);   // rolled back with the test
+        }
+
         return Stories::inSection('fiction')->whereNotNull('m.price')->first();
     }
 

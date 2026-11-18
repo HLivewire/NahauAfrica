@@ -21,7 +21,7 @@
     <nav class="nx-crumbs" aria-label="Breadcrumb"><a href="{{ nroute('home') }}">{{ __('Home') }}</a> / <a href="{{ nroute('opportunities') }}">{{ nsection('jobs-careers','name') }}</a> / <a href="{{ nroute('opportunities') }}">{{ __('Opportunities') }}</a></nav>
 
     <div class="nx-jobhead">
-        <div class="nx-opp-logo nx-opp-logo--lg">@if($o->employer_logo)<img src="{{ media_url($o->employer_logo) }}" alt="">@else<span>{{ mb_strtoupper(mb_substr($o->employer, 0, 1)) }}</span>@endif</div>
+        <div class="nx-opp-logo nx-opp-logo--lg">@if($o->employer_logo)<img loading="lazy" decoding="async" src="{{ media_url($o->employer_logo) }}" alt="">@else<span>{{ mb_strtoupper(mb_substr($o->employer, 0, 1)) }}</span>@endif</div>
         <div>
             <h1 class="nx-title" style="font-size:clamp(26px,3.6vw,38px);line-height:1.15">{{ $o->title }}</h1>
             <p class="nx-opp-emp" style="margin:4px 0 10px">{{ $o->employer }}</p>
@@ -55,7 +55,7 @@
     </section>
 
     <section class="nx-aboutco">
-        <div class="nx-opp-logo">@if($o->employer_logo)<img src="{{ media_url($o->employer_logo) }}" alt="">@else<span>{{ mb_strtoupper(mb_substr($o->employer, 0, 1)) }}</span>@endif</div>
+        <div class="nx-opp-logo">@if($o->employer_logo)<img loading="lazy" decoding="async" src="{{ media_url($o->employer_logo) }}" alt="">@else<span>{{ mb_strtoupper(mb_substr($o->employer, 0, 1)) }}</span>@endif</div>
         <div><span class="nx-eyebrow" style="font-size:11px">{{ __('About the employer') }}</span><div style="font:700 19px 'Source Serif 4',Georgia,serif">{{ $o->employer }}</div>@if($o->employer_about)<p style="margin-top:6px;color:var(--nx-body);font-size:16px">{{ $o->employer_about }}</p>@endif</div>
     </section>
 

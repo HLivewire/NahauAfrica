@@ -20,7 +20,7 @@
         @endphp
         <article class="nx-xs{{ $loop->first ? ' is-active' : '' }}" style="{{ ['--pc:#232427;--fg:#fff;--fg2:rgba(255,255,255,.88);--bb:#fff;--bf:#232427;--sh:rgba(0,0,0,.35)', '--pc:#F7F3EB;--fg:#232427;--fg2:#4a4a4a;--bb:#232427;--bf:#fff;--sh:transparent', '--pc:#EDEDED;--fg:#232427;--fg2:#4a4a4a;--bb:#232427;--bf:#fff;--sh:transparent'][($loop->iteration - 1) % 3] }}" role="group" aria-roledescription="slide" aria-label="{{ $loop->iteration }} / {{ $heroes->count() }}" @if(! $loop->first) aria-hidden="true" @endif>
             <div class="nx-xs-panel"></div>
-            <div class="nx-xs-photo">@if($himg)<img src="{{ $himg }}" alt="{{ $h->name }}" loading="{{ $loop->first ? 'eager' : 'lazy' }}">@endif</div>
+            <div class="nx-xs-photo">@if($himg)<img loading="lazy" decoding="async" src="{{ $himg }}" alt="{{ $h->name }}" loading="{{ $loop->first ? 'eager' : 'lazy' }}">@endif</div>
             <div class="nx-xs-copy">
                 <span class="nx-xs-kicker">{{ __('African Heroes') }}</span>
                 <h2>{{ $h->name }}</h2>
@@ -52,7 +52,7 @@
 <div class="nx-sec nx-sec--sm" style="padding-top:8px">
     <div class="nx-wrap">
         <article class="nx-featured nx-s-{{ $featured->section }}">
-            <div class="nx-media">@if($fi)<img src="{{ $fi }}" alt="{{ $featured->image_alt ?: '' }}" width="900" height="620">@else<span>{{ nsection($featured->section,'name') }}</span>@endif</div>
+            <div class="nx-media">@if($fi)<img fetchpriority="high" decoding="async" src="{{ $fi }}" alt="{{ $featured->image_alt ?: '' }}" width="900" height="620">@else<span>{{ nsection($featured->section,'name') }}</span>@endif</div>
             <div>
                 <p class="nx-eyebrow">{{ __('Featured story') }}</p>
                 <h2><a class="nx-stretch" href="{{ Stories::url($featured) }}">{{ $featured->title }}</a></h2>
@@ -137,7 +137,7 @@
                     @for($r = 0; $r < $mqReps; $r++)
                     @foreach($voices as $a)
                     <div class="nx-mq-item"><div class="nx-person">
-                <div class="nx-avatar">@if($a->photo && ($av = nimage($a->photo)))<img src="{{ $av }}" alt="{{ $a->name }}" width="64" height="64" loading="lazy">@else<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5z"/></svg>@endif</div>
+                <div class="nx-avatar">@if($a->photo && ($av = nimage($a->photo)))<img loading="lazy" decoding="async" src="{{ $av }}" alt="{{ $a->name }}" width="64" height="64" loading="lazy">@else<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5z"/></svg>@endif</div>
                 <div><a class="nx-stretch"@if($mqCopy) tabindex="-1"@endif href="{{ nroute('author',['slug'=>$a->slug]) }}" style="font-weight:600;font-size:18px">{{ $a->name }}</a>
                     <div class="nx-meta">{{ trim($a->role.($a->city ? ' · '.$a->city : ''),' ·') }}</div>
                     <div class="nx-link" style="font-size:15px">{{ $a->story_count }} {{ trans_choice('{1} story|[2,*] stories', $a->story_count) }} →</div></div>

@@ -15,9 +15,16 @@
                                 <li role="option" @if(nlocale()==='sw') aria-selected="true" @endif><a href="{{ nswitch_url('sw') }}" hreflang="sw" lang="sw"><svg class="nx-flag" viewBox="0 0 60 40" width="22" height="22" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="60" height="40" fill="#1EB53A"/><polygon points="60,0 60,40 0,40" fill="#00A3DD"/><line x1="0" y1="40" x2="60" y2="0" stroke="#FCD116" stroke-width="14"/><line x1="0" y1="40" x2="60" y2="0" stroke="#000" stroke-width="8"/></svg><span>Kiswahili</span></a></li>
                             </ul>
                         </li>
+                    @if(auth()->check() || auth('maanuser')->check())
+                    <li class="nx-acct">
+                        <a class="nahau-getstarted nahau-getstarted--sm" href="{{ auth()->check() ? route('admin.dashboard') : route('maanuser.index') }}">{{ auth()->check() ? __('Dashboard') : __('My account') }}</a>
+                        <a class="nx-signout" href="{{ auth()->check() ? route('logout') : route('signout') }}" data-nx-logout data-busy="{{ __('Signing out…') }}">{{ __('Sign out') }}</a>
+                    </li>
+                    @else
                     <li>
                         <button type="button" class="nahau-getstarted nahau-getstarted--sm" data-nahau-open="drawer">{{ __('Get Started') }}</button>
                     </li>
+                    @endif
                                         <li class="d-lg-none">
                         <button type="button" class="manu-btn">
                             <span></span>

@@ -119,6 +119,13 @@ Route::prefix('admin')->middleware(['auth', 'adminlang'])->name('admin.')->group
         });
     });
 
+    // Audit Activity: read-only trail of who did what (Administrator only)
+    Route::middleware('role:super-admin,admin')->prefix('audit')->name('audit')->controller(\App\Http\Controllers\Admin\AuditController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('export', 'export')->name('.export');
+        Route::get('{log}', 'show')->whereNumber('log')->name('.show');
+    });
+
     Route::prefix('stories')->name('stories')->middleware('role:super-admin,admin,editor,section-editor,translator,contributor,reporter')->controller(\App\Http\Controllers\Admin\StoriesAdminController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('create', 'create')->name('.create');

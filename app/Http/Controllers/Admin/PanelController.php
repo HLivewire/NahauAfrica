@@ -123,7 +123,12 @@ class PanelController extends Controller
     private function setRole(User $u, string $slug): void
     {
         $role = Role::where('slug', $slug)->firstOrFail();
+        $old = $u->roles()->count() ? Panel::roleName($u->unsetRelation('roles')) : '—';
         $u->roles()->sync([$role->id]);
+        $new = $this->roleOptions()[$slug] ?? $role->name;
+        if ($old !== $new) {
+            \App\Nahau\Audit::log('role_change', $u, 'Role ya '.\App\Nahau\Audit::label($u).': '.$old.' → '.$new, ['role' => [$old, $new]]);
+        }
         $u->forceFill(['user_type' => Panel::USER_TYPE[$slug] ?? '0'])->save();
     }
 

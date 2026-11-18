@@ -32,7 +32,7 @@
 </div>
 
 @if($lead)
-<div class="nx-wrap" style="padding-top:34px"><figure style="margin:0"><div class="nx-media nx-leadmedia"><img src="{{ $lead }}" alt="{{ $story->image_alt }}" fetchpriority="high"></div>
+<div class="nx-wrap" style="padding-top:34px"><figure style="margin:0"><div class="nx-media nx-leadmedia"><img loading="lazy" decoding="async" src="{{ $lead }}" alt="{{ $story->image_alt }}" fetchpriority="high"></div>
     @if($story->image_caption || $story->image_credit)<figcaption class="nx-meta" style="margin-top:8px">{{ $story->image_caption }}@if($story->image_credit) · {{ $story->image_credit }}@endif</figcaption>@endif</figure></div>
 @endif
 
@@ -45,7 +45,7 @@
         @if($hero->country)<dt>{{ __('Country') }}</dt><dd>{{ $hero->country }}</dd>@endif
         @if($hero->known_for && !$hero->spotlight_summary)<dt>{{ __('Known for') }}</dt><dd>{{ $hero->known_for }}</dd>@endif
     </dl>
-    @if($hero->portrait)<figure style="margin:16px 0 0"><img src="{{ media_url($hero->portrait) }}" alt="{{ __('Portrait of') }} {{ $hero->name }}" style="max-width:220px;border-radius:10px">@if($hero->portrait_credit)<figcaption class="nx-meta" style="margin-top:6px">{{ $hero->portrait_credit }}</figcaption>@endif</figure>@endif
+    @if($hero->portrait)<figure style="margin:16px 0 0"><img loading="lazy" decoding="async" src="{{ media_url($hero->portrait) }}" alt="{{ __('Portrait of') }} {{ $hero->name }}" style="max-width:220px;border-radius:10px">@if($hero->portrait_credit)<figcaption class="nx-meta" style="margin-top:6px">{{ $hero->portrait_credit }}</figcaption>@endif</figure>@endif
     </div>
     @endif
     <div class="nx-body" data-nx-body>{!! nclean($story->description) !!}</div>
@@ -72,7 +72,7 @@
 
     @if($author)
     <div class="nx-author">
-        <div class="nx-avatar" style="width:60px;height:60px">@if($author->photo)<img src="{{ media_url($author->photo) }}" alt="">@else{{ mb_strtoupper(mb_substr($author->name,0,1)) }}@endif</div>
+        <div class="nx-avatar" style="width:60px;height:60px">@if($author->photo)<img loading="lazy" decoding="async" src="{{ media_url($author->photo) }}" alt="">@else{{ mb_strtoupper(mb_substr($author->name,0,1)) }}@endif</div>
         <div><p class="nx-eyebrow" style="color:var(--nx-muted);font-size:12px;margin-bottom:6px">{{ __('About the author') }}</p>
             <div style="font-weight:600;font-size:20px;margin-bottom:6px">{{ $author->name }}</div>
             <p style="color:#4A4A4A;font-size:16px;margin-bottom:10px">{{ $author->bio }}</p>

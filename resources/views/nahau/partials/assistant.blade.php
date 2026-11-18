@@ -1,23 +1,24 @@
 <div class="nx-ai" data-nx-ai data-url="{{ route('nahau.assistant') }}" data-lang="{{ nlocale() }}">
-    <div class="nx-ai-panel" role="dialog" aria-label="{{ __('Nahau helper') }}" hidden>
-        <div class="nx-ai-head"><b>{{ __('Nahau helper') }}</b><span>{{ __('Ask about stories, jobs or how to apply') }}</span><button type="button" class="nx-ai-x" aria-label="{{ __('Close') }}">&times;</button></div>
+    <div class="nx-ai-panel" role="dialog" aria-label="{{ __('Ask about Nahau Africa') }}" hidden>
+        <div class="nx-ai-head"><b>{{ __('Ask about Nahau Africa') }}</b><span>{{ __('Stories, jobs and how to apply') }}</span><button type="button" class="nx-ai-x" aria-label="{{ __('Close') }}">&times;</button></div>
         <div class="nx-ai-log" aria-live="polite"><p class="nx-ai-m bot">{{ __('Hi! I can help you find stories, apply for opportunities, or send us your own story. What do you need?') }}</p></div>
         <div class="nx-ai-chips"><button type="button">{{ __('How do I apply for a job?') }}</button><button type="button">{{ __('How do I submit my story?') }}</button><button type="button">{{ __('Contact the team') }}</button></div>
         <form class="nx-ai-form"><input type="text" maxlength="500" placeholder="{{ __('Type your question…') }}" aria-label="{{ __('Your question') }}" required><button type="submit" aria-label="{{ __('Send') }}">&#10148;</button></form>
     </div>
-    <div class="nx-ai-dock"><span class="nx-ai-pill" role="button" tabindex="-1">{{ __('Ask about Nahau Africa') }}</span><button type="button" class="nx-ai-fab" aria-label="{{ __('Open help assistant') }}" aria-expanded="false"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg></button></div>
+    <span class="nx-ai-tip" aria-hidden="true">{{ __('Ask about Nahau Africa') }}</span>
+    <button type="button" class="nx-ai-fab" aria-label="{{ __('Ask about Nahau Africa') }}" aria-expanded="false"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg></button>
 </div>
 <style>
-.nx-ai{position:fixed;right:22px;bottom:22px;z-index:1500;font-family:'Jost',sans-serif}
-.nx-ai-dock{display:flex;align-items:center;gap:14px}
-.nx-ai-pill{background:#fff;color:#161d2f;font:700 17px 'Jost',sans-serif;padding:15px 24px;border-radius:999px;border:1px solid #e3e3e3;box-shadow:0 10px 30px rgba(0,0,0,.14);cursor:pointer;white-space:nowrap}
-.nx-ai-fab{position:relative;width:58px;height:58px;border:0;border-radius:50%;background:#E0262B;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 22px rgba(224,38,43,.4)}
-.nx-ai-fab::after{content:"";position:absolute;inset:0;border-radius:50%;background:rgba(224,38,43,.35);animation:nxaip 2.2s ease-out infinite;z-index:-1}
-@keyframes nxaip{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.7);opacity:0}}
-.nx-ai-fab svg{width:28px !important;height:28px !important;display:block;fill:none !important;stroke:#fff !important}
-.nx-ai-fab:hover{background:#c40000}
-@media (prefers-reduced-motion:reduce){.nx-ai-fab::after{animation:none}}
-.nx-ai-panel{height:auto;position:absolute;right:0;bottom:76px;width:350px;max-width:calc(100vw - 32px);background:#fff;border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.25);overflow:hidden;display:flex;flex-direction:column}
+.nx-ai{position:fixed;right:22px;bottom:22px;z-index:1500;font-family:'Jost',sans-serif;display:flex;align-items:center;gap:14px}
+.nx-ai-tip{background:#fff;color:#1a1d29;font:700 16px 'Jost',sans-serif;padding:15px 24px;border-radius:999px;box-shadow:0 8px 26px rgba(0,0,0,.16);border:1px solid #e4e4e4;white-space:nowrap}
+.nx-ai-fab{position:relative;display:flex;align-items:center;justify-content:center;width:64px;height:64px;border:0;border-radius:50%;background:#E0292B;color:#fff;cursor:pointer;box-shadow:0 8px 22px rgba(224,41,43,.4)}
+.nx-ai-fab::before,.nx-ai-fab::after{content:"";position:absolute;inset:0;border-radius:50%;background:rgba(224,41,43,.35);z-index:-1;animation:nxAiPulse 2.4s ease-out infinite}
+.nx-ai-fab::after{animation-delay:1.2s}
+@keyframes nxAiPulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.9);opacity:0}}
+@media (prefers-reduced-motion:reduce){.nx-ai-fab::before,.nx-ai-fab::after{animation:none;opacity:0}}
+.nx-ai-fab svg{width:30px !important;height:30px !important;display:block;flex:none}
+.nx-ai-fab:hover{background:#c71f21}
+.nx-ai-panel{height:auto;position:absolute;right:0;bottom:82px;width:350px;max-width:calc(100vw - 32px);background:#fff;border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.25);overflow:hidden;display:flex;flex-direction:column}
 .nx-ai-panel[hidden]{display:none}
 .nx-ai-head{position:relative;background:#232427;color:#fff;padding:14px 44px 14px 16px}
 .nx-ai-head b{display:block;font-size:17px}.nx-ai-head span{font-size:13px;opacity:.8}
@@ -31,7 +32,7 @@
 .nx-ai-form{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #eee}
 .nx-ai-form input{letter-spacing:0;height:auto;flex:1;border:1px solid #ddd;border-radius:10px;padding:10px 12px;font:500 15px 'Jost',sans-serif;min-width:0}
 .nx-ai-form button{border:0;border-radius:10px;background:#E60000;color:#fff;width:42px;cursor:pointer;font-size:16px}
-@media (max-width:480px){.nx-ai{right:12px;bottom:12px}.nx-ai-pill{display:none}}
+@media (max-width:560px){.nx-ai{right:12px;bottom:12px}.nx-ai-tip{display:none}}
 </style>
 <script>
 (function(){var w=document.querySelector('[data-nx-ai]');if(!w)return;var fab=w.querySelector('.nx-ai-fab'),pn=w.querySelector('.nx-ai-panel'),pill=w.querySelector('.nx-ai-pill'),log=w.querySelector('.nx-ai-log'),f=w.querySelector('form'),inp=f.querySelector('input');

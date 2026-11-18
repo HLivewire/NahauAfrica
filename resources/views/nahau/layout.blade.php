@@ -1,5 +1,7 @@
 @extends('frontend.master')
 
+@section('nx_lite', '1')
+
 @section('title'){{ trim($__env->yieldContent('nx_title')) ? trim($__env->yieldContent('nx_title')).' — ' : '' }}Nahau Africa @endsection
 
 @section('meta_content')

@@ -32,7 +32,7 @@ class ViewServiceProvider extends ServiceProvider
                 View::share('seooptimization', Seooptimization::first() ?? new Seooptimization());
             }
             if (Schema::hasTable('settings')) {
-                View::share('settings', Settings::first() ?? new Settings());
+                View::share('settings', settings());
             }
             if (Schema::hasTable('companies')) {
                 View::share('companyInfo', Company::first() ?? new Company());

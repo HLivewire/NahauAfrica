@@ -145,7 +145,8 @@ function photogalleries(){
 }
 function settings(){
     // Empty model fallback keeps pages working on a database without settings rows.
-    return Settings::first() ?? new Settings();
+    static $memo = null; // one query per request, not one per call
+    return $memo ??= (Settings::first() ?? new Settings());
 }
 function seooptimization(){
     return Seooptimization::first() ?? new Seooptimization();
@@ -154,8 +155,8 @@ function advertisement() {
     return \App\Models\Advertisement::latest()->first() ?? new \App\Models\Advertisement();
 }
 function googleanalytics() {
-    $googleanalytics = \App\Models\Googleanalytic::latest()->get();
-    return $googleanalytics ;
+    static $memo = null;
+    return $memo ??= \App\Models\Googleanalytic::latest()->get();
 }
 function home() {
     $home = Newscategory::where('type','home')->value('name');
@@ -170,16 +171,16 @@ function socials(){
     return $socials;
 }
 function headers(){
-    $header = \App\Models\Header::where('status',1)->where('is_active',1)->first();
-    return $header;
+    static $memo = false;
+    return $memo === false ? ($memo = \App\Models\Header::where('status',1)->where('is_active',1)->first()) : $memo;
 }
 function menu(){
     $menu = \App\Models\Menu::where('status',1)->where('is_active',1)->first();
     return $menu;
 }
 function footer(){
-    $footer = \App\Models\Footer::where('status',1)->where('is_active',1)->first();
-    return $footer;
+    static $memo = false;
+    return $memo === false ? ($memo = \App\Models\Footer::where('status',1)->where('is_active',1)->first()) : $memo;
 }
 function companies(){
     return \App\Models\Company::where('status',1)->first() ?? new \App\Models\Company();

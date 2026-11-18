@@ -61,7 +61,7 @@ class NahauDemoSeeder extends Seeder
             if ($sample && is_file(public_path("uploads/images/nahau/" . (is_int($sample) ? "sample_{$sample}" : $sample) . ".jpg"))) {
                 $news->update(['image' => json_encode(["public/uploads/images/nahau/" . (is_int($sample) ? "sample_{$sample}" : $sample) . ".jpg"])]);
             }
-            NahauStoryMeta::updateOrCreate(['news_id' => $news->id], array_merge(['slug' => \App\Nahau\Stories::makeSlug($title, $news->id), 'format' => $format, 'label' => $label, 'dek' => $dek, 'author_id' => $author, 'language' => 'en', 'price' => $section === 'fiction' ? 5000 : null, 'reading_minutes' => rand(4, 14)], $extra));
+            NahauStoryMeta::updateOrCreate(['news_id' => $news->id], array_merge(['slug' => \App\Nahau\Stories::makeSlug($title, $news->id), 'format' => $format, 'label' => $label, 'dek' => $dek, 'author_id' => $author, 'language' => 'en', 'reading_minutes' => rand(4, 14)], \Illuminate\Support\Facades\Schema::hasColumn('nahau_story_meta', 'price') ? ['price' => $section === 'fiction' ? 5000 : null] : [], $extra));
 
             return $news;
         };

@@ -11,7 +11,7 @@
         if (!$mode) { foreach (\App\Models\NahauOpportunity::WORK_MODES as $k => $lbl) { if (stripos((string) $o->terms, $lbl) !== false || stripos((string) $o->terms, str_replace('-', ' ', $k)) !== false) { $mode = $lbl; break; } } }
     @endphp
     <article class="nx-opp nx-opp--{{ $o->type }}{{ $o->isNew() ? ' is-new' : '' }}" id="opp-{{ $o->id }}">
-        <div class="nx-opp-logo">@if($o->employer_logo)<img src="{{ media_url($o->employer_logo) }}" alt="">@else<span>{{ mb_strtoupper(mb_substr($o->employer, 0, 1)) }}</span>@endif</div>
+        <div class="nx-opp-logo">@if($o->employer_logo)<img loading="lazy" decoding="async" src="{{ media_url($o->employer_logo) }}" alt="">@else<span>{{ mb_strtoupper(mb_substr($o->employer, 0, 1)) }}</span>@endif</div>
         <div class="nx-opp-main">
             <div class="nx-opp-chips">
                 @if($o->isNew())<span class="nx-new">{!! nxi('spark') !!}{{ __('New') }}</span>@endif

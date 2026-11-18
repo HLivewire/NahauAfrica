@@ -20,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        \App\Nahau\Audit::boot();
         Paginator::defaultView('vendor.pagination.nahau');
         Paginator::defaultSimpleView('vendor.pagination.nahau');
 

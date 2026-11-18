@@ -59,6 +59,15 @@ class NahauPanelTest extends TestCase
         $this->patchJson('/admin/nahau/heroes/'.$h->id.'/toggle/name', ['value' => 1])->assertNotFound();
     }
 
+    public function test_site_menu_offers_sign_out_with_busy_state_when_signed_in(): void
+    {
+        $this->get('/')->assertDontSee('data-nx-logout', false)->assertSee('Get Started');
+        $this->actingAs($this->userWith('admin'));
+        $this->get('/')->assertSee('data-nx-logout', false)->assertSee('data-busy', false)->assertDontSee('data-nahau-open="drawer">Get Started', false);
+        $this->get('/theme-core-check-missing')->assertNotFound();
+        $this->assertFileExists(public_path('frontend/css/theme-core.min.css'));
+    }
+
     public function test_administrator_invites_a_user_and_last_admin_is_protected(): void
     {
         $admin = $this->userWith('admin');

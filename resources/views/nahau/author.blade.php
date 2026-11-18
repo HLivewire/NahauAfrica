@@ -5,7 +5,7 @@
 @section('nx')
 <div class="nx-banner" style="background:var(--nx-grey);border-bottom-color:var(--nx-red)">
     <div class="nx-wrap" style="display:flex;gap:28px;align-items:center;flex-wrap:wrap">
-        <div class="nx-avatar" style="width:112px;height:112px;font-size:44px">@if($author->photo)<img src="{{ media_url($author->photo) }}" alt="">@else{{ mb_strtoupper(mb_substr($author->name,0,1)) }}@endif</div>
+        <div class="nx-avatar" style="width:112px;height:112px;font-size:44px">@if($author->photo)<img loading="lazy" decoding="async" src="{{ media_url($author->photo) }}" alt="">@else{{ mb_strtoupper(mb_substr($author->name,0,1)) }}@endif</div>
         <div style="flex:1 1 380px">
             <nav class="nx-crumbs" aria-label="Breadcrumb"><a href="{{ nroute('home') }}">{{ __('Home') }}</a> / {{ __('Authors') }}</nav>
             <h1 class="nx-h1" style="font-size:clamp(34px,5vw,52px)">{{ $author->name }}</h1>

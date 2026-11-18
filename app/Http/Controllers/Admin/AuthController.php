@@ -30,7 +30,7 @@ class AuthController extends Controller
             $this->setSuccess('User login Successfully !');
             return redirect()->route('admin.dashboard');
         }else{
-            //If is invalid email or password,will be redirect to back
+            \App\Nahau\Audit::log('login_failed', null, 'Kuingia kumeshindwa: '.$request->email, null, 'web');
             $this->setError('Invalid Email or Password !');
             return redirect('/')->withInput($request->only('email'))->with('nahau_panel', 'login');
         }

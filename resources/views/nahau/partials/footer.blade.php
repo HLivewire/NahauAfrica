@@ -2,7 +2,7 @@
     <div class="nx-wrap">
         <div class="cols">
             <div>
-                <a href="{{ nroute('home') }}"><img src="{{ asset('uploads/images/logo/nahau_logo_light.png') }}" alt="{{ __('Nahau Africa home') }}"></a>
+                <a href="{{ nroute('home') }}"><img loading="lazy" decoding="async" src="{{ asset('uploads/images/logo/nahau_logo_light.png') }}" alt="{{ __('Nahau Africa home') }}"></a>
                 <p class="brand">{{ __('Our Stories. Our Voices.') }}</p>
                 <p>{{ __('Fiction, lived experiences, and remarkable lives from African perspectives.') }}</p>
             </div>

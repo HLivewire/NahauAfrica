@@ -34,7 +34,7 @@
 <div class="nx-wrap nx-book-grid">
     <div class="nx-book-left">
         <figure class="nx-book-cover">
-            @if($lead)<img src="{{ $lead }}" alt="{{ $story->image_alt ?: __('Cover of').' '.$story->title }}" fetchpriority="high">@else<span>{{ $story->title }}</span>@endif
+            @if($lead)<img loading="lazy" decoding="async" src="{{ $lead }}" alt="{{ $story->image_alt ?: __('Cover of').' '.$story->title }}" fetchpriority="high">@else<span>{{ $story->title }}</span>@endif
         </figure>
         @if($story->image_caption || $story->image_credit)<p class="nx-meta" style="margin:-6px 0 18px">{{ $story->image_caption }}@if($story->image_credit) · {{ $story->image_credit }}@endif</p>@endif
 
@@ -62,7 +62,7 @@
 
         @if($author)
         <div class="nx-author">
-            <div class="nx-avatar" style="width:60px;height:60px">@if($author->photo && ($av = nimage($author->photo)))<img src="{{ $av }}" alt="{{ $author->name }}">@else<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5z"/></svg>@endif</div>
+            <div class="nx-avatar" style="width:60px;height:60px">@if($author->photo && ($av = nimage($author->photo)))<img loading="lazy" decoding="async" src="{{ $av }}" alt="{{ $author->name }}">@else<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5z"/></svg>@endif</div>
             <div><p class="nx-eyebrow" style="color:var(--nx-muted);font-size:12px;margin-bottom:6px">{{ __('About the author') }}</p>
                 <div style="font-weight:600;font-size:20px;margin-bottom:6px">{{ $author->name }}</div>
                 <p style="color:#4A4A4A;font-size:16px;margin-bottom:10px">{{ $author->bio }}</p>

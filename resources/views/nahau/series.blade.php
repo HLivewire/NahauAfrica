@@ -19,7 +19,7 @@
                 @if($last && $chapters->count()>1)<a class="nx-btn nx-btn--ghost" href="{{ nroute('chapter',['slug'=>$series->slug,'n'=>$last->chapter_no]) }}">{{ __('Latest') }}: {{ __('Chapter') }} {{ $last->chapter_no }}</a>@endif
             </div>
         </div>
-        @if($series->cover)<div class="nx-media" style="aspect-ratio:4/3"><img src="{{ media_url($series->cover) }}" alt=""></div>@endif
+        @if($series->cover)<div class="nx-media" style="aspect-ratio:4/3"><img loading="lazy" decoding="async" src="{{ media_url($series->cover) }}" alt=""></div>@endif
     </div>
 </div>
 <div class="nx-sec nx-sec--sm"><div class="nx-wrap" style="max-width:860px">
