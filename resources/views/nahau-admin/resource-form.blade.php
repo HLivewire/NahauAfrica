@@ -9,6 +9,7 @@
     <hr style="border:0;border-top:1px solid var(--bd);width:100%">
   @endif
   @if($res==='opportunities')<div class="alert-soft">Fursa haichapishwi hadi <b>Verified by</b> na <b>Verified on</b> zijazwe. @if($edit)Ripoti za tangazo hili: {{ $row->reports()->count() }}.@endif</div>@endif
+  @if($res==='carousel')<div class="alert-soft">Chagua <b>Hero</b> au <b>Book</b>; sehemu zinazohusika zitatokea. Muda ni siku 4 au zaidi; siku 2 kabla ya kuisha utapata arifa.</div>@endif
   @if($res==='stories')<p class="note">Hadithi: <b>{{ \App\Models\News::find($row->news_id)?->title }}</b></p>@endif
   @php
     $tabs = $d['tabs'] ?? null; $byName = collect($d['fields'])->keyBy(0);
@@ -20,8 +21,8 @@
   <div class="pane" @if($tabs) data-pane="t{{ $loop->index }}" @if(!$loop->first) style="display:none" @endif @endif>
   <div class="fg">
   @foreach($names as $nm)
-    @php $f = $byName[$nm]; [$name,$label,$type] = $f; $val = old($name, $row->$name); $hint = $f[5] ?? null; @endphp
-    <div class="f {{ in_array($type,$wide,true) ? 'full' : '' }}">
+    @php $f = $byName[$nm]; [$name,$label,$type] = $f; $val = old($name, $row->$name); $hint = $f[5] ?? null; $dep = $f[6] ?? null; @endphp
+    <div class="f {{ in_array($type,$wide,true) ? 'full' : '' }}" @if($dep) data-dep="{{ $dep }}" @endif>
       @if($type==='checkbox')
         <label class="ck"><input type="checkbox" name="{{ $name }}" value="1" @checked($val)> {{ $label }}</label>
       @elseif($type==='radio')

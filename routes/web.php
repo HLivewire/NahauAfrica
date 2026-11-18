@@ -143,6 +143,7 @@ Route::prefix('admin')->middleware(['auth', 'adminlang'])->name('admin.')->group
         Route::get('{res}/{id}/edit','edit')->whereNumber('id')->name('edit');
         Route::put('{res}/{id}','update')->whereNumber('id')->name('update');
         Route::patch('{res}/{id}/toggle/{field}','toggle')->whereNumber('id')->name('toggle');
+        Route::post('carousel/{id}/extend','extendSlide')->whereNumber('id')->name('carousel.extend');
         Route::delete('{res}/{id}','destroy')->whereNumber('id')->name('destroy');
     });
     Route::group(['middleware'=>['role:super-admin']],function (){

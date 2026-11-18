@@ -14,7 +14,7 @@
         @endforeach
             <div class="nx-field"><label for="o-type">{{ __('Type') }} *</label><select id="o-type" name="type" class="nx-input">@foreach(config('nahau.opportunity_types') as $k=>$l)<option value="{{ $k }}" @selected(old('type')===$k)>{{ __($l) }}</option>@endforeach</select></div>
             <div class="nx-field"><label for="o-location">{{ __('Location') }} *</label><input id="o-location" class="nx-input" name="location" value="{{ old('location') }}">@include('nahau.partials.field_error',['f'=>'location'])</div>
-            <div class="nx-field"><label for="o-terms">{{ __('Terms') }} *</label><input id="o-terms" class="nx-input" name="terms" value="{{ old('terms') }}" placeholder="Full-time / Free, 8 weeks">@include('nahau.partials.field_error',['f'=>'terms'])</div>
+            <div class="nx-field"><label for="o-terms">{{ __('Terms') }} ({{ __('optional') }})</label><input id="o-terms" class="nx-input" name="terms" value="{{ old('terms') }}" placeholder="Full-time / Free, 8 weeks">@include('nahau.partials.field_error',['f'=>'terms'])</div>
         </div>
         <div class="nx-field"><label for="o-description">{{ __('Description (max 300 characters)') }} *</label><textarea id="o-description" class="nx-input" name="description" rows="3" maxlength="300">{{ old('description') }}</textarea>@include('nahau.partials.field_error',['f'=>'description'])</div>
         <div class="nx-formgrid">

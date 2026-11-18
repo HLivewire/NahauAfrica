@@ -258,4 +258,15 @@
     o.setAttribute('role', 'status'); o.querySelector('span').textContent = ((window.NH && NH.dict && NH.dict['Inatoka…']) || 'Inatoka…'); o.classList.add('on');
   });
   window.addEventListener('pageshow', function () { offAll(); var o = document.querySelector('.nx-busy'); if (o) o.classList.remove('on'); });
+
+  /* ---------- conditional form fields: <div data-dep="kind=hero"> shows only while select[name=kind] has that value ---------- */
+  function applyDeps(root) {
+    Array.prototype.slice.call((root || document).querySelectorAll('[data-dep]')).forEach(function (el) {
+      var p = el.getAttribute('data-dep').split('='), c = el.closest('form') && el.closest('form').querySelector('[name="' + p[0] + '"]');
+      if (c) el.style.display = c.value === p[1] ? '' : 'none';
+    });
+  }
+  document.addEventListener('change', function (e) { if (e.target.closest && e.target.closest('form') && e.target.matches('select')) applyDeps(e.target.closest('form')); });
+  new MutationObserver(function () { applyDeps(document.getElementById('modal')); }).observe(document.body, { childList: true, subtree: true });
+  applyDeps();
 })();

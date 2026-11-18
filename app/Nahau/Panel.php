@@ -52,7 +52,7 @@ class Panel
 
     /** Which roles may open a Nahau resource screen. */
     public const RES = [
-        'authors' => 'AES', 'series' => 'AES', 'heroes' => 'AE', 'opportunities' => 'AE', 'submissions' => 'AES',
+        'authors' => 'AES', 'series' => 'AES', 'heroes' => 'AE', 'carousel' => 'AE', 'opportunities' => 'AE', 'submissions' => 'AES',
         'messages' => 'AE', 'opportunity-submissions' => 'AE', 'subscribers' => 'A', 'pages' => 'AE', 'team' => 'AE', 'stories' => 'AEST', 'story' => 'AESTC',
     ];
 
@@ -81,7 +81,10 @@ class Panel
                 ['Hadithi zote', route('admin.stories'), 'AESTC', 'news'],
                 ['Series', $n('series'), 'AES', 'series'],
             ]],
-            ['star', 'Heroes', $n('heroes'), 'AE', 'heroes'],
+            ['star', 'Carousel', [
+                ['Carousel ya Home', $n('carousel'), 'AE', 'carousel'],
+                ['Hero profiles', $n('heroes'), 'AE', 'heroes'],
+            ], \App\Models\NahauSlide::expiring()->count()],
             ['user', 'Authors', $n('authors'), 'AES', 'authors'],
             ['briefcase', 'Opportunities', $n('opportunities'), 'AE', 'opportunities'],
             ['s' => 'Inbox'],

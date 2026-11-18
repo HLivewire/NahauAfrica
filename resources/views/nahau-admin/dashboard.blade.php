@@ -6,6 +6,11 @@
   @if(App\Nahau\Panel::canRes('story'))<button class="btn" data-modal="{{ route('admin.stories.create') }}">{!! Icons::svg('plus') !!}Hadithi mpya</button>@endif
   @if(App\Nahau\Panel::canRes('opportunities'))<button class="btn sec" data-modal="{{ route('admin.nahau.create','opportunities') }}">{!! Icons::svg('briefcase') !!}Fursa mpya</button>@endif</div>
 
+@foreach($expiring as $sl)
+<div class="alert-soft rise" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:12px;border-color:var(--org)"><div style="flex:1;min-width:220px"><b>{{ $sl->kind === 'hero' ? 'Hero' : 'Book' }} slide: {{ $sl->title }}</b><br>{{ $sl->expired() ? 'Muda umeisha na slide imeondolewa kwenye Home.' : 'Siku '.$sl->daysLeft().' zimebaki kwenye Home.' }} Ongeza siku au iondoe uweke nyingine.</div>
+  <form method="post" action="{{ route('admin.nahau.carousel.extend', $sl->id) }}" style="display:flex;gap:6px;align-items:center">@csrf<select name="days" style="height:34px"><option value="4">Siku 4</option><option value="7" selected>Siku 7</option><option value="14">Siku 14</option><option value="30">Siku 30</option></select><button class="btn sm" type="submit" data-busy>Ongeza siku</button></form>
+  <form method="post" action="{{ route('admin.nahau.destroy', ['carousel', $sl->id]) }}" onsubmit="return confirm('Kuondoa slide hii?')">@csrf @method('DELETE')<button class="btn sm dng" type="submit">Ondoa</button></form></div>
+@endforeach
 <form class="rangebar rise" method="get" action="{{ route('admin.dashboard') }}"><b style="font-size:13px">Kipindi</b>
   <select name="range" onchange="this.form.submit()">@foreach([7=>'Siku 7 zilizopita',30=>'Siku 30 zilizopita',90=>'Siku 90 zilizopita',365=>'Mwaka 1 uliopita'] as $k=>$v)<option value="{{ $k }}" @selected($range==$k)>{{ $v }}</option>@endforeach</select>
   <span class="sub-t" style="margin:0">{{ $rFrom->format('M j') }} - {{ $rTo->format('M j, Y') }}</span></form>

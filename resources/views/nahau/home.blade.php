@@ -9,23 +9,19 @@
 @section('nx')
 <div class="nx-xs-band">
 <div class="nx-wrap nx-xs-top"><p class="nx-eyebrow" style="color:var(--nx-red-text)">{{ __('Our Stories. Our Voices.') }}</p></div>
-@if($heroes->isNotEmpty())
-<section class="nx-xs-band-in" data-nx-herocar data-interval="6500" role="region" aria-roledescription="carousel" aria-label="{{ __('African Heroes') }}">
+@if($slides->isNotEmpty())
+<section class="nx-xs-band-in" data-nx-herocar data-interval="6500" role="region" aria-roledescription="carousel" aria-label="{{ __('Featured') }}">
     <div class="nx-xs-stage">
-        @foreach($heroes as $h)
-        @php
-            $hs = $heroStories[$h->news_id];
-            $himg = ($h->portrait ? nimage($h->portrait) : null) ?: nimage($hs);
-            $hsum = \Illuminate\Support\Str::limit(strip_tags($h->spotlight_summary ?: ($hs->summary ?? '')), 320);
-        @endphp
-        <article class="nx-xs{{ $loop->first ? ' is-active' : '' }}" style="{{ ['--pc:#232427;--fg:#fff;--fg2:rgba(255,255,255,.88);--bb:#fff;--bf:#232427;--sh:rgba(0,0,0,.35)', '--pc:#F7F3EB;--fg:#232427;--fg2:#4a4a4a;--bb:#232427;--bf:#fff;--sh:transparent', '--pc:#EDEDED;--fg:#232427;--fg2:#4a4a4a;--bb:#232427;--bf:#fff;--sh:transparent'][($loop->iteration - 1) % 3] }}" role="group" aria-roledescription="slide" aria-label="{{ $loop->iteration }} / {{ $heroes->count() }}" @if(! $loop->first) aria-hidden="true" @endif>
+        @foreach($slides as $sl)
+        @php $pal = ['--pc:#232427;--fg:#fff;--fg2:rgba(255,255,255,.88);--bb:#fff;--bf:#232427;--sh:rgba(0,0,0,.35)', '--pc:#F7F3EB;--fg:#232427;--fg2:#4a4a4a;--bb:#232427;--bf:#fff;--sh:transparent', '--pc:#EDEDED;--fg:#232427;--fg2:#4a4a4a;--bb:#232427;--bf:#fff;--sh:transparent', '--pc:#F7F3EB;--fg:#232427;--fg2:#4a4a4a;--bb:#232427;--bf:#fff;--sh:transparent']; @endphp
+        <article class="nx-xs{{ $loop->first ? ' is-active' : '' }}" data-kind="{{ $sl['kind'] }}" style="{{ $pal[($sl['slot'] - 1) % 4] }}" role="group" aria-roledescription="slide" aria-label="{{ $loop->iteration }} / {{ $slides->count() }}" @if(! $loop->first) aria-hidden="true" @endif>
             <div class="nx-xs-panel"></div>
-            <div class="nx-xs-photo">@if($himg)<img loading="lazy" decoding="async" src="{{ $himg }}" alt="{{ $h->name }}" loading="{{ $loop->first ? 'eager' : 'lazy' }}">@endif</div>
+            <div class="nx-xs-photo">@if($sl['img'])<img loading="{{ $loop->first ? 'eager' : 'lazy' }}" decoding="async" src="{{ $sl['img'] }}" alt="{{ $sl['title'] }}">@endif</div>
             <div class="nx-xs-copy">
-                <span class="nx-xs-kicker">{{ __('African Heroes') }}</span>
-                <h2>{{ $h->name }}</h2>
-                <p class="nx-xs-sum">{{ $hsum }}</p>
-                <a class="nx-xs-btn" href="{{ Stories::url($hs) }}" @if(! $loop->first) tabindex="-1" @endif><span>{{ __('Read more') }}</span><i aria-hidden="true"></i></a>
+                <span class="nx-xs-kicker">{{ $sl['kicker'] }}</span>
+                <h2>{{ $sl['title'] }}</h2>
+                <p class="nx-xs-sum">{{ $sl['sum'] }}</p>
+                <a class="nx-xs-btn" href="{{ $sl['url'] }}" @if(! $loop->first) tabindex="-1" @endif><span>{{ $sl['cta'] }}</span><i aria-hidden="true"></i></a>
             </div>
         </article>
         @endforeach

@@ -21,6 +21,11 @@
     ];
     $notes = [];
     foreach ($new as [$res, $rows, $fmt]) { if (!Panel::canRes($res)) continue; foreach ($rows as $r) { [$a, $b] = $fmt($r); $notes[] = [$a, $b, $r->created_at?->diffForHumans(), route('admin.nahau.index', $res)]; } }
+    if (Panel::canRes('carousel')) {
+        foreach (\App\Models\NahauSlide::expiring()->orderBy('ends_at')->get() as $sl) {
+            $notes[] = [$sl->expired() ? 'Slide imeisha' : 'Slide inaisha karibu', $sl->title.' · '.($sl->expired() ? 'imeondoka kwenye Home' : 'siku '.$sl->daysLeft().' zimebaki').'. Ongeza siku au iondoe.', $sl->ends_at?->diffForHumans(), route('admin.nahau.index', 'carousel')];
+        }
+    }
 @endphp
 <!doctype html>
 <html lang="{{ \App\Nahau\AdminLang::current() }}" data-theme="light">

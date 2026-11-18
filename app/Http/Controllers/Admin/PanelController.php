@@ -55,6 +55,7 @@ class PanelController extends Controller
             'languages' => [['Kiswahili', (int) ($languages['sw'] ?? 0)], ['English', (int) ($languages['en'] ?? 0)]],
             'months' => $months, 'top' => $top,
             'pending' => \App\Models\NahauSubmission::where('status', 'new')->latest()->take(5)->get(),
+            'expiring' => \App\Nahau\Panel::canRes('carousel') ? \App\Models\NahauSlide::expiring()->orderBy('ends_at')->get() : collect(),
         ];
 
         $d += $this->analytics($r);

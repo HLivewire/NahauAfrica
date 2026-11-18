@@ -34,6 +34,16 @@ class NahauAdminController extends Controller
                 ['title', 'Title (English)', 'text', 'required|max:160'], ['title_sw', 'Title (Kiswahili)', 'text', 'nullable|max:160'], ['slug', 'Slug (auto if empty)', 'text', 'nullable|alpha_dash'],
                 ['description', 'Description', 'textarea', 'nullable'], ['cover', 'Cover image', 'image', 'nullable|image|max:4096'], ['author_id', 'Author', 'select', 'nullable', $authors],
                 ['rhythm', 'Publishing rhythm', 'text', 'nullable|max:160'], ['featured', 'Featured on Home', 'checkbox', 'nullable'], ['next_chapter_date', 'Next chapter date', 'date', 'nullable|date']]],
+            'carousel' => ['title' => 'Home carousel', 'model' => \App\Models\NahauSlide::class, 'orderBy' => 'slot', 'cols' => ['slot', 'kind', 'title', 'days_left'], 'fields' => [
+                ['slot', 'Slot (order on Home; slot 4 uses the cream Bibi Titi colour)', 'select', 'required|integer|between:1,4', fn () => [1 => 'Slot 1', 2 => 'Slot 2', 3 => 'Slot 3', 4 => 'Slot 4']],
+                ['kind', 'What is this slide?', 'select', 'required|in:hero,book', fn () => ['hero' => 'Hero', 'book' => 'Book'], 'Up to 2 heroes and 2 books in the carousel.'],
+                ['hero_id', 'Hero', 'select', 'nullable|exists:nahau_heroes,id', fn () => \App\Models\NahauHero::orderBy('name')->pluck('name', 'id')->all(), 'Add the hero first under Carousel > Hero profiles.', 'kind=hero'],
+                ['news_id', 'Book (fiction story)', 'select', 'nullable|integer', fn () => $newsIn(['fiction']), null, 'kind=book'],
+                ['kicker', 'Small label above the title (e.g. New book)', 'text', 'nullable|max:60', null, null, 'kind=book'],
+                ['headline', 'Title (leave empty to use the name or book title)', 'text', 'nullable|max:160'],
+                ['summary', 'Summary (max 320)', 'textarea', 'nullable|max:320'],
+                ['image', 'Image (hero portrait or book cover; optional)', 'image', 'nullable|image|max:4096'],
+                ['days', 'Days to show on Home (minimum 4)', 'number', 'required|integer|min:4|max:365', null, 'You get an alert 2 days before it ends, to add days or replace it.']]],
             'heroes' => ['title' => 'Hero profiles', 'model' => \App\Models\NahauHero::class, 'cols' => ['name', 'country', 'show_in_spotlight', 'spotlight_order'], 'fields' => [
                 ['news_id', 'Story (African Heroes news item)', 'select', 'required|integer', fn () => $newsIn(['african-heroes'])], ['name', 'Name', 'text', 'required|max:160'],
                 ['spotlight_summary', 'Summary (shown under the name, max 320)', 'textarea', 'nullable|max:320', null, 'Shown under the name on the hero page and on the Home spotlight.'],
@@ -47,7 +57,7 @@ class NahauAdminController extends Controller
                 ['title', 'Title', 'text', 'required|max:160'], ['type', 'Type (job, internship, training, grant)', 'select', 'required', fn () => config('nahau.opportunity_types')],
                 ['work_mode', 'Work mode', 'select', 'nullable|in:full-time,part-time,remote,hybrid', fn () => \App\Models\NahauOpportunity::WORK_MODES],
                 ['employer', 'Employer or organisation', 'text', 'required|max:160'], ['location', 'Location', 'text', 'required|max:120'],
-                ['terms', 'Pay or duration (e.g. TZS 200,000 a month, 3 months)', 'text', 'required|max:120'],
+                ['terms', 'Pay or duration (optional, e.g. TZS 200,000 a month, 3 months)', 'text', 'nullable|max:120', null, 'Leave empty when the job does not state it. It is then hidden everywhere.'],
                 ['description', 'Short summary shown on the card (max 300)', 'textarea', 'required|max:300'], ['closing_date', 'Closing date', 'date', 'required|date'],
                 ['about', 'About the position', 'textarea', 'nullable|max:5000', null, 'Write it freely. A new line starts a new paragraph.'],
                 ['responsibilities', 'Key responsibilities', 'textarea', 'nullable|max:5000', null, 'One responsibility per line. Each line becomes a bullet.'],
@@ -104,7 +114,7 @@ class NahauAdminController extends Controller
         $q = $d['model']::query();
         $rows = ($res === 'stories'
             ? $q->join('news', 'news.id', '=', 'nahau_story_meta.news_id')->select('nahau_story_meta.*', 'news.title as news_title')->orderByDesc('news.id')
-            : $q->orderByDesc('id'))->paginate(25);
+            : $q->orderBy(...(isset($d['orderBy']) ? [$d['orderBy']] : ['id', 'desc'])))->paginate(25);
 
         return view('nahau-admin.resource', compact('d', 'res', 'rows'));
     }
@@ -164,7 +174,20 @@ class NahauAdminController extends Controller
         foreach ($d['fields'] as $f) {
             $rules[$f[0]] = $f[3];
         }
-        $data = $r->validate($rules);
+        if ($res === 'carousel') {
+            $rules['slot'] = ['required', 'integer', 'between:1,4', \Illuminate\Validation\Rule::unique('nahau_carousel', 'slot')->ignore($row->id)];
+            $rules['hero_id'] = 'required_if:kind,hero|nullable|exists:nahau_heroes,id';
+            $rules['news_id'] = 'required_if:kind,book|nullable|integer';
+        }
+        $data = $r->validate($rules, $res === 'carousel' ? ['slot.unique' => 'This slot is already used. Pick another slot or edit that one.', 'days.min' => 'A slide must stay at least 4 days.', 'hero_id.required_if' => 'Choose the hero.', 'news_id.required_if' => 'Choose the book.'] : []);
+        if ($res === 'carousel') {
+            $same = \App\Models\NahauSlide::where('kind', $data['kind'])->where('id', '!=', $row->id ?? 0)->count();
+            if ($same >= 2) {
+                $msg = 'The carousel already has 2 '.($data['kind'] === 'hero' ? 'heroes' : 'books').'. Remove one first.';
+
+                return $r->expectsJson() ? response()->json(['message' => $msg, 'errors' => ['kind' => [$msg]]], 422) : back()->withInput()->withErrors(['kind' => $msg]);
+            }
+        }
 
         foreach ($d['fields'] as $f) {
             [$name, , $type] = $f;
@@ -210,6 +233,13 @@ class NahauAdminController extends Controller
             $data['reading_minutes'] = nreading(News::find($row->news_id)?->description);
         }
 
+        if ($res === 'carousel') {
+            $data[$data['kind'] === 'hero' ? 'news_id' : 'hero_id'] = null;
+            $start = $row->starts_at ?: now();
+            $data['starts_at'] = $start;
+            $data['ends_at'] = $start->copy()->addDays((int) $data['days']);
+        }
+
         $row->fill($data)->save();
 
         if ($r->expectsJson()) {
@@ -217,6 +247,20 @@ class NahauAdminController extends Controller
         }
 
         return redirect()->route('admin.nahau.index', $res)->with('success', 'Saved.');
+    }
+
+    /** "Add days" from the alert: push the end date out (or restart an expired slide). */
+    public function extendSlide(Request $r, int $id)
+    {
+        abort_unless(\App\Nahau\Panel::canRes('carousel'), 403);
+        $add = max(\App\Models\NahauSlide::MIN_DAYS, min(90, (int) $r->input('days', 7)));
+        $s = \App\Models\NahauSlide::findOrFail($id);
+        $from = $s->ends_at && $s->ends_at->isFuture() ? $s->ends_at : now();
+        $s->ends_at = $from->copy()->addDays($add);
+        $s->days = (int) ceil(($s->starts_at ?? now())->diffInHours($s->ends_at) / 24);
+        $s->save();
+
+        return back()->with('success', 'Siku '.$add.' zimeongezwa.');
     }
 
     /** One-click Visible/Hidden switch from the list table. */

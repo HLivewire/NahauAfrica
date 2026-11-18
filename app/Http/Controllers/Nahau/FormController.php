@@ -108,7 +108,7 @@ class FormController extends Controller
             'organisation' => 'required|string|max:160', 'contact_person' => 'required|string|max:120',
             'email' => 'required|email|max:160', 'phone' => 'required|string|max:40', 'website' => 'nullable|url|max:200',
             'title' => 'required|string|max:160', 'type' => 'required|in:'.implode(',', array_keys(config('nahau.opportunity_types'))),
-            'location' => 'required|string|max:120', 'terms' => 'required|string|max:120', 'description' => 'required|string|max:300',
+            'location' => 'required|string|max:120', 'terms' => 'nullable|string|max:120', 'description' => 'required|string|max:300',
             'apply_link' => ['required', 'string', 'max:300', function ($a, $v, $fail) {
                 if (! filter_var($v, FILTER_VALIDATE_EMAIL) && ! filter_var($v, FILTER_VALIDATE_URL)) {
                     $fail(__('Please enter the employer\'s web address or email.'));

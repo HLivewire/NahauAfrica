@@ -28,11 +28,35 @@ class PageController extends Controller
             return $a;
         });
 
-        $heroes = NahauHero::where('show_in_spotlight', 1)->orderBy('spotlight_order')->limit(8)->get();
-        $heroStories = $heroes->isEmpty() ? collect() : Stories::query()->whereIn('news.id', $heroes->pluck('news_id'))->get()->keyBy('id');
-        $heroes = $heroes->filter(fn ($h) => $heroStories->has($h->news_id))->values();
+        // Home carousel: up to 2 heroes + 2 books, each for a set number of days (App\Models\NahauSlide).
+        $slides = \App\Models\NahauSlide::live()->orderBy('slot')->get()->map(function ($sl) {
+            if ($sl->kind === 'hero') {
+                $h = $sl->hero;
+                $st = $h ? Stories::query()->where('news.id', $h->news_id)->first() : null;
+                if (! $h || ! $st) {
+                    return null;
+                }
+                $img = ($sl->image ? nimage($sl->image) : null) ?: ($h->portrait ? nimage($h->portrait) : null) ?: nimage($st);
+                $kicker = __('African Heroes');
+                $title = $sl->headline ?: $h->name;
+                $sum = $sl->summary ?: ($h->spotlight_summary ?: ($st->summary ?? ''));
+            } else {
+                $st = Stories::query()->where('news.id', $sl->news_id)->first();
+                if (! $st) {
+                    return null;
+                }
+                $img = ($sl->image ? nimage($sl->image) : null) ?: nimage($st);
+                $kicker = $sl->kicker ?: __('Book');
+                $title = $sl->headline ?: $st->title;
+                $sum = $sl->summary ?: ($st->dek ?: ($st->summary ?? ''));
+            }
 
-        return view('nahau.home', compact('featured', 'latest', 'series', 'chapters', 'voices', 'heroes', 'heroStories'));
+            return ['slot' => $sl->slot, 'kind' => $sl->kind, 'kicker' => $kicker, 'title' => $title, 'img' => $img,
+                'sum' => \Illuminate\Support\Str::limit(strip_tags((string) $sum), 320), 'url' => Stories::url($st),
+                'cta' => $sl->kind === 'book' ? __('Read the book') : __('Read more')];
+        })->filter()->values();
+
+        return view('nahau.home', compact('featured', 'latest', 'series', 'chapters', 'voices', 'slides'));
     }
 
     public function write()
