@@ -9,11 +9,11 @@
   var NH = window.NH = window.NH || {};
 
   /* ---------- theme ---------- */
-  $('#themeBtn').onclick = function () {
+  $$('#themeBtn, .js-theme').forEach(function (b) { b.onclick = function () {
     var r = document.documentElement, t = r.getAttribute('data-theme');
     var dark = t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches);
     var n = dark ? 'light' : 'dark'; r.setAttribute('data-theme', n); store('nh_theme', n);
-  };
+  }; });
 
   /* ---------- dropdowns ---------- */
   function closeDD() { $$('.dd.open').forEach(function (d) { d.classList.remove('open'); }); $('#sres').classList.remove('open'); }

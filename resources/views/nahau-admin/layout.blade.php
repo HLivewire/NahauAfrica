@@ -51,8 +51,9 @@
     <div class="sres" id="sres" role="listbox"></div>
   </div>
   <div class="tb-r">
-    <button class="ib theme" id="themeBtn" aria-label="Badilisha mwonekano (giza au mwanga)"><svg class="ic s" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg><svg class="ic m" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
+    <button class="ib theme hide-s" id="themeBtn" aria-label="Badilisha mwonekano (giza au mwanga)"><svg class="ic s" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg><svg class="ic m" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
     @php $lg = \App\Nahau\AdminLang::current(); @endphp
+    <a class="backsite" href="{{ url('/') }}" target="_blank" rel="noopener" title="Tembelea site">{!! Icons::svg('globe', 'sm') !!}<span>Tembelea site</span></a>
     <a class="ib lang" href="{{ route('admin.lang', $lg === 'en' ? 'sw' : 'en') }}" aria-label="Badilisha lugha" title="{{ $lg === 'en' ? 'Kiswahili' : 'English' }}">{!! Icons::svg('globe') !!}<b>{{ strtoupper($lg) }}</b></a>
     <div class="dwrap"><button class="ib" data-dd="ddN" aria-label="Arifa" aria-haspopup="true">{!! Icons::svg('bell') !!}@if(count($notes))<span class="dot"></span>@endif</button>
       <div class="dd dd-n" id="ddN" role="menu">
@@ -75,6 +76,7 @@
         <div class="pm" style="margin-top:8px">
           <button data-modal="{{ route('admin.panel.profile') }}">{!! Icons::svg('user') !!}Wasifu wangu</button>
           <a class="pmx" href="{{ route('admin.dashboard') }}">{!! Icons::svg('home') !!}Dashboard</a>
+          <a class="pmx js-theme only-s" href="#" role="button">{!! Icons::svg('sun') !!}Badilisha mwonekano</a>
           <button data-modal="{{ route('admin.panel.password') }}">{!! Icons::svg('shield') !!}Usalama na nenosiri</button>
           @if(Panel::isAdmin())<hr><button data-modal="{{ route('admin.panel.users.create') }}">{!! Icons::svg('userplus') !!}Alika Administrator mwingine</button>@endif
         </div>

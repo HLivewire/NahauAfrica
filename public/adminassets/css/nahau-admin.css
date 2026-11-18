@@ -368,3 +368,21 @@ a.nrow2{text-decoration:none}a.nrow2:hover b{color:var(--pri)}
 .backsite:hover{filter:brightness(.92);color:#fff}.backsite .ic{stroke:#fff}
 .side .backlink{margin:8px 10px 0;border:1px solid var(--bd);border-radius:8px;font-weight:700;width:auto}
 @media (max-width:900px){.backsite span{display:none}.backsite{width:34px;padding:0;justify-content:center}}
+
+/* mobile topbar + page-head actions */
+.only-s{display:none!important}
+.pha{display:flex;gap:8px;flex-wrap:wrap}
+.pha .btn,.ph>.btn{justify-content:center}
+@media (max-width:640px){
+  .hide-s{display:none!important}.only-s{display:flex!important}
+  .tb-r{gap:4px}.lsw{margin-right:0}.lsw a{padding:5px 8px;font-size:10.5px}
+  .backsite{margin-right:0}.logo img{height:26px}
+  .ph .sp{display:none}.ph{align-items:stretch}
+  .pha{width:100%;flex-direction:column}.pha .btn,.ph>.btn{width:100%;height:42px}
+}
+@media (max-width:640px){
+  .tb-l{padding-right:6px;gap:2px}.burger{width:32px}.logo img{height:22px}
+  .tb-r{padding-right:max(10px,env(safe-area-inset-right,0px))}
+  .tb .ib{width:32px;height:32px}.tb .backsite{width:32px;height:32px}
+  a.ib.lang{width:32px}
+}

@@ -61,8 +61,8 @@
     <div class="sres" id="sres" role="listbox"></div>
   </div>
   <div class="tb-r">
-    <button class="ib theme" id="themeBtn" aria-label="Badilisha mwonekano (giza au mwanga)"><svg class="ic s" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg><svg class="ic m" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
-    <a class="backsite" href="{{ nroute('home', [], $lg) }}" title="Rudi kwenye site">{!! Icons::svg('globe', 'sm') !!}<span>Rudi kwenye site</span></a>
+    <button class="ib theme hide-s" id="themeBtn" aria-label="Badilisha mwonekano (giza au mwanga)"><svg class="ic s" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg><svg class="ic m" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
+    <a class="backsite hide-s" href="{{ nroute('home', [], $lg) }}" title="Rudi kwenye site">{!! Icons::svg('globe', 'sm') !!}<span>Rudi kwenye site</span></a>
     <div class="lsw" role="group" aria-label="Lugha"><a href="{{ route('account.lang', 'sw') }}" class="{{ $lg === 'sw' ? 'on' : '' }}" aria-current="{{ $lg === 'sw' ? 'true' : 'false' }}">SWH</a><a href="{{ route('account.lang', 'en') }}" class="{{ $lg === 'en' ? 'on' : '' }}" aria-current="{{ $lg === 'en' ? 'true' : 'false' }}">ENG</a></div>
     <div class="dwrap"><button class="ib" data-dd="ddN" aria-label="Arifa" aria-haspopup="true">{!! Icons::svg('bell') !!}@if($unreadN)<span class="dot"></span>@endif</button>
       <div class="dd dd-n" id="ddN" role="menu">
@@ -84,6 +84,8 @@
           <a class="pmx" href="{{ route('account.profile') }}">{!! Icons::svg('user') !!}Wasifu wangu</a>
           <a class="pmx" href="{{ route('account.dashboard') }}">{!! Icons::svg('home') !!}Dashboard</a>
           <a class="pmx" href="{{ route('account.mine') }}">{!! Icons::svg('file') !!}Hadithi zangu</a>
+          <a class="pmx only-s" href="{{ nroute('home', [], $lg) }}">{!! Icons::svg('globe') !!}Rudi kwenye site</a>
+          <a class="pmx js-theme only-s" href="#" role="button">{!! Icons::svg('sun') !!}Badilisha mwonekano</a>
         </div>
         <a class="so" href="{{ route('logout') }}" data-busy>{!! Icons::svg('logout', 'sm') !!}Toka</a>
         <div class="pf">NahauAfrica · Our Stories. Our Voices.</div>

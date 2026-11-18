@@ -3,8 +3,8 @@
 @section('content')
 @php use App\Nahau\Icons; $lg = \App\Nahau\AdminLang::current(); @endphp
 <div class="ph rise"><div><h2>Habari, {{ $u->first_name ?: 'karibu' }}</h2><p>Hapa ndipo unapoona ulichosoma, ulichohifadhi na hali ya hadithi ulizotuma.</p></div><div class="sp"></div>
-  <a class="btn" href="{{ nroute('write') }}">{!! Icons::svg('send') !!}Tuma hadithi</a>
-  <a class="btn sec" href="{{ nroute('home') }}">{!! Icons::svg('book') !!}Soma kitu kipya</a></div>
+  <div class="pha"><a class="btn" href="{{ nroute('write') }}">{!! Icons::svg('send') !!}Tuma hadithi</a>
+  <a class="btn sec" href="{{ nroute('home') }}">{!! Icons::svg('book') !!}Soma kitu kipya</a></div></div>
 
 <div class="chips rise" style="margin:0">
   @foreach([['file','pri-soft','pri',$newStories,'Hadithi mpya wiki hii',route('account.history')],['bookmark','org-bg','org',$later,'Za kusoma baadaye',route('account.later')],['bell','cy-bg','cy',$unread,'Arifa mpya',route('account.notifications')],['send','grn-bg','grn',$subsOpen,'Hadithi zangu zinazopitiwa',route('account.mine')]] as [$ic,$bg,$fg,$n,$l,$href])

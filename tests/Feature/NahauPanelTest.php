@@ -41,6 +41,12 @@ class NahauPanelTest extends TestCase
         $this->get(route('admin.dashboard', ['range' => 7]))->assertOk();
     }
 
+    public function test_admin_topbar_has_visit_site_button(): void
+    {
+        $this->actingAs($this->userWith('admin'));
+        $this->get(route('admin.dashboard'))->assertOk()->assertSee('Tembelea site')->assertSee('class="backsite"', false);
+    }
+
     public function test_section_editor_can_manage_authors_but_not_heroes(): void
     {
         $this->actingAs($this->userWith('section-editor'));

@@ -133,7 +133,7 @@ class AdminLang
         'Tafuta ukurasa au kazi…' => 'Search a page or task…', 'Tafuta' => 'Search', 'Badilisha mwonekano (giza au mwanga)' => 'Switch light or dark mode',
         'Badilisha lugha' => 'Change language', 'Arifa' => 'Notifications', 'Hakuna arifa mpya' => 'No new notifications', 'Fungua Inbox' => 'Open Inbox',
         'Njia za mkato' => 'Shortcuts', 'Hadithi mpya' => 'New story', 'Fursa mpya' => 'New opportunity', 'Mwandishi' => 'Author',
-        'Alika mtumiaji' => 'Invite user', 'Nenosiri' => 'Password', 'Tazama site' => 'View site', 'Akaunti yangu' => 'My account',
+        'Alika mtumiaji' => 'Invite user', 'Nenosiri' => 'Password', 'Tazama site' => 'View site', 'Tembelea site' => 'Visit site', 'Badilisha mwonekano' => 'Switch theme', 'Akaunti yangu' => 'My account',
         'Wasifu wangu' => 'My profile', 'Usalama na nenosiri' => 'Security and password', 'Alika Administrator mwingine' => 'Invite another Administrator',
         'Toka' => 'Sign out', 'Tafadhali badilisha nenosiri lako la mwanzo sasa hivi.' => 'Please change your first password now.',
         'Badilisha nenosiri' => 'Change password', 'Kwa usalama, weka nenosiri jipya kabla ya kuendelea.' => 'For your safety, set a new password before continuing.',
