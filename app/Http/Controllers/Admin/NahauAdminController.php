@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\News;
 use App\Models\NahauStoryMeta;
+use App\Nahau\HeroStories;
 use App\Nahau\Stories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -37,7 +38,7 @@ class NahauAdminController extends Controller
             'carousel' => ['title' => 'Home carousel', 'model' => \App\Models\NahauSlide::class, 'orderBy' => 'slot', 'cols' => ['slot', 'kind', 'title', 'days_left', 'active'], 'fields' => [
                 ['slot', 'Slot (order on Home)', 'select', 'required|integer|between:1,4', fn () => [1 => 'Slot 1', 2 => 'Slot 2', 3 => 'Slot 3', 4 => 'Slot 4']],
                 ['kind', 'What is this slide?', 'select', 'required|in:hero,book', fn () => ['hero' => 'Hero', 'book' => 'Book'], 'Up to 2 heroes and 2 books in the carousel.'],
-                ['hero_id', 'Hero', 'select', 'nullable|exists:nahau_heroes,id', fn () => \App\Models\NahauHero::orderBy('name')->pluck('name', 'id')->all(), 'Add the hero first under Carousel > Hero profiles.', 'kind=hero'],
+                ['hero_id', 'Hero', 'select', 'nullable|exists:nahau_heroes,id', fn () => \App\Models\NahauHero::orderBy('name')->get()->mapWithKeys(fn ($h) => [$h->id => $h->name.($h->active ? '' : ' (inactive)')])->all(), 'Every hero from Hero profiles is listed. Add new ones under Carousel > Hero profiles.', 'kind=hero'],
                 ['news_id', 'Book (fiction story)', 'select', 'nullable|integer', fn () => $newsIn(['fiction']), null, 'kind=book'],
                 ['kicker', 'Small label above the title (e.g. New book)', 'text', 'nullable|max:60', null, null, 'kind=book'],
                 ['headline', 'Title (leave empty to use the name or book title)', 'text', 'nullable|max:160'],
@@ -45,11 +46,12 @@ class NahauAdminController extends Controller
                 ['color', 'Background colour', 'swatch', 'nullable|in:dark,cream,gray', fn () => \App\Models\NahauSlide::COLORS],
                 ['image', 'Image (hero portrait or book cover; optional)', 'image', 'nullable|image|max:4096'],
                 ['days', 'Days to show on Home (minimum 4)', 'number', 'required|integer|min:4|max:365', null, 'You get an alert 2 days before it ends, to add days or replace it.']]],
-            'heroes' => ['title' => 'Hero profiles', 'model' => \App\Models\NahauHero::class, 'cols' => ['name', 'country', 'show_in_spotlight', 'spotlight_order'], 'fields' => [
-                ['news_id', 'Story (African Heroes news item)', 'select', 'required|integer', fn () => $newsIn(['african-heroes'])], ['name', 'Name', 'text', 'required|max:160'],
-                ['spotlight_summary', 'Summary (shown under the name, max 320)', 'textarea', 'nullable|max:320', null, 'Shown under the name on the hero page and on the Home spotlight.'],
-                ['born', 'Born', 'text', 'nullable|max:40'], ['died', 'Died', 'text', 'nullable|max:40'], ['country', 'Country', 'text', 'nullable|max:80'],
-                ['spotlight_order', 'Spotlight order', 'number', 'nullable|integer'],
+            'heroes' => ['title' => 'Hero profiles', 'model' => \App\Models\NahauHero::class, 'cols' => ['name', 'country', 'language', 'active'], 'fields' => [
+                ['name', 'Name', 'text', 'required|max:160'], ['language', 'Story language', 'select', 'required|in:en,sw', fn () => ['en' => 'English', 'sw' => 'Kiswahili']],
+                ['country', 'Country', 'text', 'nullable|max:80'], ['born', 'Born', 'text', 'nullable|max:40'], ['died', 'Died', 'text', 'nullable|max:40'],
+                ['spotlight_summary', 'Summary (shown under the name, max 320)', 'textarea', 'nullable|max:320', null, 'Shown under the name on the hero page and on the Home carousel.'],
+                ['story_text', 'Story (write it here)', 'textarea', 'nullable|max:200000', null, 'Write the story here, or upload a PDF below. A blank line starts a new paragraph.'],
+                ['story_pdf', 'Or upload the story as a PDF', 'file', 'nullable|file|mimes:pdf|max:20480', null, 'Optional. Readers see the PDF on the hero page.'],
                 ['portrait', 'Portrait', 'image', 'nullable|image|max:4096'], ['portrait_credit', 'Portrait credit and licence', 'text', 'nullable|max:200'], ['sources', 'Sources (one per line: title | URL)', 'textarea', 'nullable']]],
             'opportunities' => ['title' => 'Opportunities', 'model' => \App\Models\NahauOpportunity::class, 'cols' => ['title', 'type', 'employer', 'closing_date', 'status'],
                 'tabs' => ['Msingi' => ['title', 'type', 'work_mode', 'employer', 'location', 'terms', 'description', 'closing_date'], 'Maelezo ya kazi' => ['about', 'responsibilities', 'qualifications', 'benefits'],
@@ -125,6 +127,9 @@ class NahauAdminController extends Controller
         $d = $this->def($res);
         abort_unless($d['create'], 404);
         $row = new $d['model'];
+        if ($res === 'heroes') {
+            $row->language = 'en';
+        }
         if ($res === 'carousel') {
             $row->active = 1;
             $row->color = 'dark';
@@ -197,7 +202,9 @@ class NahauAdminController extends Controller
 
         foreach ($d['fields'] as $f) {
             [$name, , $type] = $f;
-            if ($type === 'checkbox' || $type === 'radio') {
+            if ($type === 'file') {
+                unset($data[$name]);
+            } elseif ($type === 'checkbox' || $type === 'radio') {
                 $data[$name] = $r->boolean($name);
             } elseif ($type === 'image') {
                 unset($data[$name]);
@@ -207,6 +214,10 @@ class NahauAdminController extends Controller
             } elseif (($data[$name] ?? null) === '') {
                 $data[$name] = null;
             }
+        }
+
+        if ($res === 'heroes') {
+            return $this->saveHero($r, $row, $data);
         }
 
         foreach (['home_order', 'spotlight_order', 'sort'] as $k) {   // ordering columns are NOT NULL
@@ -279,7 +290,13 @@ class NahauAdminController extends Controller
         abort_unless(in_array($field, $d['cols'], true), 404);
         $row = $d['model']::findOrFail($id);
         $row->{$field} = $r->boolean('value') ? 1 : 0;
+        if ($res === 'heroes' && $field === 'active' && $row->active && ! HeroStories::hasStory($row)) {
+            return response()->json(['message' => 'Add the story first (text or PDF), then switch the hero on.'], 422);
+        }
         $row->save();
+        if ($res === 'heroes') {
+            HeroStories::sync($row);
+        }
 
         return response()->json(['message' => $row->{$field} ? 'Inaonekana' : 'Imefichwa', 'value' => (int) $row->{$field}]);
     }
@@ -288,12 +305,108 @@ class NahauAdminController extends Controller
     {
         $d = $this->def($res);
         abort_if($res === 'stories', 404);
-        $d['model']::findOrFail($id)->delete();
+        $gone = $d['model']::findOrFail($id);
+        if ($res === 'heroes') {
+            $gone->active = false;
+            HeroStories::sync($gone);   // the story is hidden, not lost
+        }
+        $gone->delete();
 
         if ($r->expectsJson()) {
             return response()->json(['message' => 'Imefutwa']);
         }
 
         return redirect()->route('admin.nahau.index', $res)->with('success', 'Deleted.');
+    }
+
+    protected function saveHero(Request $r, $row, array $data)
+    {
+        $text = $r->input('story_text');
+        $pdf = $r->file('story_pdf');
+        if (! $row->exists && trim((string) $text) === '' && ! $pdf) {
+            $msg = 'Write the story or upload a PDF.';
+
+            return $r->expectsJson() ? response()->json(['message' => $msg, 'errors' => ['story_text' => [$msg]]], 422) : back()->withInput()->withErrors(['story_text' => $msg]);
+        }
+        unset($data['story_text'], $data['story_pdf']);
+        if (! $row->exists) {
+            $data['active'] = false;   // hidden until previewed and switched on from the table
+        }
+        HeroStories::save($row, $data, $text, $pdf);
+
+        return $r->expectsJson() ? response()->json(['message' => 'Imehifadhiwa']) : redirect()->route('admin.nahau.index', 'heroes')->with('success', 'Saved.');
+    }
+
+    /** Preview a hero exactly as readers will see it, even while it is inactive. */
+    public function heroPreview(int $id)
+    {
+        abort_unless(\App\Nahau\Panel::canRes('heroes'), 403);
+        $hero = \App\Models\NahauHero::findOrFail($id);
+        $story = Stories::query(false)->where('news.id', $hero->news_id)->first();
+        abort_unless($story, 404);
+        $key = 'african-heroes';
+        $cfg = config('nahau.sections')[$key];
+        $translation = $author = $nav = null;
+        $related = collect();
+        $corrections = collect();
+        $preview = true;
+
+        return view('nahau.hero', compact('story', 'key', 'cfg', 'translation', 'related', 'author', 'hero', 'nav', 'corrections', 'preview'));
+    }
+
+    public function heroActivate(Request $r, int $id)
+    {
+        abort_unless(\App\Nahau\Panel::canRes('heroes'), 403);
+        $hero = \App\Models\NahauHero::findOrFail($id);
+        $on = $r->boolean('on');
+        if ($on && ! HeroStories::hasStory($hero)) {
+            return back()->with('error', 'Add the story first (text or PDF).');
+        }
+        $hero->active = $on;
+        $hero->save();
+        HeroStories::sync($hero);
+
+        return redirect()->route('admin.nahau.index', 'heroes')->with('success', $on ? 'Hero is now visible.' : 'Hero is hidden.');
+    }
+
+    /** A reader's submission, shown in full so the editor can read it before deciding. */
+    public function submissionPreview(int $id)
+    {
+        abort_unless(\App\Nahau\Panel::canRes('submissions'), 403);
+        $s = \App\Models\NahauSubmission::findOrFail($id);
+
+        return view('nahau-admin.page', ['partial' => 'nahau-admin.submission-preview', 'data' => ['s' => $s], 'title' => 'Submission '.$s->reference]);
+    }
+
+    public function submissionFile(int $id)
+    {
+        abort_unless(\App\Nahau\Panel::canRes('submissions'), 403);
+        $s = \App\Models\NahauSubmission::findOrFail($id);
+        abort_unless($s->file_path && \Illuminate\Support\Facades\Storage::exists($s->file_path), 404);
+
+        return \Illuminate\Support\Facades\Storage::response($s->file_path, basename($s->file_path), [], 'inline');
+    }
+
+    /** Publish (hero stories only) or reject a reader's submission. */
+    public function submissionDecide(Request $r, int $id)
+    {
+        abort_unless(\App\Nahau\Panel::canRes('submissions'), 403);
+        $s = \App\Models\NahauSubmission::findOrFail($id);
+        $in = $r->validate(['action' => 'required|in:publish,reject', 'note' => 'nullable|string|max:1000']);
+        $note = trim((string) ($in['note'] ?? '')) ?: null;
+
+        if ($in['action'] === 'reject') {
+            $s->update(['status' => 'declined', 'notes' => $note ?: $s->notes, 'decided_at' => now()]);
+
+            return redirect()->route('admin.nahau.index', 'submissions')->with('success', 'Submission rejected. The reader sees it on their dashboard.');
+        }
+        abort_unless($s->section === 'african-heroes' && \App\Nahau\Panel::canRes('heroes'), 403);
+        if ($s->hero_id) {
+            return back()->with('error', 'This story is already published.');
+        }
+        [$hero, $live] = HeroStories::fromSubmission($s);
+        $s->update(['status' => 'accepted', 'hero_id' => $hero->id, 'notes' => $note ?: $s->notes, 'decided_at' => now()]);
+
+        return redirect()->route('admin.nahau.index', 'heroes')->with('success', $live ? 'Published. The hero is now visible.' : 'Saved as a hidden draft: the file is a Word document, paste the text into the hero and switch it on.');
     }
 }

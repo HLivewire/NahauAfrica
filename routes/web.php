@@ -144,6 +144,11 @@ Route::prefix('admin')->middleware(['auth', 'adminlang'])->name('admin.')->group
         Route::put('{res}/{id}','update')->whereNumber('id')->name('update');
         Route::patch('{res}/{id}/toggle/{field}','toggle')->whereNumber('id')->name('toggle');
         Route::post('carousel/{id}/extend','extendSlide')->whereNumber('id')->name('carousel.extend');
+        Route::get('heroes/{id}/preview','heroPreview')->whereNumber('id')->name('hero.preview');
+        Route::post('heroes/{id}/activate','heroActivate')->whereNumber('id')->name('hero.activate');
+        Route::get('submissions/{id}/preview','submissionPreview')->whereNumber('id')->name('submission.preview');
+        Route::get('submissions/{id}/file','submissionFile')->whereNumber('id')->name('submission.file');
+        Route::post('submissions/{id}/decide','submissionDecide')->whereNumber('id')->name('submission.decide');
         Route::delete('{res}/{id}','destroy')->whereNumber('id')->name('destroy');
     });
     Route::group(['middleware'=>['role:super-admin']],function (){
@@ -363,6 +368,8 @@ Route::prefix('maanuser')->name('maanuser.')->group(function (){
 Route::prefix('account')->name('account.')->middleware(['auth:maanuser','adminlang'])->controller(\App\Http\Controllers\Nahau\AccountController::class)->group(function (){
     Route::get('/','dashboard')->name('dashboard');
     Route::get('lang/{lang}','lang')->whereIn('lang',['sw','en'])->name('lang');
+    Route::get('my-stories/{id}','submission')->whereNumber('id')->name('submission');
+    Route::get('my-stories/{id}/file','submissionFile')->whereNumber('id')->name('submission.file');
     Route::get('favourites','favourites')->name('favourites');
     Route::delete('favourites/{news}','favToggle')->whereNumber('news')->name('favourites.remove');
     Route::get('read-later','later')->name('later');

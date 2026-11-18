@@ -10,6 +10,7 @@
   @endif
   @if($res==='opportunities')<div class="alert-soft">Fursa haichapishwi hadi <b>Verified by</b> na <b>Verified on</b> zijazwe. @if($edit)Ripoti za tangazo hili: {{ $row->reports()->count() }}.@endif</div>@endif
   @if($res==='carousel')<div class="alert-soft">Chagua Hero au Book; sehemu zinazohusika zitatokea. Muda ni siku 4 au zaidi; siku 2 kabla ya kuisha utapata arifa.</div>@endif
+  @if($res==='heroes')<div class="alert-soft">Andika hadithi kwenye kisanduku, au pakia PDF. Baada ya kuhifadhi, bofya Preview kuona jinsi itakavyoonekana, kisha iwashe (Active) kwenye jedwali.</div>@endif
   @if($res==='stories')<p class="note">Hadithi: <b>{{ \App\Models\News::find($row->news_id)?->title }}</b></p>@endif
   @php
     $tabs = $d['tabs'] ?? null; $byName = collect($d['fields'])->keyBy(0);
@@ -35,6 +36,7 @@
         <label for="f-{{ $name }}">{{ $label }}</label>
         @if($type==='textarea')<textarea id="f-{{ $name }}" name="{{ $name }}" rows="{{ in_array($name,$tall) ? 7 : 4 }}">{{ $val }}</textarea>
         @elseif($type==='select')<select id="f-{{ $name }}" name="{{ $name }}"><option value="">—</option>@foreach(($f[4])() as $k=>$v)<option value="{{ $k }}" @selected((string)$val === (string)$k)>{{ $v }}</option>@endforeach</select>
+        @elseif($type==='file')<input type="file" id="f-{{ $name }}" name="{{ $name }}" accept="application/pdf">@if($val)<small>Faili la sasa: <b>PDF imepakiwa</b>. Chagua jipya ili kulibadilisha.</small>@endif
         @elseif($type==='image')<input type="file" id="f-{{ $name }}" name="{{ $name }}" accept="image/*" data-preview="pv-{{ $name }}"><img class="prev" id="pv-{{ $name }}" src="{{ $val ? media_url($val) : '' }}" alt="" style="{{ $val ? '' : 'display:none' }}">
         @else<input id="f-{{ $name }}" name="{{ $name }}" type="{{ $type==='number'?'number':($type==='date'?'date':'text') }}" value="{{ $type==='date' && $val ? \Illuminate\Support\Carbon::parse($val)->toDateString() : $val }}">
         @endif
@@ -49,6 +51,9 @@
   @endforeach
 </div>
 <div class="mf">
+  @if($res==='heroes' && $edit)<a class="btn soft" target="_blank" rel="noopener" href="{{ route('admin.nahau.hero.preview', $row->id) }}">{!! Icons::svg('eye','sm') !!}Preview</a>@endif
+  @if($res==='submissions' && $edit)<a class="btn soft" target="_blank" rel="noopener" href="{{ route('admin.nahau.submission.preview', $row->id) }}">{!! Icons::svg('eye','sm') !!}Preview na uamuzi</a>@endif
+  @if($res==='heroes' && !$edit)<div class="alert-soft" style="margin-right:auto">Hero mpya haionekani hadi uikague (Preview) kisha uiwashe kwenye jedwali.</div>@endif
   @if($res==='opportunity-submissions' && $edit)<button type="button" class="btn sec" data-modal="{{ route('admin.nahau.create','opportunities') }}?from={{ $row->id }}">Tengeneza fursa kutoka kwa hii</button>@endif
   <div class="sp"></div><button type="button" class="btn sec" data-close>Funga</button>
   @if(count($d['fields']))<button class="btn" type="submit">Hifadhi</button>@endif

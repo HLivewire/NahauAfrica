@@ -39,12 +39,12 @@ class AuditActivityTest extends TestCase
     {
         $admin = $this->staff('admin');
         $this->actingAs($admin);
-        $h = \App\Models\NahauHero::create(['news_id' => \DB::table('news')->value('id'), 'name' => 'Audit Hero', 'show_in_spotlight' => 1, 'spotlight_order' => 0]);
-        $this->patchJson('/admin/nahau/heroes/'.$h->id.'/toggle/show_in_spotlight', ['value' => 0])->assertOk();
+        $h = \App\Models\NahauHero::create(['news_id' => \DB::table('news')->value('id'), 'name' => 'Audit Hero', 'active' => 1, 'spotlight_order' => 0]);
+        $this->patchJson('/admin/nahau/heroes/'.$h->id.'/toggle/active', ['value' => 0])->assertOk();
         $log = ActivityLog::where('action', 'updated')->where('subject_type', 'Hero')->latest('id')->first();
         $this->assertNotNull($log);
         $this->assertEquals($admin->id, $log->user_id);
-        $this->assertEquals(['1', '0'], array_map('strval', $log->changes['show_in_spotlight']));
+        $this->assertEquals(['1', '0'], array_map('strval', $log->changes['active']));
 
         $admin->forceFill(['password' => Hash::make('NewPassw0rd!y')])->save();
         $pw = ActivityLog::where('action', 'password_change')->latest('id')->first();

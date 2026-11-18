@@ -49,6 +49,10 @@
     </div>
     @endif
     <div class="nx-body" data-nx-body>{!! nclean($story->description) !!}</div>
+    @if(!empty($hero) && $hero->story_pdf)
+    <div class="nx-pdf" style="margin:24px 0"><object data="{{ route('hero.pdf', $hero->id) }}" type="application/pdf" style="width:100%;height:80vh;border:1px solid #ddd"></object>
+        <p style="margin-top:10px"><a class="nx-btn" href="{{ route('hero.pdf', $hero->id) }}" target="_blank" rel="noopener">{{ __('Open the PDF') }}</a></p></div>
+    @endif
     @if(!empty($hero) && $hero->sources)
     <div class="nx-sources"><h2 style="font-family:'Jost',sans-serif;font-size:20px;margin-bottom:10px">{{ __('Sources') }}</h2><ul>
         @foreach(preg_split('/\R/', $hero->sources) as $line)@if(trim($line))@php [$st,$su] = array_pad(array_map('trim', explode('|', $line, 2)), 2, null); @endphp<li>@if($su)<a href="{{ $su }}" rel="noopener nofollow" target="_blank" style="text-decoration:underline">{{ $st }}</a>@else{{ $st }}@endif</li>@endif @endforeach

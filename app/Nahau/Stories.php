@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
  */
 class Stories
 {
-    public static function query()
+    public static function query(bool $publishedOnly = true)
     {
         return News::query()
             ->join('newssubcategories', 'news.subcategory_id', '=', 'newssubcategories.id')
@@ -21,7 +21,7 @@ class Stories
             ->leftJoin('nahau_story_meta as m', 'm.news_id', '=', 'news.id')
             ->leftJoin('nahau_authors as a', 'a.id', '=', 'm.author_id')
             ->leftJoin('users as u', 'u.id', '=', 'news.reporter_id')
-            ->where('news.status', 1)
+            ->when($publishedOnly, fn ($q) => $q->where('news.status', 1))
             ->whereIn('newscategories.slug', array_keys(config('nahau.sections')))
             ->select([
                 'news.id', 'news.title', 'news.summary', 'news.description', 'news.image', 'news.date', 'news.tags',

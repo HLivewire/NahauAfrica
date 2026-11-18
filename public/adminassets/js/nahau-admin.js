@@ -145,6 +145,7 @@
   }
 
   /* ---------- flash + forced password change ---------- */
+  if (NH.err) sw({ icon: 'error', title: NH.err, confirmButtonText: 'OK' });
   if (NH.flash) sw({ icon: 'success', title: NH.flash, timer: 2000, showConfirmButton: false, timerProgressBar: true });
   if (NH.forcePw) setTimeout(function () { openModal(NH.pwUrl); }, 400);
 

@@ -159,6 +159,26 @@ class AccountController extends Controller
         return view('nahau-account.mine', ['subs' => $subs]);
     }
 
+    /** The reader's own submission: preview, status and the editor's note. */
+    public function submission(int $id)
+    {
+        $s = NahauSubmission::where('id', $id)->where('email', $this->me()->email)->firstOrFail();
+        $live = null;
+        if ($s->hero_id && ($h = \App\Models\NahauHero::find($s->hero_id)) && ($st = Stories::query()->where('news.id', $h->news_id)->first())) {
+            $live = Stories::url($st);
+        }
+
+        return view('nahau-account.submission', ['s' => $s, 'live' => $live]);
+    }
+
+    public function submissionFile(int $id)
+    {
+        $s = NahauSubmission::where('id', $id)->where('email', $this->me()->email)->firstOrFail();
+        abort_unless($s->file_path && \Illuminate\Support\Facades\Storage::exists($s->file_path), 404);
+
+        return \Illuminate\Support\Facades\Storage::response($s->file_path, basename($s->file_path), [], 'inline');
+    }
+
     public function notifications()
     {
         $all = ReaderNotes::for($this->me(), 200);

@@ -25,6 +25,8 @@
       @else{{ Str::limit((string) $v, 60) }}@endif</td>
   @endforeach
   <td><div class="act">
+    @if($res==='heroes')<a class="btn sm soft" target="_blank" rel="noopener" href="{{ route('admin.nahau.hero.preview', $r->id) }}">{!! Icons::svg('eye','sm') !!}Preview</a>@endif
+    @if($res==='submissions')<a class="btn sm soft" target="_blank" rel="noopener" href="{{ route('admin.nahau.submission.preview', $r->id) }}">{!! Icons::svg('eye','sm') !!}Preview</a>@endif
     @if($d['edit'])<button class="btn sm {{ $d['create'] ? 'sec' : 'soft' }}" data-modal="{{ route('admin.nahau.edit', [$res, $r->id]) }}">{!! Icons::svg($d['create'] ? 'edit' : 'eye','sm') !!}{{ $d['create'] ? 'Hariri' : 'Fungua' }}</button>@endif
     @if($res!=='stories' && ($d['edit'] !== false || $res==='subscribers'))<button class="btn sm dng ico" aria-label="Futa" data-del="{{ route('admin.nahau.destroy', [$res, $r->id]) }}" data-name="{{ Str::limit((string) ($r->title ?? $r->name ?? $r->email ?? '#'.$r->id), 40) }}">{!! Icons::svg('trash','sm') !!}</button>@endif
   </div></td></tr>

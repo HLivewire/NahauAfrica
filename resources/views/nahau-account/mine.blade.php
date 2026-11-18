@@ -14,6 +14,7 @@
   @php $n = $step[$s->status] ?? 1; @endphp
   <div class="steps2"><div class="d">Imetumwa</div><div class="{{ $n >= 2 ? 'd' : '' }}">Inapitiwa</div><div class="{{ $n >= 3 ? 'd' : '' }}">{{ $s->status === 'declined' ? 'Haijakubaliwa' : 'Imekubaliwa' }}</div></div>
   @if($s->notes && in_array($s->status, ['revisions', 'declined', 'accepted'], true))<div class="sub-t" style="margin-top:8px"><b>Maelezo ya mhariri:</b> {{ $s->notes }}</div>@endif
+  <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn sm soft" href="{{ route('account.submission', $s->id) }}">Angalia ulichotuma</a></div>
   @if($s->status === 'revisions')<a class="btn sm sec" style="margin-top:10px" href="{{ nroute('write') }}">Tuma toleo jipya</a>@endif
 </div>
 @empty

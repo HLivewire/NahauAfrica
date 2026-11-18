@@ -6,6 +6,7 @@ use App\Http\Controllers\Nahau\SearchController;
 use App\Http\Controllers\Nahau\SectionController;
 use App\Http\Controllers\Nahau\StoryController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 /*
 | NahauAfrica public site (English at "/", Kiswahili under "/sw").
@@ -75,4 +76,11 @@ Route::post('/favorites/{news}', [\App\Http\Controllers\Nahau\FavoriteController
 Route::get('/favourites', [\App\Http\Controllers\Nahau\FavoriteController::class, 'index'])->name('nahau.favorites');
 
 // Reading list (read later) for signed-in readers
+// Hero story PDF: public only while the hero is active (staff can always open it, for the preview)
+Route::get('/hero-pdf/{id}', function (int $id) {
+    $h = \App\Models\NahauHero::findOrFail($id);
+    abort_unless($h->story_pdf && \Illuminate\Support\Facades\Storage::exists($h->story_pdf) && ($h->active || auth('web')->check()), 404);
+
+    return \Illuminate\Support\Facades\Storage::response($h->story_pdf, Str::slug($h->name).'.pdf', [], 'inline');
+})->whereNumber('id')->name('hero.pdf');
 Route::post('/read-later/{news}', [\App\Http\Controllers\Nahau\AccountController::class, 'laterToggle'])->whereNumber('news')->middleware('throttle:60,1')->name('nahau.later');

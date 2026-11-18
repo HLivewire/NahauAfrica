@@ -15,7 +15,7 @@
         if ($m && strlen($f[1]) > $bestLen) { $best = $f[2]; $bestLen = strlen($f[1]); }
     }
     $new = [
-        ['submissions', \App\Models\NahauSubmission::where('status', 'new')->latest()->take(3)->get(), fn ($r) => [$r->name, 'Ametuma hadithi "'.$r->title.'"']],
+        ['submissions', \App\Models\NahauSubmission::where('status', 'new')->latest()->take(4)->get(), fn ($r) => $r->section === 'african-heroes' ? [(\App\Nahau\AdminLang::current() === 'en' ? 'Hero story · ' : 'Hero story · ').$r->name, (\App\Nahau\AdminLang::current() === 'en' ? 'sent the hero story "'.$r->title.'". Preview it, then reject or publish.' : 'ametuma hero story "'.$r->title.'". Ikague, kisha ikatae au uichapishe.')] : [$r->name, 'Ametuma hadithi "'.$r->title.'"']],
         ['messages', \App\Models\NahauMessage::where('status', 'new')->latest()->take(3)->get(), fn ($r) => [$r->name, 'Ujumbe: '.\Illuminate\Support\Str::limit($r->message, 60)]],
         ['opportunity-submissions', \App\Models\NahauOpportunitySubmission::where('status', 'new')->latest()->take(3)->get(), fn ($r) => [$r->organisation, 'Fursa mpya: '.$r->title]],
     ];
@@ -116,7 +116,7 @@
 </div></main>
 <div class="ov" id="ov" role="dialog" aria-modal="true"><div class="modal" id="modal"></div></div>
 
-<script>window.NH={dict:(function(){try{return JSON.parse(decodeURIComponent(escape(atob('{{ \App\Nahau\AdminLang::current() === 'en' ? base64_encode(json_encode(\App\Nahau\AdminLang::DICT, JSON_UNESCAPED_UNICODE)) : base64_encode('{}') }}'))))}catch(e){return {}}})(),csrf:document.querySelector('meta[name=csrf-token]').content,go:@json(collect($flat)->map(fn($f)=>[$f[0],$f[1]])->values()),flash:@json(session('success')),forcePw:@json((bool)$u->must_change_password),pwUrl:@json(route('admin.panel.password')),icons:@json(\App\Nahau\Icons::P)};</script>
+<script>window.NH={dict:(function(){try{return JSON.parse(decodeURIComponent(escape(atob('{{ \App\Nahau\AdminLang::current() === 'en' ? base64_encode(json_encode(\App\Nahau\AdminLang::DICT, JSON_UNESCAPED_UNICODE)) : base64_encode('{}') }}'))))}catch(e){return {}}})(),csrf:document.querySelector('meta[name=csrf-token]').content,go:@json(collect($flat)->map(fn($f)=>[$f[0],$f[1]])->values()),flash:@json(session('success')),err:@json(session('error')),forcePw:@json((bool)$u->must_change_password),pwUrl:@json(route('admin.panel.password')),icons:@json(\App\Nahau\Icons::P)};</script>
 <script src="{{ asset('adminassets/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 <script src="{{ asset('adminassets/js/nahau-admin.js') }}?v={{ @filemtime(public_path('adminassets/js/nahau-admin.js')) }}"></script>
 @stack('scripts')
