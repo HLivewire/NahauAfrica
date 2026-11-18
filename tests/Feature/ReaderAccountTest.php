@@ -66,6 +66,21 @@ class ReaderAccountTest extends TestCase
         $this->post(route('account.password'), ['current' => 'Secret12345', 'password' => 'NewSecret123', 'password_confirmation' => 'NewSecret123'])->assertSessionHas('ok');
     }
 
+    public function test_language_switch_swh_eng_translates_the_reader_area(): void
+    {
+        $u = $this->reader();
+        $this->actingAs($u, 'maanuser');
+        $this->get(route('account.dashboard'))->assertOk()->assertSee('SWH')->assertSee('ENG')->assertSee('Shughuli yangu ya kusoma')->assertSee('Maktaba yangu');
+        $r = $this->get(route('account.lang', 'en'))->assertRedirect();
+        $r->assertCookie('nh_lang', 'en');
+        $this->withCookie('nh_lang', 'en')->get(route('account.dashboard'))->assertOk()->assertSee('My reading activity')->assertSee('My library')->assertDontSee('Shughuli yangu ya kusoma')->assertSee('Sign out');
+        foreach (['favourites', 'later', 'history', 'follows', 'mine', 'notifications', 'profile'] as $p) {
+            $this->withCookie('nh_lang', 'en')->get(route('account.'.$p))->assertOk();
+        }
+        $this->withCookie('nh_lang', 'en')->get(route('account.profile'))->assertSee('First name')->assertDontSee('Jina la kwanza');
+        $this->assertSame('en', $u->fresh()->lang);
+    }
+
     public function test_logout_signs_the_reader_out_completely(): void
     {
         $u = $this->reader();

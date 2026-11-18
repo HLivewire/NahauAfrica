@@ -359,8 +359,9 @@ Route::prefix('maanuser')->name('maanuser.')->group(function (){
     Route::get('/post',fn()=>redirect()->route('account.mine'))->name('post');
 });
 // Reader area (signed-in readers only): same look as the admin panel
-Route::prefix('account')->name('account.')->middleware('auth:maanuser')->controller(\App\Http\Controllers\Nahau\AccountController::class)->group(function (){
+Route::prefix('account')->name('account.')->middleware(['auth:maanuser','adminlang'])->controller(\App\Http\Controllers\Nahau\AccountController::class)->group(function (){
     Route::get('/','dashboard')->name('dashboard');
+    Route::get('lang/{lang}','lang')->whereIn('lang',['sw','en'])->name('lang');
     Route::get('favourites','favourites')->name('favourites');
     Route::delete('favourites/{news}','favToggle')->whereNumber('news')->name('favourites.remove');
     Route::get('read-later','later')->name('later');

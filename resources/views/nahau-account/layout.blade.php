@@ -1,5 +1,6 @@
 @php
     use App\Nahau\Icons; use App\Nahau\ReaderNotes;
+    $lg = \App\Nahau\AdminLang::current();
     $u = auth('maanuser')->user();
     $initials = strtoupper(mb_substr($u->first_name ?? 'A', 0, 1).mb_substr($u->last_name ?? '', 0, 1)) ?: 'A';
     $fullName = trim(($u->first_name ?? '').' '.($u->last_name ?? '')) ?: $u->email;
@@ -30,7 +31,7 @@
     $go = collect($nav)->filter(fn ($i) => ! isset($i['s']))->map(fn ($i) => [$i[1], $i[2]])->values();
 @endphp
 <!doctype html>
-<html lang="sw" data-theme="light">
+<html lang="{{ $lg }}" data-theme="light">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -61,10 +62,11 @@
   </div>
   <div class="tb-r">
     <button class="ib theme" id="themeBtn" aria-label="Badilisha mwonekano (giza au mwanga)"><svg class="ic s" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg><svg class="ic m" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
+    <div class="lsw" role="group" aria-label="Lugha"><a href="{{ route('account.lang', 'sw') }}" class="{{ $lg === 'sw' ? 'on' : '' }}" aria-current="{{ $lg === 'sw' ? 'true' : 'false' }}">SWH</a><a href="{{ route('account.lang', 'en') }}" class="{{ $lg === 'en' ? 'on' : '' }}" aria-current="{{ $lg === 'en' ? 'true' : 'false' }}">ENG</a></div>
     <div class="dwrap"><button class="ib" data-dd="ddN" aria-label="Arifa" aria-haspopup="true">{!! Icons::svg('bell') !!}@if($unreadN)<span class="dot"></span>@endif</button>
       <div class="dd dd-n" id="ddN" role="menu">
         <div class="dd-h"><b>Arifa</b>@if($unreadN)<form method="post" action="{{ route('account.notifications.read') }}" style="margin-left:auto">@csrf<button type="submit" style="border:0;background:none;color:var(--pri);font-weight:700;font-size:12px">Weka zote zimesomwa</button></form>@endif</div>
-        <div class="nlist">@forelse(array_slice($allNotes, 0, 8) as $n)<a class="nrow{{ $n['unread'] ? ' un' : '' }}" href="{{ $n['url'] }}"><span class="av" style="background:var(--pri-soft);color:var(--pri);display:grid;place-items:center">{!! Icons::svg($n['icon'], 'sm') !!}</span><div><b>{{ $n['title'] }}</b><span>{{ $n['body'] }}</span><small>{{ $n['label'] }} · {{ $n['at']->locale('sw')->diffForHumans() }}</small></div></a>@empty<div class="empty">Hakuna arifa mpya</div>@endforelse</div>
+        <div class="nlist">@forelse(array_slice($allNotes, 0, 8) as $n)<a class="nrow{{ $n['unread'] ? ' un' : '' }}" href="{{ $n['url'] }}"><span class="av" style="background:var(--pri-soft);color:var(--pri);display:grid;place-items:center">{!! Icons::svg($n['icon'], 'sm') !!}</span><div><b>{{ $n['title'] }}</b><span>{{ $n['body'] }}</span><small>{{ $n['label'] }} · {{ $n['at']->locale($lg)->diffForHumans() }}</small></div></a>@empty<div class="empty">Hakuna arifa mpya</div>@endforelse</div>
         <div class="dd-f"><a href="{{ route('account.notifications') }}">Arifa zote</a></div>
       </div></div>
     <div class="dwrap hide-m"><button class="ib hide-m" data-dd="ddA" aria-label="Njia za mkato" aria-haspopup="true"><svg class="ic" viewBox="0 0 24 24" style="fill:currentColor;stroke:none"><circle cx="5" cy="5" r="1.7"/><circle cx="12" cy="5" r="1.7"/><circle cx="19" cy="5" r="1.7"/><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/><circle cx="5" cy="19" r="1.7"/><circle cx="12" cy="19" r="1.7"/><circle cx="19" cy="19" r="1.7"/></svg></button>
@@ -106,7 +108,7 @@
 </div></main>
 <div class="ov" id="ov" role="dialog" aria-modal="true"><div class="modal" id="modal"></div></div>
 
-<script>window.NH={dict:{},csrf:document.querySelector('meta[name=csrf-token]').content,go:@json($go),flash:null,forcePw:false,pwUrl:'',icons:@json(\App\Nahau\Icons::P)};</script>
+<script>window.NH={dict:(function(){try{return JSON.parse(decodeURIComponent(escape(atob('{{ $lg === 'en' ? base64_encode(json_encode(\App\Nahau\AdminLang::DICT, JSON_UNESCAPED_UNICODE)) : base64_encode('{}') }}'))))}catch(e){return {}}})(),csrf:document.querySelector('meta[name=csrf-token]').content,go:@json($go),flash:null,forcePw:false,pwUrl:'',icons:@json(\App\Nahau\Icons::P)};</script>
 <script src="{{ asset('adminassets/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 <script src="{{ asset('adminassets/js/nahau-admin.js') }}?v={{ @filemtime(public_path('adminassets/js/nahau-admin.js')) }}"></script>
 @stack('scripts')

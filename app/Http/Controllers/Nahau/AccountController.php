@@ -69,6 +69,13 @@ class AccountController extends Controller
         ]);
     }
 
+    public function lang(string $lang)
+    {
+        $this->me()->forceFill(['lang' => $lang])->save();
+
+        return redirect()->back(fallback: route('account.dashboard'))->withCookie(cookie('nh_lang', $lang, 60 * 24 * 365));
+    }
+
     public function favourites()
     {
         $ids = NahauFavorite::where('maanuser_id', $this->me()->id)->latest()->pluck('news_id');
@@ -163,7 +170,7 @@ class AccountController extends Controller
         $d = $r->validate(['first_name' => 'required|string|max:80', 'last_name' => 'nullable|string|max:80', 'phone' => 'nullable|string|max:30', 'lang' => 'required|in:sw,en', 'reading_goal' => 'required|integer|min:1|max:60']);
         $this->me()->forceFill($d)->save();
 
-        return back()->with('ok', 'Wasifu umehifadhiwa.');
+        return back()->with('ok', 'Wasifu umehifadhiwa.')->withCookie(cookie('nh_lang', $d['lang'], 60 * 24 * 365));
     }
 
     public function password(Request $r)
