@@ -19,4 +19,5 @@
 @empty
 <div class="card rise"><div class="empty">Bado hujatuma hadithi. Bonyeza "Tuma hadithi" ili uanze. Hadithi unazotuma kwa barua pepe ile ile ya akaunti yako zinaonekana hapa.</div></div>
 @endforelse
+@if($subs->total() > $subs->perPage())<div class="card rise">@include('nahau-account._pager', ['p' => $subs])</div>@endif
 @endsection

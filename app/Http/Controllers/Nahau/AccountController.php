@@ -12,6 +12,7 @@ use App\Models\NahauSubmission;
 use App\Nahau\ReaderNotes;
 use App\Nahau\Stories;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
@@ -29,11 +30,23 @@ class AccountController extends Controller
         return Schema::hasTable('nahau_reads') ? DB::table('nahau_reads')->where('maanuser_id', $this->me()->id) : DB::table('news')->whereRaw('1=0');
     }
 
-    private function storiesByIds($ids)
+    /** Stories for a list of ids, in that order, one page at a time. */
+    private function storiesByIds($ids, int $per = 10)
     {
         $ids = collect($ids)->values();
+        $page = $this->paged($ids, $per);
+        $slice = collect($page->items());
+        $rows = $slice->isEmpty() ? collect() : Stories::query()->whereIn('news.id', $slice)->get()->sortBy(fn ($s) => $slice->search($s->id))->values();
 
-        return $ids->isEmpty() ? collect() : Stories::query()->whereIn('news.id', $ids)->get()->sortBy(fn ($s) => $ids->search($s->id))->values();
+        return new LengthAwarePaginator($rows, $page->total(), $per, $page->currentPage(), ['path' => request()->url(), 'query' => request()->query()]);
+    }
+
+    private function paged($items, int $per = 10): LengthAwarePaginator
+    {
+        $items = collect($items)->values();
+        $cur = max(1, (int) request()->query('page', 1));
+
+        return new LengthAwarePaginator($items->forPage($cur, $per)->values(), $items->count(), $per, $cur, ['path' => request()->url(), 'query' => request()->query()]);
     }
 
     public function dashboard(Request $r)
@@ -92,7 +105,7 @@ class AccountController extends Controller
 
     public function history()
     {
-        $ids = $this->reads()->select('news_id', DB::raw('max(created_at) as at'))->groupBy('news_id')->orderByDesc('at')->limit(60)->pluck('news_id');
+        $ids = $this->reads()->select('news_id', DB::raw('max(created_at) as at'))->groupBy('news_id')->orderByDesc('at')->limit(300)->pluck('news_id');
 
         return view('nahau-account.stories', ['title' => 'Nilichosoma', 'sub' => 'Historia ya hadithi ulizofungua, mpya kwanza.', 'stories' => $this->storiesByIds($ids), 'empty' => 'Historia yako itaonekana ukianza kusoma ukiwa umeingia.', 'action' => null]);
     }
@@ -103,7 +116,7 @@ class AccountController extends Controller
         $ids = NahauFollow::where('maanuser_id', $u->id)->pluck('author_id')->all();
         $authors = NahauAuthor::orderBy('name')->get()->each(fn ($a) => $a->following = in_array($a->id, $ids, true));
 
-        return view('nahau-account.follows', ['authors' => $authors->sortByDesc('following')->values()]);
+        return view('nahau-account.follows', ['authors' => $this->paged($authors->sortByDesc('following')->values(), 12)]);
     }
 
     public function followToggle(int $author)
@@ -141,16 +154,16 @@ class AccountController extends Controller
 
     public function mine()
     {
-        $subs = NahauSubmission::where('email', $this->me()->email)->orderByDesc('id')->get();
+        $subs = NahauSubmission::where('email', $this->me()->email)->orderByDesc('id')->paginate(8)->withQueryString();
 
         return view('nahau-account.mine', ['subs' => $subs]);
     }
 
     public function notifications()
     {
-        $notes = ReaderNotes::for($this->me(), 60);
+        $all = ReaderNotes::for($this->me(), 200);
 
-        return view('nahau-account.notifications', ['notes' => $notes, 'unread' => ReaderNotes::unread($notes)]);
+        return view('nahau-account.notifications', ['pageNotes' => $this->paged($all, 10), 'unread' => ReaderNotes::unread($all)]);
     }
 
     public function notificationsRead()

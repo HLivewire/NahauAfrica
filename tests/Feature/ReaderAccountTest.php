@@ -81,6 +81,24 @@ class ReaderAccountTest extends TestCase
         $this->assertSame('en', $u->fresh()->lang);
     }
 
+    public function test_long_lists_are_paginated(): void
+    {
+        $u = $this->reader();
+        for ($i = 1; $i <= 20; $i++) {
+            NahauSubmission::create(['reference' => 'NA-P-'.uniqid().$i, 'name' => 'A', 'email' => $u->email, 'section' => 'fiction', 'language' => 'Kiswahili', 'title' => 'Hadithi namba '.$i, 'status' => 'new']);
+        }
+        $this->actingAs($u, 'maanuser');
+        $this->get(route('account.mine'))->assertOk()->assertSee('hadi 8 kati ya 20')->assertSee('page=2', false)->assertSee('Hadithi namba 20')->assertDontSee('Hadithi namba 1<', false);
+        $this->get(route('account.mine', ['page' => 3]))->assertOk()->assertSee('hadi 20 kati ya 20');
+        $n = $this->get(route('account.notifications'))->assertOk();
+        $n->assertSee('1 hadi 10 kati ya', false)->assertSee('page=2', false);
+        $this->get(route('account.notifications', ['page' => 2]))->assertOk();
+        $this->withCookie('nh_lang', 'en')->get(route('account.mine'))->assertSee('1 to 8 of 20');
+        foreach (['favourites', 'later', 'history', 'follows'] as $r) {
+            $this->get(route('account.'.$r, ['page' => 2]))->assertOk();
+        }
+    }
+
     public function test_logout_signs_the_reader_out_completely(): void
     {
         $u = $this->reader();

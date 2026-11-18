@@ -13,5 +13,6 @@
 @empty
   <div class="empty">{{ $empty }}</div>
 @endforelse
+@include('nahau-account._pager', ['p' => $stories])
 </div>
 @endsection

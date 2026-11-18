@@ -10,5 +10,6 @@
 @empty
   <div class="empty">Bado hakuna waandishi.</div>
 @endforelse
+@include('nahau-account._pager', ['p' => $authors])
 </div>
 @endsection
