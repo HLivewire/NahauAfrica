@@ -34,8 +34,11 @@ class SigninController extends Controller
     }
     public function maanSignout()
     {
-        \auth()->logout() ;
-        $this->setSuccess('User logout Successfully !');
-        return redirect()->route('home');
+        // Reader sign out: leave both guards and drop the whole session, so the menu really shows signed-out.
+        \Illuminate\Support\Facades\Auth::guard('maanuser')->logout();
+        \Illuminate\Support\Facades\Auth::guard('web')->logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect('/')->with('message', 'Umetoka kwa usalama. Karibu tena!')->with('type', 'success');
     }
 }

@@ -90,6 +90,16 @@ class ReaderAccountTest extends TestCase
         $this->get(route('account.dashboard'))->assertRedirect();
     }
 
+    public function test_site_menu_has_no_sign_out_next_to_my_account_and_signout_route_still_works(): void
+    {
+        $u = $this->reader();
+        $this->be($u, 'maanuser'); $this->app['auth']->shouldUse('web'); $this->get('/')->assertOk()->assertSee('My account')->assertDontSee('data-nx-logout', false);
+        $this->get(route('signout'))->assertRedirect('/');
+        $this->assertGuest('maanuser');
+        $this->get('/')->assertOk()->assertDontSee('My account');
+        $this->get(route('account.dashboard'))->assertRedirect();
+    }
+
     public function test_story_views_are_recorded_against_the_reader(): void
     {
         $u = $this->reader();
